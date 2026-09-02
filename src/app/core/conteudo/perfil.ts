@@ -8,18 +8,18 @@ import type { Conteudo } from '../models/conteudo';
  */
 export const CONTEUDO: Conteudo = {
   perfil: {
-    nome: 'Danilo P.',
+    nome: 'Danilo Pereira da Silva',
     apelido: 'D1',
-    titulo: 'Desenvolvedor de software',
+    titulo: 'Engenheiro de software sênior',
     chamada:
       'Quinze anos construindo sistemas que não podem parar — de cancela de aeroporto a ' +
       'central de atendimento de banco. Do banco de dados à tela, com a regra de negócio ' +
       'no lugar certo.',
     sobre: [
-      'Comecei em 2011 testando software e virei desenvolvedor logo depois. De lá para cá ' +
-        'passei por leilões online, consultoria corporativa, onze anos em automação de ' +
-        'estacionamento e tráfego, e desde 2024 o setor bancário — hoje no Itaú, em centrais ' +
-        'de atendimento ao cliente pessoa física.',
+      'Comecei em 2011 testando software e passei a analista de sistemas logo depois. De lá ' +
+        'para cá passei por leilões online, consultoria corporativa, onze anos em automação ' +
+        'de estacionamento e tráfego, e desde 2024 o setor bancário — hoje no Itaú, em ' +
+        'centrais de atendimento ao cliente pessoa física.',
       'O que se repete nessa trajetória é o tipo de sistema: aquele em que a falha é cara e ' +
         'aparece na hora. Cancela que não abre no Galeão, atendimento que cai, nota fiscal ' +
         'que não sai. Isso molda como eu escrevo código — prefiro a solução que eu consigo ' +
@@ -64,7 +64,7 @@ export const CONTEUDO: Conteudo = {
   trajetoria: [
     {
       organizacao: 'Itaú',
-      cargo: 'Desenvolvedor de software',
+      cargo: 'Engenheiro de software sênior',
       periodo: '2024 — hoje',
       atual: true,
       descricao:
@@ -79,7 +79,7 @@ export const CONTEUDO: Conteudo = {
     },
     {
       organizacao: 'Nepos',
-      cargo: 'Desenvolvedor de software',
+      cargo: 'Engenheiro de software pleno e sênior',
       periodo: '2013 — 2024',
       atual: false,
       descricao:
@@ -94,7 +94,7 @@ export const CONTEUDO: Conteudo = {
       stack: ['C', 'C++', '.NET', 'Java', 'Angular', 'SQL Server'],
     },
     {
-      organizacao: 'Consultoria de soluções corporativas',
+      organizacao: 'Onione',
       cargo: 'Desenvolvedor',
       periodo: '2013',
       atual: false,
@@ -110,7 +110,7 @@ export const CONTEUDO: Conteudo = {
     },
     {
       organizacao: 'Superbid',
-      cargo: 'Estagiário de testes, depois desenvolvedor',
+      cargo: 'Estagiário de testes, depois analista de sistemas',
       periodo: '2011 — 2013',
       atual: false,
       descricao:
