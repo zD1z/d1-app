@@ -6,7 +6,9 @@
       <p class="contato__convite">{{ contato.convite }}</p>
 
       <div class="contato__acoes">
-        <a class="botao botao--primario" [href]="enderecoDeEmail">{{ contato.email }}</a>
+        @if (contato.email) {
+          <a class="botao botao--primario" [href]="enderecoDeEmail">{{ contato.email }}</a>
+        }
         <a class="botao botao--secundario" [href]="contato.github" target="_blank" rel="noopener noreferrer">
           GitHub
         </a>

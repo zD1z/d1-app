@@ -6,7 +6,9 @@
     </p>
 
     <ul class="rodape__links">
-      <li><a [href]="'mailto:' + contato.email">E-mail</a></li>
+      @if (contato.email) {
+        <li><a [href]="'mailto:' + contato.email">E-mail</a></li>
+      }
       <li><a [href]="contato.github" target="_blank" rel="noopener noreferrer">GitHub</a></li>
       @if (contato.linkedin) {
         <li><a [href]="contato.linkedin" target="_blank" rel="noopener noreferrer">LinkedIn</a></li>

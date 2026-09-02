@@ -3,80 +3,178 @@ import type { Conteudo } from '../models/conteudo';
 /**
  * CONTEÚDO DO SITE — este é o único arquivo a editar para mudar a página.
  *
- * Os campos marcados com `[PREENCHER]` são rascunho: estão aí para a página ter
- * forma e espaçamento reais, não porque sejam verdade — e aparecem assim no ar.
- * Troque todos antes de apontar o domínio. Tudo que não está marcado já é
- * informação verificada.
+ * O formato está descrito em `../models/conteudo.ts`, com um comentário por
+ * campo dizendo onde ele aparece e que tamanho de texto cabe.
  */
 export const CONTEUDO: Conteudo = {
   perfil: {
-    nome: '[PREENCHER] Danilo P.',
+    nome: 'Danilo P.',
     apelido: 'D1',
     titulo: 'Desenvolvedor de software',
     chamada:
-      'Construo sistemas que resolvem problema real de gente real — do banco de dados à tela, ' +
-      'com a regra de negócio no lugar certo.',
+      'Quinze anos construindo sistemas que não podem parar — de cancela de aeroporto a ' +
+      'central de atendimento de banco. Do banco de dados à tela, com a regra de negócio ' +
+      'no lugar certo.',
     sobre: [
-      '[PREENCHER] Um parágrafo sobre quem você é profissionalmente: em que trabalha hoje, há quanto tempo, e o tipo de problema que gosta de resolver.',
-      '[PREENCHER] Um parágrafo sobre como você trabalha: as decisões técnicas que defende, o que aprendeu a evitar, o que entrega de diferente.',
-      'Fora do trabalho contratado, mantenho sistemas próprios em produção — porque a melhor forma de saber se uma arquitetura se sustenta é conviver com ela por anos.',
+      'Comecei em 2011 testando software e virei desenvolvedor logo depois. De lá para cá ' +
+        'passei por leilões online, consultoria corporativa, onze anos em automação de ' +
+        'estacionamento e tráfego, e desde 2024 o setor bancário — hoje no Itaú, em centrais ' +
+        'de atendimento ao cliente pessoa física.',
+      'O que se repete nessa trajetória é o tipo de sistema: aquele em que a falha é cara e ' +
+        'aparece na hora. Cancela que não abre no Galeão, atendimento que cai, nota fiscal ' +
+        'que não sai. Isso molda como eu escrevo código — prefiro a solução que eu consigo ' +
+        'explicar inteira a uma que só funciona enquanto ninguém mexe.',
+      'Fora do trabalho contratado, mantenho sistemas próprios em produção — porque a melhor ' +
+        'forma de saber se uma arquitetura se sustenta é conviver com ela por anos.',
     ],
     localizacao: 'Brasil',
-    desdeAno: 2017,
+    desdeAno: 2011,
     disponivel: true,
   },
 
   numeros: [
-    { valor: '[PREENCHER] 8+', rotulo: 'anos escrevendo software' },
-    { valor: '[PREENCHER] 20+', rotulo: 'projetos entregues' },
-    { valor: '3', rotulo: 'anos de dado real em produção no D1 Finanças' },
+    { valor: '15 anos', rotulo: 'em tecnologia, desde 2011' },
+    { valor: '11 anos', rotulo: 'em automação de estacionamento e tráfego' },
+    { valor: '4 setores', rotulo: 'leilões, consultoria, automação e banco' },
   ],
 
   habilidades: [
     {
       grupo: 'Backend',
-      itens: ['C#', '.NET', 'Entity Framework Core', 'Minimal APIs', 'SQL Server', 'T-SQL'],
+      itens: ['C#', '.NET', 'Java', 'Python', 'C', 'C++'],
     },
     {
       grupo: 'Frontend',
-      itens: ['Angular', 'TypeScript', 'RxJS', 'Signals', 'PrimeNG', 'HTML/CSS'],
+      itens: ['Angular', 'TypeScript', 'RxJS', 'Signals'],
     },
     {
-      grupo: 'Qualidade e entrega',
-      itens: ['Playwright', 'Vitest', 'Git', 'GitHub Actions', 'PowerShell'],
+      grupo: 'Dados',
+      itens: ['SQL Server', 'Oracle', 'DynamoDB', 'Entity Framework Core'],
     },
     {
-      grupo: 'IA aplicada',
-      itens: ['Model Context Protocol (MCP)', 'Claude Code', 'Automação com agentes'],
+      grupo: 'Nuvem e infraestrutura',
+      itens: ['AWS', 'Azure', 'Terraform', 'CI/CD', 'GitHub Actions'],
+    },
+    {
+      grupo: 'Integração',
+      itens: ['Dynamics 365', 'APIs REST', 'Model Context Protocol (MCP)'],
     },
   ],
 
   trajetoria: [
     {
-      organizacao: '[PREENCHER] Empresa atual',
-      cargo: '[PREENCHER] Cargo',
-      periodo: '[PREENCHER] 2023 — hoje',
+      organizacao: 'Itaú',
+      cargo: 'Desenvolvedor de software',
+      periodo: '2024 — hoje',
       atual: true,
       descricao:
-        '[PREENCHER] Uma ou duas frases sobre o escopo: que produto, que time, que responsabilidade.',
+        'Centrais de atendimento ao cliente pessoa física. A jornada é governada pelo ' +
+        'Dynamics 365, e o trabalho é integrar as peças do banco por trás dele.',
       entregas: [
-        '[PREENCHER] Entrega concreta, com o resultado no fim da frase.',
-        '[PREENCHER] Outra entrega — prefira número a adjetivo.',
+        'Central de suporte digital ao cliente.',
+        'Canal de WhatsApp e frente de gerentes para as centrais de atendimento.',
+        'Infraestrutura em AWS com esteira de CI/CD.',
       ],
-      stack: ['[PREENCHER]', 'C#', 'Angular'],
+      stack: ['.NET', 'Java', 'Angular', 'Python', 'Terraform', 'AWS', 'DynamoDB', 'Dynamics 365'],
     },
     {
-      organizacao: '[PREENCHER] Empresa anterior',
-      cargo: '[PREENCHER] Cargo',
-      periodo: '[PREENCHER] 2020 — 2023',
+      organizacao: 'Nepos',
+      cargo: 'Desenvolvedor de software',
+      periodo: '2013 — 2024',
       atual: false,
-      descricao: '[PREENCHER] O que você fazia ali.',
-      entregas: ['[PREENCHER] Entrega concreta.'],
-      stack: ['[PREENCHER]'],
+      descricao:
+        'Onze anos em automação de estacionamento e tráfego, do controle de acesso na ' +
+        'entrada até a emissão da nota fiscal na saída.',
+      entregas: [
+        'Controle de acesso veicular por tag, integrado a Sem Parar, ConectCar e Veloe.',
+        'Controle de acesso por LPR, com leitura automática de placa.',
+        'Sistema de gestão de estacionamento cobrindo o ciclo inteiro: acesso, permanência, cobrança e nota.',
+        'Implantações nos aeroportos do Galeão e de Guarulhos e nos principais grupos de shopping centers.',
+      ],
+      stack: ['C', 'C++', '.NET', 'Java', 'Angular', 'SQL Server'],
+    },
+    {
+      organizacao: 'Consultoria de soluções corporativas',
+      cargo: 'Desenvolvedor',
+      periodo: '2013',
+      atual: false,
+      descricao:
+        'Passagem curta e de escopo fechado, numa consultoria de CRM, ERP e SAP: tirar um ' +
+        'sistema feito em Maker de onde estava e colocá-lo na Azure.',
+      entregas: [
+        'Migração do sistema legado em Maker para a nuvem Azure.',
+        'Migração da base SQL Server que sustentava a operação.',
+        'Serviços de gestão de funcionários, emissão de notas e relatórios.',
+      ],
+      stack: ['Maker', 'SQL Server', 'Azure'],
+    },
+    {
+      organizacao: 'Superbid',
+      cargo: 'Estagiário de testes, depois desenvolvedor',
+      periodo: '2011 — 2013',
+      atual: false,
+      descricao:
+        'Entrada na área, em leilões online. Comecei testando e passei a desenvolver na ' +
+        'ferramenta que gerencia os leilões.',
+      entregas: [
+        'Ferramenta de gestão dos leilões online, do cadastro do lote ao encerramento.',
+      ],
+      stack: ['PHP', 'Java', 'Maker', 'Oracle', 'SQL'],
     },
   ],
 
   projetos: [
+    {
+      nome: 'Acesso veicular por tag e LPR',
+      ano: '2013 — 2024',
+      papel: 'Desenvolvedor no time do produto',
+      resumo: 'Entrada e saída de veículos sem interação, em aeroportos e shopping centers.',
+      descricao:
+        'Integração com as tags de pedágio — Sem Parar, ConectCar e Veloe — e com LPR, que ' +
+        'lê a placa e a transforma na credencial. O carro passa, a cancela abre e a cobrança ' +
+        'acontece atrás disso, sem ninguém no meio.',
+      destaques: [
+        'Três operadoras de tag, cada uma com seu próprio protocolo de integração.',
+        'LPR como alternativa à tag: quem não tem etiqueta usa a própria placa.',
+        'Implantado no Galeão e em Guarulhos, onde interromper a operação não é uma opção disponível.',
+      ],
+      stack: ['C', 'C++', '.NET', 'SQL Server'],
+      privado: true,
+    },
+    {
+      nome: 'Gestão de estacionamento ponta a ponta',
+      ano: '2013 — 2024',
+      papel: 'Desenvolvedor no time do produto',
+      resumo: 'O ciclo inteiro do estacionamento em um sistema só: do acesso à nota fiscal.',
+      descricao:
+        'Acesso, permanência, tarifação, cobrança e emissão de nota. Operado por grandes ' +
+        'grupos de shopping centers, onde o volume não dá margem para conferência manual e ' +
+        'um erro de tarifa aparece multiplicado por milhares de veículos no fim do dia.',
+      destaques: [
+        'Todas as etapas no mesmo sistema, sem transferência manual de dado entre fases.',
+        'Regras de tarifação que mudam por operação, por horário e por convênio.',
+        'Emissão fiscal integrada ao fluxo, não como passo separado depois.',
+      ],
+      stack: ['.NET', 'Java', 'Angular', 'SQL Server'],
+      privado: true,
+    },
+    {
+      nome: 'Atendimento digital ao cliente',
+      ano: '2024 — hoje',
+      papel: 'Desenvolvedor no time da plataforma',
+      resumo: 'Central de suporte digital e WhatsApp para o atendimento a pessoa física.',
+      descricao:
+        'Centrais de atendimento governadas pelo Dynamics 365, com as peças do banco ' +
+        'integradas por trás. Inclui a central de suporte digital, o canal de WhatsApp e a ' +
+        'frente de gerentes — toda a infraestrutura em AWS, com esteira de CI/CD.',
+      destaques: [
+        'Dynamics 365 como camada de governo da jornada, integrado aos sistemas internos.',
+        'WhatsApp como canal de atendimento, no mesmo fluxo dos demais.',
+        'Infraestrutura descrita em Terraform: o ambiente é código, não configuração manual.',
+      ],
+      stack: ['.NET', 'Java', 'Angular', 'Python', 'Terraform', 'AWS', 'DynamoDB'],
+      privado: true,
+    },
     {
       nome: 'D1 Finanças',
       ano: '2025 — hoje',
@@ -90,34 +188,10 @@ export const CONTEUDO: Conteudo = {
         'Arquitetura em camadas sem CQRS nem repositório genérico: cerimônia custa caro em projeto de um dev.',
         'Servidor MCP que referencia a camada de aplicação direto, sem passar por HTTP — a regra de negócio mora em um lugar só.',
         'Suíte E2E em Playwright com banco próprio e três travas independentes que abortam se apontar para a base de produção.',
-        'Dinheiro em decimal(18,2) e quantidade de ativo em decimal(18,8). Nunca float.',
         'Sem delete físico: cadastro inativa, lançamento cancela. O histórico é imutável.',
       ],
       stack: ['C# 13', '.NET', 'EF Core', 'SQL Server', 'Angular 21', 'PrimeNG', 'Playwright', 'MCP'],
       privado: true,
-    },
-    {
-      nome: '[PREENCHER] Nome do projeto',
-      ano: '[PREENCHER] 2024',
-      papel: '[PREENCHER] Seu papel no time',
-      resumo: '[PREENCHER] Uma linha dizendo o que o projeto resolve.',
-      descricao: '[PREENCHER] Dois ou três períodos: o contexto, o problema e o que foi construído.',
-      destaques: [
-        '[PREENCHER] Uma decisão técnica que valeu a pena.',
-        '[PREENCHER] Um problema difícil e como foi resolvido.',
-      ],
-      stack: ['[PREENCHER]'],
-      privado: false,
-    },
-    {
-      nome: '[PREENCHER] Outro projeto',
-      ano: '[PREENCHER] 2022',
-      papel: '[PREENCHER] Seu papel',
-      resumo: '[PREENCHER] Uma linha.',
-      descricao: '[PREENCHER] O contexto e a entrega.',
-      destaques: ['[PREENCHER] O que teve de interessante.'],
-      stack: ['[PREENCHER]'],
-      privado: false,
     },
   ],
 
@@ -178,9 +252,9 @@ export const CONTEUDO: Conteudo = {
   ],
 
   contato: {
-    email: '[PREENCHER] contato@d1.app.br',
+    // Sem e-mail ainda: o botão não aparece enquanto este campo estiver ausente.
     github: 'https://github.com/zD1z',
-    linkedin: '[PREENCHER] https://www.linkedin.com/in/seu-usuario',
+    linkedin: 'https://www.linkedin.com/in/danilops',
     convite:
       'Tem uma ideia parada porque não sabe por onde começar? Descreve ela em duas linhas. ' +
       'Respondo dizendo se dá para fazer, quanto custa mais ou menos, e se eu sou a pessoa certa.',
