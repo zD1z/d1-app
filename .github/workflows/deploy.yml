@@ -37,7 +37,13 @@ jobs:
       - name: Duplicar index.html como 404.html
         run: cp dist/d1-app/browser/index.html dist/d1-app/browser/404.html
 
+      # `enablement` liga o Pages pela API na primeira execução, usando a
+      # permissão `pages: write` acima. Sem isso o primeiro run de um repo
+      # novo falha aqui com "Get Pages site failed" ate alguem abrir
+      # Settings → Pages e escolher GitHub Actions na mao.
       - uses: actions/configure-pages@v5
+        with:
+          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
