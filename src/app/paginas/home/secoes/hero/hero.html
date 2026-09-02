@@ -1,0 +1,31 @@
+<section class="hero" id="topo">
+  <div class="container hero__conteudo">
+    @if (perfil.disponivel) {
+      <p class="hero__selo">
+        <span class="hero__ponto" aria-hidden="true"></span>
+        Disponível para novos projetos
+      </p>
+    }
+
+    <h1 class="hero__titulo">
+      {{ perfil.nome }}
+      <span class="hero__cargo">{{ perfil.titulo }}</span>
+    </h1>
+
+    <p class="hero__chamada">{{ perfil.chamada }}</p>
+
+    <div class="hero__acoes">
+      <a class="botao botao--primario" href="#solucoes">Transformar minha ideia em software</a>
+      <a class="botao botao--secundario" href="#projetos">Ver o que já construí</a>
+    </div>
+
+    <dl class="hero__numeros">
+      @for (numero of numeros; track numero.rotulo) {
+        <div class="hero__numero">
+          <dt class="hero__numero-valor">{{ numero.valor }}</dt>
+          <dd class="hero__numero-rotulo">{{ numero.rotulo }}</dd>
+        </div>
+      }
+    </dl>
+  </div>
+</section>

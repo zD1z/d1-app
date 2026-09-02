@@ -1,0 +1,136 @@
+.linha {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-left: 28px;
+}
+
+/* Fio vertical da linha do tempo. */
+.linha::before {
+  content: '';
+  position: absolute;
+  top: 12px;
+  bottom: 12px;
+  left: 5px;
+  width: 1px;
+  background: var(--borda);
+}
+
+.linha__item {
+  position: relative;
+}
+
+.linha__marcador {
+  position: absolute;
+  top: 26px;
+  left: -28px;
+  width: 11px;
+  height: 11px;
+  border: 2px solid var(--borda-forte);
+  border-radius: 50%;
+  background: var(--fundo);
+}
+
+.linha__item--atual .linha__marcador {
+  border-color: var(--acento);
+  background: var(--acento);
+  box-shadow: 0 0 0 4px var(--acento-fundo);
+}
+
+.linha__cartao {
+  padding: 24px 26px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  background: var(--fundo-cartao);
+  transition: border-color 0.15s ease;
+}
+
+.linha__cartao:hover {
+  border-color: var(--borda-forte);
+}
+
+.linha__item--atual .linha__cartao {
+  border-color: var(--acento-borda);
+}
+
+.linha__cabecalho {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 8px 24px;
+  margin-bottom: 14px;
+}
+
+.linha__cargo {
+  font-size: 1.15rem;
+}
+
+.linha__organizacao {
+  color: var(--acento);
+  font-size: 0.95rem;
+  font-weight: 500;
+}
+
+.linha__periodo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--fonte-mono);
+  font-size: 0.82rem;
+  color: var(--texto-fraco);
+  white-space: nowrap;
+}
+
+.linha__atual {
+  padding: 2px 8px;
+  border-radius: 999px;
+  background: var(--ok-fundo);
+  color: var(--ok);
+  font-size: 0.72rem;
+}
+
+.linha__descricao {
+  color: var(--texto-suave);
+  margin-bottom: 16px;
+  max-width: 70ch;
+}
+
+.linha__entregas {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.linha__entregas li {
+  position: relative;
+  padding-left: 20px;
+  color: var(--texto-suave);
+  font-size: 0.95rem;
+  max-width: 72ch;
+}
+
+.linha__entregas li::before {
+  content: '';
+  position: absolute;
+  top: 0.7em;
+  left: 2px;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--acento-borda);
+}
+
+.linha__stack {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+@media (max-width: 640px) {
+  .linha__cartao {
+    padding: 20px;
+  }
+}

@@ -1,0 +1,63 @@
+<section class="secao" id="projetos" aria-labelledby="titulo-projetos">
+  <div class="container">
+    <p class="secao__rotulo">03 — Projetos</p>
+    <h2 class="secao__titulo" id="titulo-projetos">O que já saiu do papel</h2>
+    <p class="secao__intro">
+      Alguns são fechados e ficam sem link — o que dá para contar sobre eles é a decisão técnica,
+      não o código.
+    </p>
+
+    <ul class="projetos">
+      @for (projeto of projetos; track projeto.nome) {
+        <li class="projeto">
+          <div class="projeto__topo">
+            <div class="projeto__identidade">
+              <h3 class="projeto__nome">{{ projeto.nome }}</h3>
+              <p class="projeto__papel">{{ projeto.papel }}</p>
+            </div>
+            <div class="projeto__meta">
+              <span class="etiqueta">{{ projeto.ano }}</span>
+              @if (projeto.privado) {
+                <span class="etiqueta projeto__privado">código fechado</span>
+              }
+            </div>
+          </div>
+
+          <p class="projeto__resumo">{{ projeto.resumo }}</p>
+          <p class="projeto__descricao">{{ projeto.descricao }}</p>
+
+          <ul class="projeto__destaques">
+            @for (destaque of projeto.destaques; track destaque) {
+              <li>{{ destaque }}</li>
+            }
+          </ul>
+
+          <div class="projeto__rodape">
+            <ul class="projeto__stack">
+              @for (tecnologia of projeto.stack; track tecnologia) {
+                <li class="etiqueta">{{ tecnologia }}</li>
+              }
+            </ul>
+
+            @if (projeto.link || projeto.repositorio) {
+              <div class="projeto__links">
+                @if (projeto.link) {
+                  <a [href]="projeto.link" target="_blank" rel="noopener noreferrer">
+                    Ver online
+                    <span class="apenas-leitor">— {{ projeto.nome }}</span>
+                  </a>
+                }
+                @if (projeto.repositorio) {
+                  <a [href]="projeto.repositorio" target="_blank" rel="noopener noreferrer">
+                    Código
+                    <span class="apenas-leitor">— {{ projeto.nome }}</span>
+                  </a>
+                }
+              </div>
+            }
+          </div>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

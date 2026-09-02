@@ -1,0 +1,21 @@
+<section class="secao contato" id="contato" aria-labelledby="titulo-contato">
+  <div class="container">
+    <div class="contato__caixa">
+      <p class="secao__rotulo">05 — Contato</p>
+      <h2 class="secao__titulo" id="titulo-contato">Vamos conversar</h2>
+      <p class="contato__convite">{{ contato.convite }}</p>
+
+      <div class="contato__acoes">
+        <a class="botao botao--primario" [href]="enderecoDeEmail">{{ contato.email }}</a>
+        <a class="botao botao--secundario" [href]="contato.github" target="_blank" rel="noopener noreferrer">
+          GitHub
+        </a>
+        @if (contato.linkedin) {
+          <a class="botao botao--secundario" [href]="contato.linkedin" target="_blank" rel="noopener noreferrer">
+            LinkedIn
+          </a>
+        }
+      </div>
+    </div>
+  </div>
+</section>

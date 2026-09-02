@@ -1,0 +1,54 @@
+name: Publicar no GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Uma publicação por vez. Push novo no meio de um deploy espera o anterior
+# terminar, em vez de cancelar e deixar o site em estado intermediário.
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  construir:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - run: npm ci
+
+      - run: npm run build
+
+      # O GitHub Pages não conhece as rotas do Angular: um acesso direto a
+      # /qualquer-coisa devolve 404. Servindo o mesmo index.html como 404.html,
+      # o roteador assume e resolve a rota no cliente.
+      - name: Duplicar index.html como 404.html
+        run: cp dist/d1-app/browser/index.html dist/d1-app/browser/404.html
+
+      - uses: actions/configure-pages@v5
+
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: dist/d1-app/browser
+
+  publicar:
+    needs: construir
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - id: deploy
+        uses: actions/deploy-pages@v4

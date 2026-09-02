@@ -1,0 +1,32 @@
+<header class="cabecalho">
+  <div class="container cabecalho__barra">
+    <a class="marca" href="#topo" (click)="fecharMenu()">
+      <span class="marca__sigla">D1</span>
+      <span class="marca__dominio">d1.app</span>
+    </a>
+
+    <button
+      type="button"
+      class="cabecalho__alternar"
+      [attr.aria-expanded]="menuAberto()"
+      aria-controls="menu-principal"
+      (click)="alternarMenu()"
+    >
+      <span class="apenas-leitor">{{ menuAberto() ? 'Fechar menu' : 'Abrir menu' }}</span>
+      <span class="cabecalho__hamburguer" [class.cabecalho__hamburguer--aberto]="menuAberto()" aria-hidden="true"></span>
+    </button>
+
+    <nav id="menu-principal" class="menu" [class.menu--aberto]="menuAberto()" aria-label="Navegação principal">
+      <ul class="menu__lista">
+        @for (item of itens; track item.ancora) {
+          <li>
+            <a class="menu__link" [href]="'#' + item.ancora" (click)="fecharMenu()">{{ item.rotulo }}</a>
+          </li>
+        }
+        <li>
+          <a class="menu__acao" href="#contato" (click)="fecharMenu()">Falar comigo</a>
+        </li>
+      </ul>
+    </nav>
+  </div>
+</header>

@@ -1,0 +1,100 @@
+.solucoes {
+  background: var(--fundo-elevado);
+}
+
+/* 228px é o maior mínimo que ainda deixa os quatro cartões numa linha só
+   dentro do container de 1080px. Acima disso sobra um cartão órfão. */
+.servicos {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
+  gap: 20px;
+  margin-bottom: 72px;
+}
+
+.servico {
+  padding: 26px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  background: var(--fundo-cartao);
+  transition: border-color 0.15s ease;
+}
+
+.servico:hover {
+  border-color: var(--acento-borda);
+}
+
+.servico__icone {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-bottom: 18px;
+  border: 1px solid var(--acento-borda);
+  border-radius: var(--raio-pequeno);
+  background: var(--acento-fundo);
+  color: var(--acento);
+}
+
+.servico__icone svg {
+  width: 21px;
+  height: 21px;
+}
+
+.servico__titulo {
+  font-size: 1.08rem;
+  margin-bottom: 10px;
+}
+
+.servico__descricao {
+  font-size: 0.93rem;
+  color: var(--texto-suave);
+}
+
+.processo__titulo {
+  font-size: 1.4rem;
+  margin-bottom: 28px;
+}
+
+.processo__etapas {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+  gap: 28px;
+}
+
+.etapa {
+  position: relative;
+  padding-top: 22px;
+  border-top: 1px solid var(--borda-forte);
+}
+
+.etapa__numero {
+  position: absolute;
+  top: -14px;
+  left: 0;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: var(--acento);
+  color: var(--fundo);
+  font-family: var(--fonte-mono);
+  font-size: 0.82rem;
+  font-weight: 600;
+}
+
+.etapa__titulo {
+  font-size: 1rem;
+  margin-bottom: 8px;
+}
+
+.etapa__descricao {
+  font-size: 0.92rem;
+  color: var(--texto-suave);
+}
+
+@media (max-width: 640px) {
+  .servicos {
+    margin-bottom: 52px;
+  }
+}

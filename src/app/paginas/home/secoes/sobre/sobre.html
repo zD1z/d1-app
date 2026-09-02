@@ -1,0 +1,27 @@
+<section class="secao" id="sobre" aria-labelledby="titulo-sobre">
+  <div class="container">
+    <p class="secao__rotulo">01 — Sobre</p>
+    <h2 class="secao__titulo" id="titulo-sobre">Quem escreve o código</h2>
+
+    <div class="sobre__grade">
+      <div class="sobre__texto">
+        @for (paragrafo of perfil.sobre; track $index) {
+          <p>{{ paragrafo }}</p>
+        }
+      </div>
+
+      <div class="sobre__habilidades">
+        @for (grupo of habilidades; track grupo.grupo) {
+          <div class="habilidade">
+            <h3 class="habilidade__titulo">{{ grupo.grupo }}</h3>
+            <ul class="habilidade__itens">
+              @for (item of grupo.itens; track item) {
+                <li class="etiqueta">{{ item }}</li>
+              }
+            </ul>
+          </div>
+        }
+      </div>
+    </div>
+  </div>
+</section>

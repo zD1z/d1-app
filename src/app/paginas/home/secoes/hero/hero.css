@@ -1,0 +1,106 @@
+.hero {
+  position: relative;
+  padding: 104px 0 88px;
+  overflow: hidden;
+}
+
+/* Brilho discreto atrás do texto. Puramente decorativo. */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: -180px;
+  left: 50%;
+  width: min(760px, 120vw);
+  height: 460px;
+  transform: translateX(-50%);
+  background: radial-gradient(ellipse at center, var(--acento-fundo), transparent 68%);
+  pointer-events: none;
+}
+
+.hero__conteudo {
+  position: relative;
+}
+
+.hero__selo {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 24px;
+  padding: 5px 14px;
+  border: 1px solid color-mix(in srgb, var(--ok) 32%, transparent);
+  border-radius: 999px;
+  background: var(--ok-fundo);
+  color: var(--ok);
+  font-size: 0.82rem;
+  font-weight: 500;
+}
+
+.hero__ponto {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--ok);
+}
+
+.hero__titulo {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  font-size: clamp(2.4rem, 7vw, 4rem);
+  margin-bottom: 24px;
+}
+
+.hero__cargo {
+  font-family: var(--fonte-mono);
+  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--acento);
+}
+
+.hero__chamada {
+  max-width: 60ch;
+  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  color: var(--texto-suave);
+  margin-bottom: 36px;
+}
+
+.hero__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 64px;
+}
+
+.hero__numeros {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 24px;
+  margin: 0;
+  padding-top: 32px;
+  border-top: 1px solid var(--borda);
+}
+
+.hero__numero-valor {
+  font-size: 1.9rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  color: var(--texto);
+}
+
+.hero__numero-rotulo {
+  margin: 4px 0 0;
+  font-size: 0.88rem;
+  color: var(--texto-fraco);
+  max-width: 26ch;
+}
+
+@media (max-width: 640px) {
+  .hero {
+    padding: 64px 0 56px;
+  }
+
+  .hero__acoes {
+    margin-bottom: 44px;
+  }
+}

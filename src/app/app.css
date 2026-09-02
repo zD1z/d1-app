@@ -1,0 +1,18 @@
+/* Link de pulo: só aparece quando recebe foco pelo teclado. */
+.pular {
+  position: absolute;
+  top: -60px;
+  left: 16px;
+  z-index: 100;
+  padding: 10px 16px;
+  border-radius: var(--raio-pequeno);
+  background: var(--acento);
+  color: var(--fundo);
+  font-weight: 600;
+  transition: top 0.15s ease;
+}
+
+.pular:focus-visible {
+  top: 12px;
+  color: var(--fundo);
+}

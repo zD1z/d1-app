@@ -1,0 +1,258 @@
+/* Tokens e base. Nada de componente aqui — cada seção tem seu próprio arquivo. */
+
+:root {
+  color-scheme: dark light;
+
+  --fundo: #08090c;
+  --fundo-elevado: #0e1116;
+  --fundo-cartao: #11151b;
+  --borda: #1d232c;
+  --borda-forte: #2a323d;
+
+  --texto: #e8ecf2;
+  --texto-suave: #99a3b2;
+  --texto-fraco: #6b7484;
+
+  --acento: #56b6ff;
+  --acento-forte: #8ccdff;
+  --acento-fundo: rgba(86, 182, 255, 0.1);
+  --acento-borda: rgba(86, 182, 255, 0.28);
+
+  --ok: #4ade80;
+  --ok-fundo: rgba(74, 222, 128, 0.12);
+
+  --fonte: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  --fonte-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+
+  --largura: 1080px;
+  --raio: 14px;
+  --raio-pequeno: 8px;
+
+  --sombra: 0 1px 2px rgba(0, 0, 0, 0.4), 0 8px 24px rgba(0, 0, 0, 0.25);
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    --fundo: #ffffff;
+    --fundo-elevado: #f7f8fa;
+    --fundo-cartao: #ffffff;
+    --borda: #e4e7ec;
+    --borda-forte: #cfd4dc;
+
+    --texto: #10151d;
+    --texto-suave: #525c6b;
+    --texto-fraco: #7b8494;
+
+    --acento: #0b62c4;
+    --acento-forte: #084a96;
+    --acento-fundo: rgba(11, 98, 196, 0.07);
+    --acento-borda: rgba(11, 98, 196, 0.22);
+
+    --ok: #157f3d;
+    --ok-fundo: rgba(21, 127, 61, 0.1);
+
+    --sombra: 0 1px 2px rgba(16, 21, 29, 0.05), 0 8px 24px rgba(16, 21, 29, 0.06);
+  }
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  /* O cabeçalho é fixo: sem isso a âncora para embaixo dele. */
+  scroll-padding-top: 96px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+body {
+  margin: 0;
+  background: var(--fundo);
+  color: var(--texto);
+  font-family: var(--fonte);
+  font-size: 16px;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+h1,
+h2,
+h3,
+h4 {
+  margin: 0;
+  line-height: 1.2;
+  letter-spacing: -0.02em;
+  font-weight: 650;
+}
+
+p {
+  margin: 0;
+}
+
+ul,
+ol {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+a {
+  color: var(--acento);
+  text-decoration: none;
+}
+
+a:hover {
+  color: var(--acento-forte);
+}
+
+:focus-visible {
+  outline: 2px solid var(--acento);
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+img,
+svg {
+  max-width: 100%;
+}
+
+/* ---- utilitários compartilhados entre as seções ---- */
+
+.container {
+  width: 100%;
+  max-width: var(--largura);
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+.secao {
+  padding: 96px 0;
+  border-top: 1px solid var(--borda);
+}
+
+.secao__rotulo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  font-family: var(--fonte-mono);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--acento);
+}
+
+.secao__rotulo::before {
+  content: '';
+  width: 28px;
+  height: 1px;
+  background: var(--acento-borda);
+}
+
+.secao__titulo {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  margin-bottom: 16px;
+}
+
+.secao__intro {
+  max-width: 62ch;
+  color: var(--texto-suave);
+  font-size: 1.05rem;
+  margin-bottom: 48px;
+}
+
+.etiqueta {
+  display: inline-block;
+  padding: 3px 10px;
+  border: 1px solid var(--borda-forte);
+  border-radius: 999px;
+  background: var(--fundo-elevado);
+  font-family: var(--fonte-mono);
+  font-size: 0.72rem;
+  color: var(--texto-suave);
+  white-space: nowrap;
+}
+
+/* Botões: usados no hero e no contato, por isso ficam no global. */
+.botao {
+  display: inline-block;
+  padding: 12px 22px;
+  border-radius: var(--raio-pequeno);
+  font-size: 0.95rem;
+  font-weight: 600;
+  border: 1px solid transparent;
+  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+}
+
+.botao:hover {
+  transform: translateY(-1px);
+}
+
+.botao--primario {
+  background: var(--acento);
+  color: var(--fundo);
+}
+
+.botao--primario:hover {
+  background: var(--acento-forte);
+  color: var(--fundo);
+}
+
+.botao--secundario {
+  border-color: var(--borda-forte);
+  background: var(--fundo-elevado);
+  color: var(--texto);
+}
+
+.botao--secundario:hover {
+  border-color: var(--acento-borda);
+  color: var(--texto);
+}
+
+@media (max-width: 640px) {
+  .botao {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+}
+
+/* Texto visível só para leitor de tela. */
+.apenas-leitor {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
+@media (max-width: 640px) {
+  .secao {
+    padding: 64px 0;
+  }
+
+  .secao__intro {
+    margin-bottom: 32px;
+  }
+}

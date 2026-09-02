@@ -1,0 +1,38 @@
+.contato__caixa {
+  padding: 56px;
+  border: 1px solid var(--acento-borda);
+  border-radius: var(--raio);
+  background:
+    radial-gradient(ellipse at top left, var(--acento-fundo), transparent 60%),
+    var(--fundo-cartao);
+  text-align: center;
+}
+
+.contato__caixa .secao__rotulo {
+  justify-content: center;
+}
+
+.contato__convite {
+  max-width: 58ch;
+  margin: 0 auto 32px;
+  font-size: 1.05rem;
+  color: var(--texto-suave);
+}
+
+.contato__acoes {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 12px;
+}
+
+/* O e-mail é um endereço: monoespaçado lê melhor. */
+.contato__acoes .botao--primario {
+  font-family: var(--fonte-mono);
+}
+
+@media (max-width: 640px) {
+  .contato__caixa {
+    padding: 32px 22px;
+  }
+}
