@@ -37,13 +37,14 @@ jobs:
       - name: Duplicar index.html como 404.html
         run: cp dist/d1-app/browser/index.html dist/d1-app/browser/404.html
 
-      # `enablement` liga o Pages pela API na primeira execução, usando a
-      # permissão `pages: write` acima. Sem isso o primeiro run de um repo
-      # novo falha aqui com "Get Pages site failed" ate alguem abrir
-      # Settings → Pages e escolher GitHub Actions na mao.
+      # Ligar o Pages tem que ser feito uma vez na mao, em
+      # Settings → Pages → Source: GitHub Actions.
+      #
+      # Nao adianta passar `enablement: true` aqui: o GITHUB_TOKEN publica no
+      # Pages, mas nao cria o site. A chamada morre com "Resource not
+      # accessible by integration" no endpoint create-a-pages-site — criar e
+      # administracao do repositorio, e o CI nao tem essa permissao.
       - uses: actions/configure-pages@v5
-        with:
-          enablement: true
 
       - uses: actions/upload-pages-artifact@v3
         with:
