@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://d1.app/sitemap.xml
+Sitemap: https://d1.app.br/sitemap.xml

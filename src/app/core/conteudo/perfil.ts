@@ -178,7 +178,7 @@ export const CONTEUDO: Conteudo = {
   ],
 
   contato: {
-    email: '[PREENCHER] contato@d1.app',
+    email: '[PREENCHER] contato@d1.app.br',
     github: 'https://github.com/zD1z',
     linkedin: '[PREENCHER] https://www.linkedin.com/in/seu-usuario',
     convite:

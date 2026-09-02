@@ -1,7 +1,7 @@
-# d1.app
+# d1.app.br
 
 Site pessoal e portfólio profissional. HTML estático, publicado no GitHub Pages
-em **https://d1.app**.
+em **https://d1.app.br**.
 
 Angular sem servidor: o build gera arquivos estáticos e nada roda no backend. A
 escolha do framework é para o que vem depois — integração com API, área logada,
@@ -68,19 +68,21 @@ nem estado guardado.
 
 Dois detalhes que não são óbvios:
 
-- **`public/CNAME`** carrega `d1.app`. Sem esse arquivo dentro do artefato, o
+- **`public/CNAME`** carrega `d1.app.br`. Sem esse arquivo dentro do artefato, o
   GitHub descarta o domínio customizado a cada deploy.
 - **`404.html`** é uma cópia do `index.html`, feita no workflow. O Pages não
-  conhece as rotas do Angular: sem isso, acessar `d1.app/algo` direto na barra
+  conhece as rotas do Angular: sem isso, acessar `d1.app.br/algo` direto na barra
   de endereço devolve 404 em vez de abrir o site.
 
 ### Configuração no GitHub (uma vez)
 
 1. **Settings → Pages → Source: GitHub Actions**.
-2. **Settings → Pages → Custom domain: `d1.app`**, e marque **Enforce HTTPS**.
-3. No DNS do domínio: os quatro registros `A` (e os quatro `AAAA`) do GitHub
-   Pages para o apex, mais `CNAME www → zD1z.github.io`.
+2. **Settings → Pages → Custom domain: `d1.app.br`**, e marque **Enforce HTTPS**.
+3. No Registro.br, na zona do domínio: os quatro registros `A` do GitHub Pages
+   para o apex, mais `CNAME www → zD1z.github.io`.
 
-`.app` está na lista de HSTS preload: o navegador **só** abre o domínio em HTTPS,
-sem exceção. O certificado do Pages leva alguns minutos para sair depois que o
-DNS propaga — até lá o domínio não abre de jeito nenhum, e isso é normal.
+O domínio é `.app.br`, do Registro.br — **não** o gTLD `.app` do Google. A
+diferença importa: `.app` inteiro está na lista de HSTS preload e só abre em
+HTTPS, `.app.br` não está. O certificado do Pages ainda leva alguns minutos para
+sair depois que o DNS propaga, e o "Enforce HTTPS" só fica clicável quando ele
+existe.
