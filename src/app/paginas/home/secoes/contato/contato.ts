@@ -16,6 +16,6 @@ export class Contato {
    */
   protected get enderecoDeEmail(): string {
     const assunto = encodeURIComponent('Tenho uma ideia');
-    return `mailto:${this.contato.email ?? ''}?subject=${assunto}`;
+    return `mailto:${this.contato.email}?subject=${assunto}`;
   }
 }

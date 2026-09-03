@@ -83,10 +83,8 @@ export interface EtapaDoProcesso {
 }
 
 export interface Contato {
-  /** Opcional: sem e-mail, a seção de contato simplesmente não mostra o botão. */
-  readonly email?: string;
-  readonly github: string;
-  readonly linkedin?: string;
+  readonly email: string;
+  readonly linkedin: string;
   /** Fecha a seção de contato. Uma frase de convite. */
   readonly convite: string;
 }

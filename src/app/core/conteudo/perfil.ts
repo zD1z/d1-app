@@ -264,8 +264,7 @@ export const CONTEUDO: Conteudo = {
   ],
 
   contato: {
-    // Sem e-mail ainda: o botão não aparece enquanto este campo estiver ausente.
-    github: 'https://github.com/zD1z',
+    email: 'danilop.silva.d1@gmail.com',
     linkedin: 'https://www.linkedin.com/in/danilops',
     convite:
       'Tem uma ideia parada porque não sabe por onde começar? Descreve ela em duas linhas. ' +
