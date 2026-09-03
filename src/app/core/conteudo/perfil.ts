@@ -36,9 +36,8 @@ export const CONTEUDO: Conteudo = {
     bordao: 'D1 App para sua ideia',
     bordaoDestaque: 'D1 App',
     subtitulo:
-      'Você tem o problema e conhece o seu negócio. A parte técnica é minha: transformo ' +
-      'a ideia em software que funciona de verdade, do banco de dados à tela, sem você ' +
-      'precisar traduzir nada para termo técnico.',
+      'Você tem o problema e conhece o seu negócio. Eu transformo a sua ideia em software ' +
+      'que funciona de verdade, sem você precisar traduzir nada para termo técnico.',
     quemFaz:
       'Quinze anos construindo sistemas em que a falha é cara e aparece na hora: cancela de ' +
       'aeroporto, gestão de estacionamento em shopping, central de atendimento de banco. ' +
@@ -243,7 +242,7 @@ export const CONTEUDO: Conteudo = {
     {
       titulo: 'Conversa',
       descricao:
-        'Você descreve o problema em português, sem precisar traduzir para termo técnico. ' +
+        'Você descreve o problema, sem precisar traduzir para termo técnico. ' +
         'Eu pergunto até entender o que de fato precisa mudar.',
     },
     {
