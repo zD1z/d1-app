@@ -63,7 +63,9 @@
 
 html {
   scroll-behavior: smooth;
-  /* O cabeçalho é fixo: sem isso a âncora para embaixo dele. */
+  /* Vale para a rolagem nativa do navegador (# na barra de endereco antes
+     de o Angular subir). A ancora do roteador e deslocada pelo setOffset
+     do ViewportScroller, em app.config.ts, que ignora esta propriedade. */
   scroll-padding-top: 96px;
 }
 
