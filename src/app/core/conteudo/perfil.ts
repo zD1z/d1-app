@@ -20,10 +20,13 @@ export const CONTEUDO: Conteudo = {
         'para cá passei por leilões online, consultoria corporativa, onze anos em automação ' +
         'de estacionamento e tráfego, e desde 2024 o setor bancário. Hoje estou no Itaú, ' +
         'em centrais de atendimento ao cliente pessoa física.',
-      'O que se repete nessa trajetória é o tipo de sistema: aquele em que a falha é cara e ' +
-        'aparece na hora. Cancela que não abre no Galeão, atendimento que cai, nota fiscal ' +
-        'que não sai. Isso molda como eu escrevo código. Prefiro a solução que eu consigo ' +
-        'explicar inteira a uma que só funciona enquanto ninguém mexe.',
+      'Passar por quatro áreas bem diferentes mudou a forma como eu resolvo problema. ' +
+        'Leilão online ensina a lidar com sistema que não pode travar justamente no pico. ' +
+        'Consultoria ensina a entrar em código que não é seu e entregar rápido. ' +
+        'Estacionamento e tráfego ensinam o ponto em que o software encontra o mundo ' +
+        'físico, cancela e câmera. Banco ensina escala e rigor. Quem fica em um domínio ' +
+        'só tende a repetir a mesma solução em todo lugar. Ter circulado entre eles me deu ' +
+        'mais de uma saída para o mesmo problema.',
       'Fora do trabalho contratado, mantenho sistemas próprios em produção, porque a melhor ' +
         'forma de saber se uma arquitetura se sustenta é conviver com ela por anos.',
     ],
