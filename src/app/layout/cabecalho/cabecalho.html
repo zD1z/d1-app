@@ -1,8 +1,9 @@
 <header class="cabecalho">
   <div class="container cabecalho__barra">
+    <!-- A marca e o mesmo arquivo do favicon: uma fonte da verdade para o
+         desenho, e o navegador ja o tem em cache quando chega aqui. -->
     <a class="marca" routerLink="/" (click)="fecharMenu()">
-      <span class="marca__sigla">D1</span>
-      <span class="marca__dominio">d1.app.br</span>
+      <img class="marca__icone" src="favicon.svg" width="36" height="36" alt="d1.app.br">
     </a>
 
     <button

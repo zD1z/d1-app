@@ -17,30 +17,20 @@
 
 .marca {
   display: inline-flex;
-  align-items: baseline;
-  gap: 10px;
-  color: var(--texto);
-  font-weight: 700;
-  letter-spacing: -0.01em;
-}
-
-.marca__sigla {
-  display: inline-grid;
-  place-items: center;
-  width: 30px;
-  height: 30px;
-  border: 1px solid var(--acento-borda);
+  align-items: center;
   border-radius: var(--raio-pequeno);
-  background: var(--acento-fundo);
-  color: var(--acento);
-  font-family: var(--fonte-mono);
-  font-size: 0.85rem;
-  align-self: center;
+  line-height: 0;
 }
 
-.marca__dominio {
-  font-family: var(--fonte-mono);
-  font-size: 0.95rem;
+.marca__icone {
+  width: 36px;
+  height: 36px;
+  display: block;
+  transition: transform 0.15s ease;
+}
+
+.marca:hover .marca__icone {
+  transform: scale(1.06);
 }
 
 .menu__lista {

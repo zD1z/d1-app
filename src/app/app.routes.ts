@@ -7,7 +7,7 @@ export const routes: Routes = [
   {
     path: '',
     pathMatch: 'full',
-    title: 'Dê um D1 App para sua ideia',
+    title: 'D1 App para sua ideia',
     component: Home,
   },
   {

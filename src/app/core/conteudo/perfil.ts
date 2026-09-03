@@ -33,7 +33,7 @@ export const CONTEUDO: Conteudo = {
   },
 
   oferta: {
-    bordao: 'Dê um D1 App para sua ideia',
+    bordao: 'D1 App para sua ideia',
     bordaoDestaque: 'D1 App',
     subtitulo:
       'Você tem o problema e conhece o seu negócio. A parte técnica é minha: transformo ' +
