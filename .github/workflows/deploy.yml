@@ -42,7 +42,7 @@ jobs:
       #
       # Nao adianta passar `enablement: true` aqui: o GITHUB_TOKEN publica no
       # Pages, mas nao cria o site. A chamada morre com "Resource not
-      # accessible by integration" no endpoint create-a-pages-site — criar e
+      # accessible by integration" no endpoint create-a-pages-site. Criar e
       # administracao do repositorio, e o CI nao tem essa permissao.
       - uses: actions/configure-pages@v5
 

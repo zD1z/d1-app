@@ -1,6 +1,6 @@
 /**
  * Formato do conteúdo do site. Os dados vivem em `core/conteudo/perfil.ts`,
- * arquivo único e sem dependência de framework — e o único lugar a editar
+ * arquivo único e sem dependência de framework, e o único lugar a editar
  * para mudar qualquer texto da página.
  */
 
@@ -20,7 +20,7 @@ export interface Perfil {
 
 /** A oferta comercial. É o que a home diz antes de qualquer coisa sobre mim. */
 export interface Oferta {
-  /** O bordão. Vira o `h1` da home — a primeira coisa que alguém lê. */
+  /** O bordão. Vira o `h1` da home, a primeira coisa que alguém lê. */
   readonly bordao: string;
   /** O trecho do bordão a destacar em cor. Precisa existir dentro de `bordao`. */
   readonly bordaoDestaque: string;

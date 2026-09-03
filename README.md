@@ -4,8 +4,8 @@ Site pessoal e portfólio profissional. HTML estático, publicado no GitHub Page
 em **https://d1.app.br**.
 
 Angular sem servidor: o build gera arquivos estáticos e nada roda no backend. A
-escolha do framework é para o que vem depois — integração com API, área logada,
-formulário de contato de verdade — sem precisar reescrever a base.
+escolha do framework é para o que vem depois, seja integração com API, área logada
+ou formulário de contato de verdade, sem precisar reescrever a base.
 
 ## Rodar localmente
 
@@ -24,7 +24,7 @@ src/app/core/conteudo/perfil.ts
 ```
 
 Nome, bio, trajetória, projetos, serviços e contato saem dali. Os componentes só
-desenham — não há texto solto em template. Para mudar qualquer coisa da página,
+desenham, e não há texto solto em template. Para mudar qualquer coisa da página,
 edite esse arquivo e nada mais.
 
 O formato está descrito em `src/app/core/models/conteudo.ts`, com um comentário
@@ -59,7 +59,7 @@ Os tokens de cor, tipografia e espaçamento ficam em `src/styles.css`, junto das
 poucas classes compartilhadas (`.container`, `.secao`, `.etiqueta`, `.botao`).
 Todo o resto é CSS escopado no componente.
 
-Tema claro e escuro saem de `prefers-color-scheme` — não há botão de alternar
+Tema claro e escuro saem de `prefers-color-scheme`, sem botão de alternar
 nem estado guardado.
 
 ## Publicação
@@ -81,7 +81,7 @@ Dois detalhes que não são óbvios:
 3. No Registro.br, na zona do domínio: os quatro registros `A` do GitHub Pages
    para o apex, mais `CNAME www → zD1z.github.io`.
 
-O domínio é `.app.br`, do Registro.br — **não** o gTLD `.app` do Google. A
+O domínio é `.app.br`, do Registro.br, e **não** o gTLD `.app` do Google. A
 diferença importa: `.app` inteiro está na lista de HSTS preload e só abre em
 HTTPS, `.app.br` não está. O certificado do Pages ainda leva alguns minutos para
 sair depois que o DNS propaga, e o "Enforce HTTPS" só fica clicável quando ele

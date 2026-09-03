@@ -1,7 +1,7 @@
 import type { Conteudo } from '../models/conteudo';
 
 /**
- * CONTEÚDO DO SITE — este é o único arquivo a editar para mudar a página.
+ * CONTEÚDO DO SITE. Este é o único arquivo a editar para mudar a página.
  *
  * O formato está descrito em `../models/conteudo.ts`, com um comentário por
  * campo dizendo onde ele aparece e que tamanho de texto cabe.
@@ -12,19 +12,19 @@ export const CONTEUDO: Conteudo = {
     apelido: 'D1',
     titulo: 'Engenheiro de software sênior',
     chamada:
-      'Quinze anos construindo sistemas que não podem parar — de cancela de aeroporto a ' +
+      'Quinze anos construindo sistemas que não podem parar, de cancela de aeroporto a ' +
       'central de atendimento de banco. Do banco de dados à tela, com a regra de negócio ' +
       'no lugar certo.',
     sobre: [
       'Comecei em 2011 testando software e passei a analista de sistemas logo depois. De lá ' +
         'para cá passei por leilões online, consultoria corporativa, onze anos em automação ' +
-        'de estacionamento e tráfego, e desde 2024 o setor bancário — hoje no Itaú, em ' +
-        'centrais de atendimento ao cliente pessoa física.',
+        'de estacionamento e tráfego, e desde 2024 o setor bancário. Hoje estou no Itaú, ' +
+        'em centrais de atendimento ao cliente pessoa física.',
       'O que se repete nessa trajetória é o tipo de sistema: aquele em que a falha é cara e ' +
         'aparece na hora. Cancela que não abre no Galeão, atendimento que cai, nota fiscal ' +
-        'que não sai. Isso molda como eu escrevo código — prefiro a solução que eu consigo ' +
+        'que não sai. Isso molda como eu escrevo código. Prefiro a solução que eu consigo ' +
         'explicar inteira a uma que só funciona enquanto ninguém mexe.',
-      'Fora do trabalho contratado, mantenho sistemas próprios em produção — porque a melhor ' +
+      'Fora do trabalho contratado, mantenho sistemas próprios em produção, porque a melhor ' +
         'forma de saber se uma arquitetura se sustenta é conviver com ela por anos.',
     ],
     localizacao: 'Brasil',
@@ -37,12 +37,12 @@ export const CONTEUDO: Conteudo = {
     bordaoDestaque: 'D1 App',
     subtitulo:
       'Você tem o problema e conhece o seu negócio. A parte técnica é minha: transformo ' +
-      'a ideia em software que funciona de verdade, do banco de dados à tela — sem você ' +
+      'a ideia em software que funciona de verdade, do banco de dados à tela, sem você ' +
       'precisar traduzir nada para termo técnico.',
     quemFaz:
       'Quinze anos construindo sistemas em que a falha é cara e aparece na hora: cancela de ' +
       'aeroporto, gestão de estacionamento em shopping, central de atendimento de banco. ' +
-      'A mesma régua vale para um projeto pequeno — só muda o tamanho.',
+      'A mesma régua vale para um projeto pequeno. Só muda o tamanho.',
   },
 
   numeros: [
@@ -78,7 +78,7 @@ export const CONTEUDO: Conteudo = {
     {
       organizacao: 'Itaú',
       cargo: 'Engenheiro de software sênior',
-      periodo: '2024 — hoje',
+      periodo: 'desde 2024',
       atual: true,
       descricao:
         'Centrais de atendimento ao cliente pessoa física. A jornada é governada pelo ' +
@@ -93,7 +93,7 @@ export const CONTEUDO: Conteudo = {
     {
       organizacao: 'Nepos',
       cargo: 'Engenheiro de software pleno e sênior',
-      periodo: '2013 — 2024',
+      periodo: 'de 2013 a 2024',
       atual: false,
       descricao:
         'Onze anos em automação de estacionamento e tráfego, do controle de acesso na ' +
@@ -124,7 +124,7 @@ export const CONTEUDO: Conteudo = {
     {
       organizacao: 'Superbid',
       cargo: 'Estagiário de testes, depois analista de sistemas',
-      periodo: '2011 — 2013',
+      periodo: 'de 2011 a 2013',
       atual: false,
       descricao:
         'Entrada na área, em leilões online. Comecei testando e passei a desenvolver na ' +
@@ -139,11 +139,11 @@ export const CONTEUDO: Conteudo = {
   projetos: [
     {
       nome: 'Acesso veicular por tag e LPR',
-      ano: '2013 — 2024',
+      ano: 'de 2013 a 2024',
       papel: 'Desenvolvedor no time do produto',
       resumo: 'Entrada e saída de veículos sem interação, em aeroportos e shopping centers.',
       descricao:
-        'Integração com as tags de pedágio — Sem Parar, ConectCar e Veloe — e com LPR, que ' +
+        'Integração com as tags de pedágio Sem Parar, ConectCar e Veloe, além do LPR, que ' +
         'lê a placa e a transforma na credencial. O carro passa, a cancela abre e a cobrança ' +
         'acontece atrás disso, sem ninguém no meio.',
       destaques: [
@@ -156,7 +156,7 @@ export const CONTEUDO: Conteudo = {
     },
     {
       nome: 'Gestão de estacionamento ponta a ponta',
-      ano: '2013 — 2024',
+      ano: 'de 2013 a 2024',
       papel: 'Desenvolvedor no time do produto',
       resumo: 'O ciclo inteiro do estacionamento em um sistema só: do acesso à nota fiscal.',
       descricao:
@@ -173,13 +173,13 @@ export const CONTEUDO: Conteudo = {
     },
     {
       nome: 'Atendimento digital ao cliente',
-      ano: '2024 — hoje',
+      ano: 'desde 2024',
       papel: 'Desenvolvedor no time da plataforma',
       resumo: 'Central de suporte digital e WhatsApp para o atendimento a pessoa física.',
       descricao:
         'Centrais de atendimento governadas pelo Dynamics 365, com as peças do banco ' +
         'integradas por trás. Inclui a central de suporte digital, o canal de WhatsApp e a ' +
-        'frente de gerentes — toda a infraestrutura em AWS, com esteira de CI/CD.',
+        'frente de gerentes, com toda a infraestrutura em AWS e esteira de CI/CD.',
       destaques: [
         'Dynamics 365 como camada de governo da jornada, integrado aos sistemas internos.',
         'WhatsApp como canal de atendimento, no mesmo fluxo dos demais.',
@@ -190,16 +190,16 @@ export const CONTEUDO: Conteudo = {
     },
     {
       nome: 'D1 Finanças',
-      ano: '2025 — hoje',
+      ano: 'desde 2025',
       papel: 'Autor e único desenvolvedor',
       resumo: 'Sistema de gestão financeira pessoal que substituiu uma planilha usada desde 2023.',
       descricao:
         'Roda como serviço do Windows na rede de casa, servindo API e front no mesmo processo. ' +
-        'Importou três anos de histórico real da planilha original — 1.097 despesas, 232 receitas e ' +
+        'Importou três anos de histórico real da planilha original, num total de 1.097 despesas, 232 receitas e ' +
         '231 movimentos de investimento, misturando lançamentos realizados e previsões futuras.',
       destaques: [
         'Arquitetura em camadas sem CQRS nem repositório genérico: cerimônia custa caro em projeto de um dev.',
-        'Servidor MCP que referencia a camada de aplicação direto, sem passar por HTTP — a regra de negócio mora em um lugar só.',
+        'Servidor MCP que referencia a camada de aplicação direto, sem passar por HTTP, porque a regra de negócio mora em um lugar só.',
         'Suíte E2E em Playwright com banco próprio e três travas independentes que abortam se apontar para a base de produção.',
         'Sem delete físico: cadastro inativa, lançamento cancela. O histórico é imutável.',
       ],
@@ -227,8 +227,8 @@ export const CONTEUDO: Conteudo = {
       icone: 'dados',
       titulo: 'Dados que você já tem',
       descricao:
-        'Importação, limpeza e conciliação de histórico bagunçado — planilha, CSV, sistema legado — ' +
-        'até virar base confiável para decidir.',
+        'Importação, limpeza e conciliação de histórico bagunçado de planilha, CSV ou sistema ' +
+        'legado, até virar base confiável para decidir.',
     },
     {
       icone: 'integracao',
@@ -250,7 +250,7 @@ export const CONTEUDO: Conteudo = {
       titulo: 'Escopo e proposta',
       descricao:
         'Escrevo o que será entregue, em que ordem e por quanto. Se o problema for menor ' +
-        'do que parecia, eu digo — cobrar por complexidade que não existe não me interessa.',
+        'do que parecia, eu digo, porque cobrar por complexidade que não existe não me interessa.',
     },
     {
       titulo: 'Construção com entregas visíveis',
