@@ -1,0 +1,10 @@
+.chamada__caixa {
+  text-align: center;
+}
+
+.chamada__texto {
+  max-width: 52ch;
+  margin: 16px auto 28px;
+  color: var(--texto-suave);
+  font-size: 1.05rem;
+}

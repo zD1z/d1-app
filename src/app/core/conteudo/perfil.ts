@@ -29,7 +29,20 @@ export const CONTEUDO: Conteudo = {
     ],
     localizacao: 'Brasil',
     desdeAno: 2011,
-    disponivel: true,
+    disponivel: false,
+  },
+
+  oferta: {
+    bordao: 'Dê um D1 App para sua ideia',
+    bordaoDestaque: 'D1 App',
+    subtitulo:
+      'Você tem o problema e conhece o seu negócio. A parte técnica é minha: transformo ' +
+      'a ideia em software que funciona de verdade, do banco de dados à tela — sem você ' +
+      'precisar traduzir nada para termo técnico.',
+    quemFaz:
+      'Quinze anos construindo sistemas em que a falha é cara e aparece na hora: cancela de ' +
+      'aeroporto, gestão de estacionamento em shopping, central de atendimento de banco. ' +
+      'A mesma régua vale para um projeto pequeno — só muda o tamanho.',
   },
 
   numeros: [

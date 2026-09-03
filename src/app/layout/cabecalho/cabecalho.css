@@ -64,6 +64,11 @@
   background: var(--fundo-elevado);
 }
 
+/* So marca a pagina atual: os itens com ancora apontam todos para a home. */
+.menu__link--ativo {
+  color: var(--texto);
+}
+
 .menu__acao {
   display: block;
   margin-left: 8px;

@@ -1,6 +1,6 @@
 <header class="cabecalho">
   <div class="container cabecalho__barra">
-    <a class="marca" href="#topo" (click)="fecharMenu()">
+    <a class="marca" routerLink="/" (click)="fecharMenu()">
       <span class="marca__sigla">D1</span>
       <span class="marca__dominio">d1.app.br</span>
     </a>
@@ -18,13 +18,20 @@
 
     <nav id="menu-principal" class="menu" [class.menu--aberto]="menuAberto()" aria-label="Navegação principal">
       <ul class="menu__lista">
-        @for (item of itens; track item.ancora) {
+        @for (item of itens; track item.rotulo) {
           <li>
-            <a class="menu__link" [href]="'#' + item.ancora" (click)="fecharMenu()">{{ item.rotulo }}</a>
+            <a
+              class="menu__link"
+              [routerLink]="item.rota"
+              [fragment]="item.fragmento"
+              routerLinkActive="menu__link--ativo"
+              [routerLinkActiveOptions]="{ exact: true }"
+              (click)="fecharMenu()"
+            >{{ item.rotulo }}</a>
           </li>
         }
         <li>
-          <a class="menu__acao" href="#contato" (click)="fecharMenu()">Falar comigo</a>
+          <a class="menu__acao" routerLink="/" fragment="contato" (click)="fecharMenu()">Falar comigo</a>
         </li>
       </ul>
     </nav>

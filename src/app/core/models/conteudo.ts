@@ -18,6 +18,18 @@ export interface Perfil {
   readonly disponivel: boolean;
 }
 
+/** A oferta comercial. É o que a home diz antes de qualquer coisa sobre mim. */
+export interface Oferta {
+  /** O bordão. Vira o `h1` da home — a primeira coisa que alguém lê. */
+  readonly bordao: string;
+  /** O trecho do bordão a destacar em cor. Precisa existir dentro de `bordao`. */
+  readonly bordaoDestaque: string;
+  /** Um parágrafo. Explica o bordão para quem não é técnico. */
+  readonly subtitulo: string;
+  /** Duas ou três frases. Fecha a faixa "quem faz" da home e leva para /sobre. */
+  readonly quemFaz: string;
+}
+
 export interface Numero {
   readonly valor: string;
   readonly rotulo: string;
@@ -81,6 +93,7 @@ export interface Contato {
 
 export interface Conteudo {
   readonly perfil: Perfil;
+  readonly oferta: Oferta;
   readonly numeros: readonly Numero[];
   readonly habilidades: readonly GrupoDeHabilidades[];
   readonly trajetoria: readonly Experiencia[];

@@ -1,0 +1,20 @@
+<section class="secao" id="quem-faz" aria-labelledby="titulo-quem-faz">
+  <div class="container">
+    <p class="secao__rotulo">02 — Quem faz</p>
+    <h2 class="secao__titulo" id="titulo-quem-faz">{{ perfil.nome }}</h2>
+    <p class="quem-faz__cargo">{{ perfil.titulo }} · {{ perfil.localizacao }}</p>
+
+    <p class="secao__intro">{{ oferta.quemFaz }}</p>
+
+    <dl class="quem-faz__numeros">
+      @for (numero of numeros; track numero.rotulo) {
+        <div>
+          <dt class="quem-faz__valor">{{ numero.valor }}</dt>
+          <dd class="quem-faz__rotulo">{{ numero.rotulo }}</dd>
+        </div>
+      }
+    </dl>
+
+    <a class="botao botao--secundario" routerLink="/sobre">Ver a trajetória completa</a>
+  </div>
+</section>

@@ -1,6 +1,6 @@
 .hero {
   position: relative;
-  padding: 104px 0 88px;
+  padding: 128px 0 112px;
   overflow: hidden;
 }
 
@@ -8,10 +8,10 @@
 .hero::before {
   content: '';
   position: absolute;
-  top: -180px;
+  top: -200px;
   left: 50%;
-  width: min(760px, 120vw);
-  height: 460px;
+  width: min(820px, 130vw);
+  height: 520px;
   transform: translateX(-50%);
   background: radial-gradient(ellipse at center, var(--acento-fundo), transparent 68%);
   pointer-events: none;
@@ -19,88 +19,36 @@
 
 .hero__conteudo {
   position: relative;
+  max-width: 880px;
 }
 
-.hero__selo {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 24px;
-  padding: 5px 14px;
-  border: 1px solid color-mix(in srgb, var(--ok) 32%, transparent);
-  border-radius: 999px;
-  background: var(--ok-fundo);
-  color: var(--ok);
-  font-size: 0.82rem;
-  font-weight: 500;
+.hero__bordao {
+  font-size: clamp(2.5rem, 7.5vw, 4.5rem);
+  line-height: 1.08;
+  margin-bottom: 28px;
+  text-wrap: balance;
 }
 
-.hero__ponto {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--ok);
-}
-
-.hero__titulo {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  font-size: clamp(2.4rem, 7vw, 4rem);
-  margin-bottom: 24px;
-}
-
-.hero__cargo {
-  font-family: var(--fonte-mono);
-  font-size: clamp(0.95rem, 2.2vw, 1.15rem);
-  font-weight: 500;
-  letter-spacing: 0.02em;
+.hero__marca {
   color: var(--acento);
+  white-space: nowrap;
 }
 
-.hero__chamada {
-  max-width: 60ch;
+.hero__subtitulo {
+  max-width: 62ch;
   font-size: clamp(1.05rem, 2.4vw, 1.3rem);
   color: var(--texto-suave);
-  margin-bottom: 36px;
+  margin-bottom: 40px;
 }
 
 .hero__acoes {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
-  margin-bottom: 64px;
-}
-
-.hero__numeros {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 24px;
-  margin: 0;
-  padding-top: 32px;
-  border-top: 1px solid var(--borda);
-}
-
-.hero__numero-valor {
-  font-size: 1.9rem;
-  font-weight: 700;
-  letter-spacing: -0.03em;
-  color: var(--texto);
-}
-
-.hero__numero-rotulo {
-  margin: 4px 0 0;
-  font-size: 0.88rem;
-  color: var(--texto-fraco);
-  max-width: 26ch;
 }
 
 @media (max-width: 640px) {
   .hero {
-    padding: 64px 0 56px;
-  }
-
-  .hero__acoes {
-    margin-bottom: 44px;
+    padding: 72px 0 64px;
   }
 }
