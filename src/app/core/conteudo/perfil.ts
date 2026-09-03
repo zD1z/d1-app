@@ -12,9 +12,9 @@ export const CONTEUDO: Conteudo = {
     apelido: 'D1',
     titulo: 'Engenheiro de software sênior',
     chamada:
-      'Quinze anos construindo sistemas que não podem parar, de cancela de aeroporto a ' +
-      'central de atendimento de banco. Do banco de dados à tela, com a regra de negócio ' +
-      'no lugar certo.',
+      'Quinze anos construindo sistemas que rodam em aeroportos, shopping centers e ' +
+      'centrais de atendimento bancário. Do banco de dados à tela, com a regra de ' +
+      'negócio no lugar certo.',
     sobre: [
       'Comecei em 2011 testando software e passei a analista de sistemas logo depois. De lá ' +
         'para cá passei por leilões online, consultoria corporativa, onze anos em automação ' +
@@ -42,9 +42,10 @@ export const CONTEUDO: Conteudo = {
       'Você tem o problema e conhece o seu negócio. Eu transformo a sua ideia em software ' +
       'que funciona de verdade, sem você precisar traduzir nada para termo técnico.',
     quemFaz:
-      'Quinze anos construindo sistemas em que a falha é cara e aparece na hora: cancela de ' +
-      'aeroporto, gestão de estacionamento em shopping, central de atendimento de banco. ' +
-      'A mesma régua vale para um projeto pequeno. Só muda o tamanho.',
+      'Quinze anos construindo software em quatro áreas diferentes: leilões online, ' +
+      'consultoria corporativa, automação de estacionamento e tráfego, e o setor ' +
+      'bancário. Cada uma resolve problema de um jeito próprio, e é esse repertório que ' +
+      'entra também num projeto pequeno. Só muda o tamanho.',
   },
 
   numeros: [
