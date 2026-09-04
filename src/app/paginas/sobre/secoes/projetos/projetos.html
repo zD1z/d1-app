@@ -44,12 +44,14 @@
                   <a [href]="projeto.link" target="_blank" rel="noopener noreferrer">
                     Ver online
                     <span class="apenas-leitor">do projeto {{ projeto.nome }}</span>
+                    <span aria-hidden="true">&#8599;</span>
                   </a>
                 }
                 @if (projeto.repositorio) {
                   <a [href]="projeto.repositorio" target="_blank" rel="noopener noreferrer">
                     Código
                     <span class="apenas-leitor">do projeto {{ projeto.nome }}</span>
+                    <span aria-hidden="true">&#8599;</span>
                   </a>
                 }
               </div>

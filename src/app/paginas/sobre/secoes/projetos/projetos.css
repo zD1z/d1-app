@@ -98,11 +98,31 @@
   gap: 8px;
 }
 
+/* Botao, nao link de texto: e a unica saida do cartao e como texto solto no
+   pe, abaixo das etiquetas, ninguem achava. */
 .projeto__links {
   display: flex;
-  gap: 18px;
+  flex-wrap: wrap;
+  gap: 10px;
   font-size: 0.9rem;
   font-weight: 600;
+}
+
+.projeto__links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 9px 16px;
+  border: 1px solid var(--acento-borda);
+  border-radius: var(--raio-pequeno);
+  background: var(--acento-fundo);
+  color: var(--acento);
+  transition: background-color 0.15s ease, transform 0.15s ease;
+}
+
+.projeto__links a:hover {
+  background: color-mix(in srgb, var(--acento) 18%, transparent);
+  transform: translateY(-1px);
 }
 
 @media (max-width: 640px) {

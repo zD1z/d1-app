@@ -216,10 +216,10 @@ export const CONTEUDO: Conteudo = {
         'rateio dos custos fixos, e devolve o preço final já com margem e taxas de venda ' +
         'embutidas. No lugar do preço no chute.',
       destaques: [
-        'O preço sai por gross-up, dividindo o preço base por um menos as taxas. Somar a taxa da maquininha ao preço, que é o erro comum, vende no prejuízo.',
-        'O lucro incide sobre o custo total, com o rateio das despesas fixas dentro, e materiais podem ser precificados por área ou por unidade.',
-        'Front em Angular 20, com standalone components e signals: dashboard de indicadores, assistente de precificação, fichas técnicas, tema claro e escuro, e consentimento de cookies que só libera analytics depois do aceite.',
-        'Back em .NET 8 sobre PostgreSQL, em Clean Architecture de quatro camadas, com assinaturas Free e Premium integradas ao Asaas por webhooks.',
+        'Precificação de produto, cálculo de frete, dashboard de indicadores, cadastro de fornecedores e fichas técnicas reaproveitáveis entre produtos.',
+        'Assinaturas Free e Premium integradas ao gateway de pagamento Asaas por webhooks, com limite de recursos por plano.',
+        'Front em Angular 20, com standalone components, signals e TailwindCSS. Tema claro e escuro, e consentimento de cookies que só libera analytics e anúncios depois do aceite.',
+        'Back em .NET 8 sobre PostgreSQL, em Clean Architecture de quatro camadas, com autenticação JWT e login social pelo Google.',
         'Em produção na AWS, com a API em ECS Fargate, o front estático em S3 e CloudFront, deploy contínuo por GitHub Actions e 2.125 testes automatizados entre as duas pontas.',
       ],
       stack: ['Angular 20', 'TypeScript', 'TailwindCSS', '.NET 8', 'C#', 'PostgreSQL', 'EF Core 8', 'AWS ECS Fargate', 'GitHub Actions'],
