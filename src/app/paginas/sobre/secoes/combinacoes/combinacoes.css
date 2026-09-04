@@ -1,0 +1,41 @@
+.combinacoes {
+  background: var(--fundo-elevado);
+}
+
+.combinacao__lista {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.combinacao {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 26px;
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  background: var(--fundo-cartao);
+  transition: border-color 0.15s ease;
+}
+
+.combinacao:hover {
+  border-color: var(--acento-borda);
+}
+
+.combinacao__titulo {
+  font-size: 1.1rem;
+}
+
+.combinacao__descricao {
+  font-size: 0.93rem;
+  color: var(--texto-suave);
+}
+
+.combinacao__pecas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: auto;
+  padding-top: 6px;
+}

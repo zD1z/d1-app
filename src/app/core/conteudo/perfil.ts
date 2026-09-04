@@ -32,6 +32,10 @@ export const CONTEUDO: Conteudo = {
     ],
     localizacao: 'Brasil',
     desdeAno: 2011,
+    resumoDeCarreira:
+      'Quatro setores até aqui: leilões online, consultoria corporativa, automação de ' +
+      'estacionamento e tráfego, e o sistema bancário. Empresas, cargos e períodos estão ' +
+      'no LinkedIn.',
     disponivel: false,
   },
 
@@ -54,86 +58,157 @@ export const CONTEUDO: Conteudo = {
     { valor: '4 setores', rotulo: 'leilões, consultoria, automação e banco' },
   ],
 
-  habilidades: [
-    {
-      grupo: 'Backend',
-      itens: ['C#', '.NET', 'Java', 'Python', 'C', 'C++'],
-    },
+  tecnologias: [
     {
       grupo: 'Frontend',
-      itens: ['Angular', 'TypeScript', 'RxJS', 'Signals'],
+      itens: [
+        {
+          nome: 'Angular',
+          icone: 'angular',
+          prova: 'Front do Valuart e do D1 Finanças, e telas das centrais de atendimento no banco. Da versão 8 à 21, incluindo a virada para standalone components e signals.',
+        },
+        {
+          nome: 'TypeScript',
+          icone: 'typescript',
+          prova: 'Todo front que escrevi na última década. Sem `any`, com as interfaces de API tipadas à mão quando o backend não gera contrato.',
+        },
+        {
+          nome: 'Tailwind CSS',
+          icone: 'tailwind',
+          prova: 'Interface inteira do Valuart, com tema claro e escuro por classe.',
+        },
+      ],
+    },
+    {
+      grupo: 'Backend',
+      itens: [
+        {
+          nome: '.NET e C#',
+          icone: 'dotnet',
+          prova: 'A linguagem em que trabalho há mais tempo. APIs de atendimento no Itaú, o backend do Valuart em Clean Architecture, e o D1 Finanças inteiro.',
+        },
+        {
+          nome: 'Java',
+          icone: 'java',
+          prova: 'Sistemas de leilão em 2011, gestão de estacionamento na Nepos, e serviços do banco hoje.',
+        },
+        {
+          nome: 'Python',
+          icone: 'python',
+          prova: 'Automação e serviços de apoio nas centrais de atendimento.',
+        },
+        {
+          nome: 'C e C++',
+          icone: 'cpp',
+          prova: 'Onde o software encontra o mundo físico: controle de acesso veicular, cancela e leitura de placa.',
+        },
+      ],
     },
     {
       grupo: 'Dados',
-      itens: ['SQL Server', 'Oracle', 'DynamoDB', 'Entity Framework Core'],
+      itens: [
+        {
+          nome: 'SQL Server',
+          sigla: 'SQL',
+          prova: 'Onze anos de operação de estacionamento e o D1 Finanças. Modelagem, T-SQL e migração de base entre servidores.',
+        },
+        {
+          nome: 'PostgreSQL',
+          icone: 'postgresql',
+          prova: 'Base do Valuart, gerenciada em RDS, com EF Core e migrations aplicadas no deploy.',
+        },
+        {
+          nome: 'DynamoDB',
+          sigla: 'DDB',
+          prova: 'Dados de sessão e atendimento nas centrais do banco, onde a leitura precisa ser barata em escala.',
+        },
+        {
+          nome: 'Oracle',
+          sigla: 'ORA',
+          prova: 'Primeira base com que trabalhei, na plataforma de leilões online.',
+        },
+      ],
     },
     {
       grupo: 'Nuvem e infraestrutura',
-      itens: ['AWS', 'Azure', 'Terraform', 'CI/CD', 'GitHub Actions'],
+      itens: [
+        {
+          nome: 'AWS',
+          sigla: 'AWS',
+          prova: 'Produção de verdade: ECS Fargate, RDS, S3, CloudFront, Route 53 e CloudWatch. É onde o Valuart roda e onde as aplicações do banco vivem.',
+        },
+        {
+          nome: 'Azure',
+          sigla: 'AZ',
+          prova: 'Migração de um sistema legado e da sua base para a nuvem, em 2013, quando isso ainda era decisão arriscada.',
+        },
+        {
+          nome: 'Terraform',
+          icone: 'terraform',
+          prova: 'Infraestrutura e esteira descritas em código, versionadas e governadas, em vez de configuração feita à mão no console.',
+        },
+        {
+          nome: 'Docker',
+          icone: 'docker',
+          prova: 'Empacotamento das APIs, do ambiente local ao registry que alimenta o ECS.',
+        },
+        {
+          nome: 'GitHub Actions',
+          icone: 'githubActions',
+          prova: 'Esteira de build, teste e deploy. Inclusive a deste site, que publica sozinho a cada push.',
+        },
+      ],
     },
     {
-      grupo: 'Integração',
-      itens: ['Dynamics 365', 'APIs REST', 'Model Context Protocol (MCP)'],
+      grupo: 'Qualidade',
+      itens: [
+        {
+          nome: 'Playwright',
+          sigla: 'PW',
+          prova: 'Suíte ponta a ponta do D1 Finanças, com banco separado e travas que impedem o teste de tocar na base real.',
+        },
+        {
+          nome: 'xUnit e Vitest',
+          icone: 'vitest',
+          prova: 'As duas pontas do Valuart, somando 2.125 testes automatizados entre backend e frontend.',
+        },
+      ],
+    },
+    {
+      grupo: 'IA aplicada',
+      itens: [
+        {
+          nome: 'Model Context Protocol',
+          sigla: 'MCP',
+          prova: 'Servidor MCP no D1 Finanças, referenciando a camada de aplicação direto, para consultar as finanças por um agente.',
+        },
+        {
+          nome: 'Claude Code',
+          icone: 'claude',
+          prova: 'Parte do meu fluxo de trabalho, deste site ao D1 Finanças. Ferramenta, não substituto de decisão técnica.',
+        },
+      ],
     },
   ],
 
-  trajetoria: [
+  combinacoes: [
     {
-      organizacao: 'Itaú',
-      cargo: 'Engenheiro de software sênior',
-      periodo: 'desde 2024',
-      atual: true,
+      titulo: 'SaaS completo',
       descricao:
-        'Centrais de atendimento ao cliente pessoa física. A jornada é governada pelo ' +
-        'Dynamics 365, e o trabalho é integrar as peças do banco por trás dele.',
-      entregas: [
-        'Centrais de contas PF, suporte digital, WhatsApp e gerentes.',
-        'Infraestrutura em AWS com esteira de CI/CD.',
-      ],
-      stack: ['.NET', 'Java', 'Angular', 'Python', 'Terraform', 'AWS', 'DynamoDB', 'Dynamics 365'],
+        'Produto que atende muitos clientes, com assinatura, painel e cobrança. É o desenho do Valuart, do banco à tela.',
+      pecas: ['Angular', 'TypeScript', '.NET', 'PostgreSQL', 'AWS', 'GitHub Actions'],
     },
     {
-      organizacao: 'Nepos',
-      cargo: 'Engenheiro de software pleno e sênior',
-      periodo: 'de 2013 a 2024',
-      atual: false,
+      titulo: 'Sistema interno sob medida',
       descricao:
-        'Onze anos em automação de estacionamento e tráfego, do controle de acesso na ' +
-        'entrada até a emissão da nota fiscal na saída.',
-      entregas: [
-        'Controle de acesso veicular por tag, integrado a Sem Parar, ConectCar e Veloe.',
-        'Controle de acesso por LPR, com leitura automática de placa.',
-        'Sistema de gestão de estacionamento cobrindo o ciclo inteiro: acesso, permanência, cobrança e nota.',
-      ],
-      stack: ['C', 'C++', '.NET', 'Java', 'Angular', 'SQL Server'],
+        'Quando a planilha não aguenta mais e o software de prateleira não serve. Roda no seu servidor ou na nuvem, do jeito que fizer sentido.',
+      pecas: ['Angular', '.NET', 'SQL Server', 'Docker'],
     },
     {
-      organizacao: 'Onione',
-      cargo: 'Analista de desenvolvimento pleno',
-      periodo: '2013',
-      atual: false,
+      titulo: 'Integração e automação',
       descricao:
-        'Passagem curta e de escopo fechado, numa consultoria de CRM, ERP e SAP: tirar um ' +
-        'sistema feito em Maker de onde estava e colocá-lo na Azure.',
-      entregas: [
-        'Migração do sistema legado em Maker para a nuvem Azure.',
-        'Migração da base SQL Server que sustentava a operação.',
-        'Serviços de gestão de funcionários, emissão de notas e relatórios.',
-      ],
-      stack: ['Maker', 'SQL Server', 'Azure'],
-    },
-    {
-      organizacao: 'Superbid',
-      cargo: 'Analista de desenvolvimento júnior',
-      periodo: 'de 2011 a 2013',
-      atual: false,
-      descricao:
-        'Entrada na área, em leilões online. Comecei testando e passei a desenvolver na ' +
-        'ferramenta que gerencia os leilões.',
-      entregas: [
-        'Ferramenta de gestão dos leilões online, do cadastro do lote ao encerramento.',
-      ],
-      stack: ['PHP', 'Java', 'Maker', 'Oracle', 'SQL'],
+        'Fazer dois sistemas que não se falam trocarem informação, ou tirar do caminho uma rotina que alguém repete toda semana.',
+      pecas: ['.NET', 'Python', 'Terraform', 'AWS', 'MCP'],
     },
   ],
 

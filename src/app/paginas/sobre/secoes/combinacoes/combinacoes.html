@@ -1,0 +1,24 @@
+<section class="secao combinacoes" id="combinacoes" aria-labelledby="titulo-combinacoes">
+  <div class="container">
+    <p class="secao__rotulo">02 · Combinações</p>
+    <h2 class="secao__titulo" id="titulo-combinacoes">Como isso vira solução</h2>
+    <p class="secao__intro">
+      Tecnologia isolada não resolve nada. Estes são os arranjos que eu monto com mais
+      frequência, e o que cada um costuma atender.
+    </p>
+
+    <ul class="combinacao__lista">
+      @for (combinacao of combinacoes; track combinacao.titulo) {
+        <li class="combinacao">
+          <h3 class="combinacao__titulo">{{ combinacao.titulo }}</h3>
+          <p class="combinacao__descricao">{{ combinacao.descricao }}</p>
+          <ul class="combinacao__pecas">
+            @for (peca of combinacao.pecas; track peca) {
+              <li class="etiqueta">{{ peca }}</li>
+            }
+          </ul>
+        </li>
+      }
+    </ul>
+  </div>
+</section>

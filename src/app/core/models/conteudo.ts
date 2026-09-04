@@ -14,6 +14,11 @@ export interface Perfil {
   readonly sobre: readonly string[];
   readonly localizacao: string;
   readonly desdeAno: number;
+  /**
+   * Uma linha no lugar da linha do tempo. O currículo detalhado vive no
+   * LinkedIn, que atualiza sozinho e não envelhece aqui sem ninguém notar.
+   */
+  readonly resumoDeCarreira: string;
   /** Liga o selo "disponível para novos projetos" no hero. */
   readonly disponivel: boolean;
 }
@@ -35,21 +40,30 @@ export interface Numero {
   readonly rotulo: string;
 }
 
-export interface GrupoDeHabilidades {
-  readonly grupo: string;
-  readonly itens: readonly string[];
+export interface Tecnologia {
+  readonly nome: string;
+  /**
+   * Chave em `core/icones/icones.ts`. Sem ela, o cartão desenha um monograma
+   * com as iniciais, que é o caso das marcas cujo símbolo não pode ser
+   * redistribuído.
+   */
+  readonly icone?: string;
+  /** Iniciais do monograma. Só é lido quando não há ícone. */
+  readonly sigla?: string;
+  /** Uma frase dizendo onde isso foi usado. É o que separa lista de prova. */
+  readonly prova: string;
 }
 
-export interface Experiencia {
-  readonly organizacao: string;
-  readonly cargo: string;
-  readonly periodo: string;
-  /** Marca o item como o atual na linha do tempo. */
-  readonly atual: boolean;
+export interface GrupoDeTecnologias {
+  readonly grupo: string;
+  readonly itens: readonly Tecnologia[];
+}
+
+/** Uma combinação típica de stack, ligando as tecnologias à oferta da home. */
+export interface Combinacao {
+  readonly titulo: string;
   readonly descricao: string;
-  /** O que foi entregue de concreto. Verbo no passado, resultado no fim. */
-  readonly entregas: readonly string[];
-  readonly stack: readonly string[];
+  readonly pecas: readonly string[];
 }
 
 export interface Projeto {
@@ -93,8 +107,8 @@ export interface Conteudo {
   readonly perfil: Perfil;
   readonly oferta: Oferta;
   readonly numeros: readonly Numero[];
-  readonly habilidades: readonly GrupoDeHabilidades[];
-  readonly trajetoria: readonly Experiencia[];
+  readonly tecnologias: readonly GrupoDeTecnologias[];
+  readonly combinacoes: readonly Combinacao[];
   readonly projetos: readonly Projeto[];
   readonly servicos: readonly Servico[];
   readonly processo: readonly EtapaDoProcesso[];

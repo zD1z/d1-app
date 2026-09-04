@@ -2,11 +2,11 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { CONTEUDO } from '../../../../core/conteudo/perfil';
 
 @Component({
-  selector: 'app-trajetoria',
-  templateUrl: './trajetoria.html',
-  styleUrl: './trajetoria.css',
+  selector: 'app-combinacoes',
+  templateUrl: './combinacoes.html',
+  styleUrl: './combinacoes.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class Trajetoria {
-  protected readonly trajetoria = CONTEUDO.trajetoria;
+export class Combinacoes {
+  protected readonly combinacoes = CONTEUDO.combinacoes;
 }

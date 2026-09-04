@@ -1,0 +1,37 @@
+<section class="secao" id="tecnologias" aria-labelledby="titulo-tecnologias">
+  <div class="container">
+    <p class="secao__rotulo">01 · Tecnologias</p>
+    <h2 class="secao__titulo" id="titulo-tecnologias">Com o que eu construo</h2>
+    <p class="secao__intro">
+      Cada ferramenta com onde ela já rodou. Lista de tecnologia qualquer um escreve, então
+      aqui vai junto a prova de uso.
+    </p>
+
+    @for (grupo of grupos; track grupo.grupo) {
+      <div class="grupo">
+        <h3 class="grupo__titulo">{{ grupo.grupo }}</h3>
+
+        <ul class="tecnologias">
+          @for (item of grupo.itens; track item.nome) {
+            <li class="tecnologia" [style.--cor-da-marca]="corDaMarca(item.icone)">
+              <span class="tecnologia__marca" aria-hidden="true">
+                @if (caminhoDoIcone(item.icone); as caminho) {
+                  <svg viewBox="0 0 24 24" fill="currentColor">
+                    <path [attr.d]="caminho" />
+                  </svg>
+                } @else {
+                  <span class="tecnologia__sigla">{{ item.sigla }}</span>
+                }
+              </span>
+
+              <div class="tecnologia__texto">
+                <h4 class="tecnologia__nome">{{ item.nome }}</h4>
+                <p class="tecnologia__prova">{{ item.prova }}</p>
+              </div>
+            </li>
+          }
+        </ul>
+      </div>
+    }
+  </div>
+</section>
