@@ -208,7 +208,9 @@ export const CONTEUDO: Conteudo = {
       nome: 'Valuart',
       ano: 'em produção',
       papel: 'Autor e único desenvolvedor',
-      resumo: 'SaaS de precificação para artesãos e pequenos produtores.',
+      resumo:
+        'SaaS de precificação para artesãos e pequenos produtores que vendem em ' +
+        'marketplaces e redes sociais.',
       descricao:
         'Calcula o custo real de cada produto, somando materiais, embalagem, mão de obra e ' +
         'rateio dos custos fixos, e devolve o preço final já com margem e taxas de venda ' +
@@ -216,9 +218,12 @@ export const CONTEUDO: Conteudo = {
       destaques: [
         'O preço sai por gross-up, dividindo o preço base por um menos as taxas. Somar a taxa da maquininha ao preço, que é o erro comum, vende no prejuízo.',
         'O lucro incide sobre o custo total, com o rateio das despesas fixas dentro, e materiais podem ser precificados por área ou por unidade.',
-        'Em produção na AWS, com ECS Fargate atrás de load balancer, RDS PostgreSQL e deploy contínuo por GitHub Actions.',
+        'Front em Angular 20, com standalone components e signals: dashboard de indicadores, assistente de precificação, fichas técnicas, tema claro e escuro, e consentimento de cookies que só libera analytics depois do aceite.',
+        'Back em .NET 8 sobre PostgreSQL, em Clean Architecture de quatro camadas, com assinaturas Free e Premium integradas ao Asaas por webhooks.',
+        'Em produção na AWS, com a API em ECS Fargate, o front estático em S3 e CloudFront, deploy contínuo por GitHub Actions e 2.125 testes automatizados entre as duas pontas.',
       ],
-      stack: ['.NET 8', 'C#', 'PostgreSQL', 'EF Core 8', 'Docker', 'AWS ECS Fargate', 'GitHub Actions', 'xUnit'],
+      stack: ['Angular 20', 'TypeScript', 'TailwindCSS', '.NET 8', 'C#', 'PostgreSQL', 'EF Core 8', 'AWS ECS Fargate', 'GitHub Actions'],
+      link: 'https://valuart.com.br',
       privado: true,
     },
   ],
