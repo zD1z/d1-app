@@ -87,8 +87,7 @@ export const CONTEUDO: Conteudo = {
         'Centrais de atendimento ao cliente pessoa física. A jornada é governada pelo ' +
         'Dynamics 365, e o trabalho é integrar as peças do banco por trás dele.',
       entregas: [
-        'Central de suporte digital ao cliente.',
-        'Canal de WhatsApp e frente de gerentes para as centrais de atendimento.',
+        'Centrais de contas PF, suporte digital, WhatsApp e gerentes.',
         'Infraestrutura em AWS com esteira de CI/CD.',
       ],
       stack: ['.NET', 'Java', 'Angular', 'Python', 'Terraform', 'AWS', 'DynamoDB', 'Dynamics 365'],
@@ -105,13 +104,12 @@ export const CONTEUDO: Conteudo = {
         'Controle de acesso veicular por tag, integrado a Sem Parar, ConectCar e Veloe.',
         'Controle de acesso por LPR, com leitura automática de placa.',
         'Sistema de gestão de estacionamento cobrindo o ciclo inteiro: acesso, permanência, cobrança e nota.',
-        'Implantações nos aeroportos do Galeão e de Guarulhos e nos principais grupos de shopping centers.',
       ],
       stack: ['C', 'C++', '.NET', 'Java', 'Angular', 'SQL Server'],
     },
     {
       organizacao: 'Onione',
-      cargo: 'Desenvolvedor',
+      cargo: 'Analista de desenvolvimento pleno',
       periodo: '2013',
       atual: false,
       descricao:
@@ -126,7 +124,7 @@ export const CONTEUDO: Conteudo = {
     },
     {
       organizacao: 'Superbid',
-      cargo: 'Estagiário de testes, depois analista de sistemas',
+      cargo: 'Analista de desenvolvimento júnior',
       periodo: 'de 2011 a 2013',
       atual: false,
       descricao:
