@@ -150,7 +150,7 @@ export const CONTEUDO: Conteudo = {
       destaques: [
         'Três operadoras de tag, cada uma com seu próprio protocolo de integração.',
         'LPR como alternativa à tag: quem não tem etiqueta usa a própria placa.',
-        'Implantado no Galeão e em Guarulhos, onde interromper a operação não é uma opção disponível.',
+        'Implantações em aeroportos, onde interromper a operação não é uma opção disponível.',
       ],
       stack: ['C', 'C++', '.NET', 'SQL Server'],
       privado: true,
@@ -167,7 +167,7 @@ export const CONTEUDO: Conteudo = {
       destaques: [
         'Todas as etapas no mesmo sistema, sem transferência manual de dado entre fases.',
         'Regras de tarifação que mudam por operação, por horário e por convênio.',
-        'Emissão fiscal integrada ao fluxo, não como passo separado depois.',
+        'Emissão fiscal integrada ao fluxo, em vários municípios.',
       ],
       stack: ['.NET', 'Java', 'Angular', 'SQL Server'],
       privado: true,
@@ -184,7 +184,8 @@ export const CONTEUDO: Conteudo = {
       destaques: [
         'Dynamics 365 como camada de governo da jornada, integrado aos sistemas internos.',
         'WhatsApp como canal de atendimento, no mesmo fluxo dos demais.',
-        'Infraestrutura descrita em Terraform: o ambiente é código, não configuração manual.',
+        'Terraform descreve a infraestrutura e a esteira de deploy. Ambiente e pipeline ' +
+          'ficam versionados e governados, em vez de configuração feita à mão no console.',
       ],
       stack: ['.NET', 'Java', 'Angular', 'Python', 'Terraform', 'AWS', 'DynamoDB'],
       privado: true,
@@ -195,14 +196,13 @@ export const CONTEUDO: Conteudo = {
       papel: 'Autor e único desenvolvedor',
       resumo: 'Sistema de gestão financeira pessoal que substituiu uma planilha usada desde 2023.',
       descricao:
-        'Roda como serviço do Windows na rede de casa, servindo API e front no mesmo processo. ' +
-        'Importou três anos de histórico real da planilha original, num total de 1.097 despesas, 232 receitas e ' +
-        '231 movimentos de investimento, misturando lançamentos realizados e previsões futuras.',
+        'Controla receitas, despesas, faturas de cartão, investimentos e reserva num sistema ' +
+        'só, com previsto e realizado lado a lado. Substituiu a planilha que fazia esse ' +
+        'papel desde 2023, trazendo o histórico junto.',
       destaques: [
-        'Arquitetura em camadas sem CQRS nem repositório genérico: cerimônia custa caro em projeto de um dev.',
-        'Servidor MCP que referencia a camada de aplicação direto, sem passar por HTTP, porque a regra de negócio mora em um lugar só.',
-        'Suíte E2E em Playwright com banco próprio e três travas independentes que abortam se apontar para a base de produção.',
-        'Sem delete físico: cadastro inativa, lançamento cancela. O histórico é imutável.',
+        'API em .NET e front em Angular no mesmo processo, publicados como serviço do Windows.',
+        'SQL Server com Entity Framework Core, e um servidor MCP sobre a mesma camada de aplicação para consulta por agente de IA.',
+        'Suíte end to end em Playwright, rodando num banco separado do de produção.',
       ],
       stack: ['C# 13', '.NET', 'EF Core', 'SQL Server', 'Angular 21', 'PrimeNG', 'Playwright', 'MCP'],
       privado: true,
