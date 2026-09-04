@@ -9,4 +9,5 @@ import { CONTEUDO } from '../../../../core/conteudo/perfil';
 })
 export class Apresentacao {
   protected readonly perfil = CONTEUDO.perfil;
+  protected readonly contato = CONTEUDO.contato;
 }

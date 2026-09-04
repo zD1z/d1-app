@@ -39,6 +39,13 @@
   max-width: 62ch;
   font-size: clamp(1.02rem, 2.2vw, 1.2rem);
   color: var(--texto-suave);
+  margin-bottom: 28px;
+}
+
+/* `.botao` e display:block no mobile por causa do `flex: 1 1 100%` global;
+   aqui ele esta solto, entao volta a ocupar so a propria largura. */
+.apresentacao__linkedin {
+  align-self: flex-start;
 }
 
 @media (max-width: 640px) {
