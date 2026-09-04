@@ -196,13 +196,11 @@ export const CONTEUDO: Conteudo = {
       papel: 'Autor e único desenvolvedor',
       resumo: 'Sistema de gestão financeira pessoal que substituiu uma planilha usada desde 2023.',
       descricao:
-        'Controla receitas, despesas, faturas de cartão, investimentos e reserva num sistema ' +
-        'só, com previsto e realizado lado a lado. Substituiu a planilha que fazia esse ' +
-        'papel desde 2023, trazendo o histórico junto.',
+        'Receitas, despesas, faturas de cartão, investimentos e reserva num sistema só, ' +
+        'com previsto e realizado lado a lado.',
       destaques: [
-        'API em .NET e front em Angular no mesmo processo, publicados como serviço do Windows.',
-        'SQL Server com Entity Framework Core, e um servidor MCP sobre a mesma camada de aplicação para consulta por agente de IA.',
-        'Suíte end to end em Playwright, rodando num banco separado do de produção.',
+        'API em .NET e front em Angular no mesmo processo, sobre SQL Server.',
+        'Servidor MCP na mesma camada de aplicação, para consulta por agente de IA.',
       ],
       stack: ['C# 13', '.NET', 'EF Core', 'SQL Server', 'Angular 21', 'PrimeNG', 'Playwright', 'MCP'],
       privado: true,

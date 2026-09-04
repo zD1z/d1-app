@@ -77,11 +77,13 @@
   color: var(--texto-suave);
 }
 
+/* Sem `margin-top: auto`: as linhas do grid tem altura igual, e prender o
+   rodape embaixo jogaria a sobra de um cartao curto para o meio dele. Assim
+   o conteudo flui e a folga cai no fim, onde se le como respiro. */
 .projeto__rodape {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  margin-top: auto;
 }
 
 .projeto__stack {
