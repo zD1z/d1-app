@@ -204,6 +204,23 @@ export const CONTEUDO: Conteudo = {
       stack: ['C# 13', '.NET', 'EF Core', 'SQL Server', 'Angular 21', 'PrimeNG', 'Playwright', 'MCP'],
       privado: true,
     },
+    {
+      nome: 'Valuart',
+      ano: 'em produção',
+      papel: 'Autor e único desenvolvedor',
+      resumo: 'SaaS de precificação para artesãos e pequenos produtores.',
+      descricao:
+        'Calcula o custo real de cada produto, somando materiais, embalagem, mão de obra e ' +
+        'rateio dos custos fixos, e devolve o preço final já com margem e taxas de venda ' +
+        'embutidas. No lugar do preço no chute.',
+      destaques: [
+        'O preço sai por gross-up, dividindo o preço base por um menos as taxas. Somar a taxa da maquininha ao preço, que é o erro comum, vende no prejuízo.',
+        'O lucro incide sobre o custo total, com o rateio das despesas fixas dentro, e materiais podem ser precificados por área ou por unidade.',
+        'Em produção na AWS, com ECS Fargate atrás de load balancer, RDS PostgreSQL e deploy contínuo por GitHub Actions.',
+      ],
+      stack: ['.NET 8', 'C#', 'PostgreSQL', 'EF Core 8', 'Docker', 'AWS ECS Fargate', 'GitHub Actions', 'xUnit'],
+      privado: true,
+    },
   ],
 
   servicos: [

@@ -4,6 +4,12 @@
   gap: 20px;
 }
 
+/* Numero impar de cartoes deixaria o ultimo sozinho, com um buraco do lado.
+   Ocupando a linha inteira, ele vira fechamento em vez de sobra. */
+.projeto:last-child:nth-child(odd) {
+  grid-column: 1 / -1;
+}
+
 .projeto {
   display: flex;
   flex-direction: column;
