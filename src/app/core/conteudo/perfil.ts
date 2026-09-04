@@ -161,9 +161,8 @@ export const CONTEUDO: Conteudo = {
       papel: 'Desenvolvedor no time do produto',
       resumo: 'O ciclo inteiro do estacionamento em um sistema só: do acesso à nota fiscal.',
       descricao:
-        'Acesso, permanência, tarifação, cobrança e emissão de nota. Operado por grandes ' +
-        'grupos de shopping centers, onde o volume não dá margem para conferência manual e ' +
-        'um erro de tarifa aparece multiplicado por milhares de veículos no fim do dia.',
+        'Operado por grandes grupos de shopping centers, cobrindo acesso, permanência, ' +
+        'tarifação, cobrança e emissão de nota.',
       destaques: [
         'Todas as etapas no mesmo sistema, sem transferência manual de dado entre fases.',
         'Regras de tarifação que mudam por operação, por horário e por convênio.',
