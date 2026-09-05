@@ -12,24 +12,8 @@ export const CONTEUDO: Conteudo = {
     apelido: 'D1',
     titulo: 'Engenheiro de software sênior',
     chamada:
-      'Quinze anos construindo sistemas que rodam em aeroportos, shopping centers e ' +
-      'centrais de atendimento bancário. Do banco de dados à tela, com a regra de ' +
-      'negócio no lugar certo.',
-    sobre: [
-      'Comecei em 2011 testando software e passei a analista de sistemas logo depois. De lá ' +
-        'para cá passei por leilões online, consultoria corporativa, onze anos em automação ' +
-        'de estacionamento e tráfego, e desde 2024 o setor bancário. Hoje estou no Itaú, ' +
-        'em centrais de atendimento ao cliente pessoa física.',
-      'Passar por quatro áreas bem diferentes mudou a forma como eu resolvo problema. ' +
-        'Leilão online ensina a lidar com sistema que não pode travar justamente no pico. ' +
-        'Consultoria ensina a entrar em código que não é seu e entregar rápido. ' +
-        'Estacionamento e tráfego ensinam o ponto em que o software encontra o mundo ' +
-        'físico, cancela e câmera. Banco ensina escala e rigor. Quem fica em um domínio ' +
-        'só tende a repetir a mesma solução em todo lugar. Ter circulado entre eles me deu ' +
-        'mais de uma saída para o mesmo problema.',
-      'Fora do trabalho contratado, mantenho sistemas próprios em produção, porque a melhor ' +
-        'forma de saber se uma arquitetura se sustenta é conviver com ela por anos.',
-    ],
+      'Quinze anos escrevendo software, do banco de dados à tela. Abaixo está o ' +
+      'ferramental que eu uso e o que costumo montar com ele.',
     localizacao: 'Brasil',
     desdeAno: 2011,
     resumoDeCarreira:
@@ -65,17 +49,17 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'Angular',
           icone: 'angular',
-          prova: 'Front do Valuart e do D1 Finanças, e telas das centrais de atendimento no banco. Da versão 8 à 21, incluindo a virada para standalone components e signals.',
+          prova: 'Da versão 8 à 21. Standalone components, signals, formulários reativos tipados, lazy loading por rota e a virada de zone.js para zoneless.',
         },
         {
           nome: 'TypeScript',
           icone: 'typescript',
-          prova: 'Todo front que escrevi na última década. Sem `any`, com as interfaces de API tipadas à mão quando o backend não gera contrato.',
+          prova: 'Modo estrito, sem `any`. Contrato de API tipado à mão quando o backend não gera cliente, e tipos utilitários no lugar de modelo repetido.',
         },
         {
           nome: 'Tailwind CSS',
           icone: 'tailwind',
-          prova: 'Interface inteira do Valuart, com tema claro e escuro por classe.',
+          prova: 'Tema claro e escuro por classe, com design tokens em custom properties e componente montado sem sair do utilitário.',
         },
       ],
     },
@@ -85,22 +69,22 @@ export const CONTEUDO: Conteudo = {
         {
           nome: '.NET e C#',
           icone: 'dotnet',
-          prova: 'A linguagem em que trabalho há mais tempo. APIs de atendimento no Itaú, o backend do Valuart em Clean Architecture, e o D1 Finanças inteiro.',
+          prova: 'A linguagem em que trabalho há mais tempo. Minimal APIs, injeção de dependência, async em tudo que toca rede, e C# moderno: records, pattern matching e nullable habilitado.',
         },
         {
           nome: 'Java',
           icone: 'java',
-          prova: 'Sistemas de leilão em 2011, gestão de estacionamento na Nepos, e serviços do banco hoje.',
+          prova: 'Serviços e APIs corporativas, do Java de 2011 às versões atuais.',
         },
         {
           nome: 'Python',
           icone: 'python',
-          prova: 'Automação e serviços de apoio nas centrais de atendimento.',
+          prova: 'Automação, scripts de apoio e integração entre sistemas que não se falam.',
         },
         {
           nome: 'C e C++',
           icone: 'cpp',
-          prova: 'Onde o software encontra o mundo físico: controle de acesso veicular, cancela e leitura de placa.',
+          prova: 'Camada baixa, onde o software conversa com equipamento: leitura de dispositivo, protocolo serial e resposta em tempo real.',
         },
       ],
     },
@@ -110,22 +94,22 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'SQL Server',
           sigla: 'SQL',
-          prova: 'Onze anos de operação de estacionamento e o D1 Finanças. Modelagem, T-SQL e migração de base entre servidores.',
+          prova: 'Modelagem, T-SQL, índice e plano de execução. Migração de base entre servidores e conserto de consulta que ficou lenta quando o volume cresceu.',
         },
         {
           nome: 'PostgreSQL',
           icone: 'postgresql',
-          prova: 'Base do Valuart, gerenciada em RDS, com EF Core e migrations aplicadas no deploy.',
+          prova: 'Base gerenciada em RDS, com EF Core por cima e migrations aplicadas no deploy.',
         },
         {
           nome: 'DynamoDB',
           sigla: 'DDB',
-          prova: 'Dados de sessão e atendimento nas centrais do banco, onde a leitura precisa ser barata em escala.',
+          prova: 'Modelagem por padrão de acesso, chave composta e leitura barata em escala. Não é SQL, e tratar como se fosse é o erro que custa caro depois.',
         },
         {
           nome: 'Oracle',
           sigla: 'ORA',
-          prova: 'Primeira base com que trabalhei, na plataforma de leilões online.',
+          prova: 'PL/SQL e consulta em base legada.',
         },
       ],
     },
@@ -135,12 +119,12 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'AWS',
           sigla: 'AWS',
-          prova: 'Produção de verdade: ECS Fargate, RDS, S3, CloudFront, Route 53 e CloudWatch. É onde o Valuart roda e onde as aplicações do banco vivem.',
+          prova: 'ECS Fargate, RDS, S3, CloudFront, Route 53, ACM, VPC privada e CloudWatch. Aplicação em contêiner atrás de load balancer, com HTTPS e log centralizado.',
         },
         {
           nome: 'Azure',
           sigla: 'AZ',
-          prova: 'Migração de um sistema legado e da sua base para a nuvem, em 2013, quando isso ainda era decisão arriscada.',
+          prova: 'Migração de sistema e de base de on-premises para a nuvem.',
         },
         {
           nome: 'Terraform',
@@ -165,12 +149,12 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'Playwright',
           sigla: 'PW',
-          prova: 'Suíte ponta a ponta do D1 Finanças, com banco separado e travas que impedem o teste de tocar na base real.',
+          prova: 'Teste ponta a ponta rodando o navegador de verdade, com banco separado do de produção e trava que aborta a suíte se ela apontar para a base errada.',
         },
         {
           nome: 'xUnit e Vitest',
           icone: 'vitest',
-          prova: 'As duas pontas do Valuart, somando 2.125 testes automatizados entre backend e frontend.',
+          prova: 'Teste de unidade nas duas pontas, com mock, asserção fluente e cobertura medida.',
         },
       ],
     },
@@ -180,12 +164,12 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'Model Context Protocol',
           sigla: 'MCP',
-          prova: 'Servidor MCP no D1 Finanças, referenciando a camada de aplicação direto, para consultar as finanças por um agente.',
+          prova: 'Servidor MCP referenciando a camada de aplicação direto, sem passar por HTTP, para um agente consultar o sistema com tools tipadas.',
         },
         {
           nome: 'Claude Code',
           icone: 'claude',
-          prova: 'Parte do meu fluxo de trabalho, deste site ao D1 Finanças. Ferramenta, não substituto de decisão técnica.',
+          prova: 'Parte do meu fluxo de trabalho. Ferramenta, não substituto de decisão técnica.',
         },
       ],
     },
@@ -195,7 +179,7 @@ export const CONTEUDO: Conteudo = {
     {
       titulo: 'SaaS completo',
       descricao:
-        'Produto que atende muitos clientes, com assinatura, painel e cobrança. É o desenho do Valuart, do banco à tela.',
+        'Produto que atende muitos clientes, com assinatura, painel e cobrança recorrente. Front, API, banco e esteira de deploy.',
       pecas: ['Angular', 'TypeScript', '.NET', 'PostgreSQL', 'AWS', 'GitHub Actions'],
     },
     {
@@ -209,97 +193,6 @@ export const CONTEUDO: Conteudo = {
       descricao:
         'Fazer dois sistemas que não se falam trocarem informação, ou tirar do caminho uma rotina que alguém repete toda semana.',
       pecas: ['.NET', 'Python', 'Terraform', 'AWS', 'MCP'],
-    },
-  ],
-
-  projetos: [
-    {
-      nome: 'Acesso veicular por tag e LPR',
-      ano: 'de 2013 a 2024',
-      papel: 'Desenvolvedor no time do produto',
-      resumo: 'Entrada e saída de veículos sem interação, em aeroportos e shopping centers.',
-      descricao:
-        'Integração com as tags de pedágio Sem Parar, ConectCar e Veloe, além do LPR, que ' +
-        'lê a placa e a transforma na credencial. O carro passa, a cancela abre e a cobrança ' +
-        'acontece atrás disso, sem ninguém no meio.',
-      destaques: [
-        'Três operadoras de tag, cada uma com seu próprio protocolo de integração.',
-        'LPR como alternativa à tag: quem não tem etiqueta usa a própria placa.',
-        'Implantações em aeroportos, onde interromper a operação não é uma opção disponível.',
-      ],
-      stack: ['C', 'C++', '.NET', 'SQL Server'],
-      privado: true,
-    },
-    {
-      nome: 'Gestão de estacionamento ponta a ponta',
-      ano: 'de 2013 a 2024',
-      papel: 'Desenvolvedor no time do produto',
-      resumo: 'O ciclo inteiro do estacionamento em um sistema só: do acesso à nota fiscal.',
-      descricao:
-        'Operado por grandes grupos de shopping centers, cobrindo acesso, permanência, ' +
-        'tarifação, cobrança e emissão de nota.',
-      destaques: [
-        'Todas as etapas no mesmo sistema, sem transferência manual de dado entre fases.',
-        'Regras de tarifação que mudam por operação, por horário e por convênio.',
-        'Emissão fiscal integrada ao fluxo, em vários municípios.',
-      ],
-      stack: ['.NET', 'Java', 'Angular', 'SQL Server'],
-      privado: true,
-    },
-    {
-      nome: 'Atendimento digital ao cliente',
-      ano: 'desde 2024',
-      papel: 'Desenvolvedor no time da plataforma',
-      resumo: 'Central de suporte digital e WhatsApp para o atendimento a pessoa física.',
-      descricao:
-        'Centrais de atendimento governadas pelo Dynamics 365, com as peças do banco ' +
-        'integradas por trás. Inclui a central de suporte digital, o canal de WhatsApp e a ' +
-        'frente de gerentes, com toda a infraestrutura em AWS e esteira de CI/CD.',
-      destaques: [
-        'Dynamics 365 como camada de governo da jornada, integrado aos sistemas internos.',
-        'WhatsApp como canal de atendimento, no mesmo fluxo dos demais.',
-        'Terraform descreve a infraestrutura e a esteira de deploy. Ambiente e pipeline ' +
-          'ficam versionados e governados, em vez de configuração feita à mão no console.',
-      ],
-      stack: ['.NET', 'Java', 'Angular', 'Python', 'Terraform', 'AWS', 'DynamoDB'],
-      privado: true,
-    },
-    {
-      nome: 'D1 Finanças',
-      ano: 'desde 2025',
-      papel: 'Autor e único desenvolvedor',
-      resumo: 'Sistema de gestão financeira pessoal que substituiu uma planilha usada desde 2023.',
-      descricao:
-        'Receitas, despesas, faturas de cartão, investimentos e reserva num sistema só, ' +
-        'com previsto e realizado lado a lado.',
-      destaques: [
-        'API em .NET e front em Angular no mesmo processo, sobre SQL Server.',
-        'Servidor MCP na mesma camada de aplicação, para consulta por agente de IA.',
-      ],
-      stack: ['C# 13', '.NET', 'EF Core', 'SQL Server', 'Angular 21', 'PrimeNG', 'Playwright', 'MCP'],
-      privado: true,
-    },
-    {
-      nome: 'Valuart',
-      ano: 'em produção',
-      papel: 'Autor e único desenvolvedor',
-      resumo:
-        'SaaS de precificação para artesãos e pequenos produtores que vendem em ' +
-        'marketplaces e redes sociais.',
-      descricao:
-        'Calcula o custo real de cada produto, somando materiais, embalagem, mão de obra e ' +
-        'rateio dos custos fixos, e devolve o preço final já com margem e taxas de venda ' +
-        'embutidas. No lugar do preço no chute.',
-      destaques: [
-        'Precificação de produto, cálculo de frete, dashboard de indicadores, cadastro de fornecedores e fichas técnicas reaproveitáveis entre produtos.',
-        'Assinaturas Free e Premium integradas ao gateway de pagamento Asaas por webhooks, com limite de recursos por plano.',
-        'Front em Angular 20, com standalone components, signals e TailwindCSS. Tema claro e escuro, e consentimento de cookies que só libera analytics e anúncios depois do aceite.',
-        'Back em .NET 8 sobre PostgreSQL, em Clean Architecture de quatro camadas, com autenticação JWT e login social pelo Google.',
-        'Em produção na AWS, com a API em ECS Fargate, o front estático em S3 e CloudFront, deploy contínuo por GitHub Actions e 2.125 testes automatizados entre as duas pontas.',
-      ],
-      stack: ['Angular 20', 'TypeScript', 'TailwindCSS', '.NET 8', 'C#', 'PostgreSQL', 'EF Core 8', 'AWS ECS Fargate', 'GitHub Actions'],
-      link: 'https://valuart.com.br',
-      privado: true,
     },
   ],
 

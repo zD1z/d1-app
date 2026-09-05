@@ -10,8 +10,6 @@ export interface Perfil {
   readonly titulo: string;
   /** Uma frase. Aparece no hero, logo abaixo do nome. */
   readonly chamada: string;
-  /** Dois ou três parágrafos. Aparece na seção "Sobre". */
-  readonly sobre: readonly string[];
   readonly localizacao: string;
   readonly desdeAno: number;
   /**
@@ -66,22 +64,6 @@ export interface Combinacao {
   readonly pecas: readonly string[];
 }
 
-export interface Projeto {
-  readonly nome: string;
-  readonly ano: string;
-  readonly papel: string;
-  /** Uma linha. É o subtítulo do cartão. */
-  readonly resumo: string;
-  readonly descricao: string;
-  /** Decisões técnicas que valem ser contadas. */
-  readonly destaques: readonly string[];
-  readonly stack: readonly string[];
-  readonly link?: string;
-  readonly repositorio?: string;
-  /** Projeto fechado: o cartão mostra o selo e não oferece link. */
-  readonly privado: boolean;
-}
-
 /** Ícone da seção "Soluções". Cada chave tem um SVG no template. */
 export type ChaveDeIcone = 'sistema' | 'automacao' | 'dados' | 'integracao';
 
@@ -109,7 +91,6 @@ export interface Conteudo {
   readonly numeros: readonly Numero[];
   readonly tecnologias: readonly GrupoDeTecnologias[];
   readonly combinacoes: readonly Combinacao[];
-  readonly projetos: readonly Projeto[];
   readonly servicos: readonly Servico[];
   readonly processo: readonly EtapaDoProcesso[];
   readonly contato: Contato;
