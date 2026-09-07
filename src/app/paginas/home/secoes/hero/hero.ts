@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, computed } from '@angular/core';
 import { CONTEUDO } from '../../../../core/conteudo/perfil';
+import { partirBordao } from '../../../../core/texto/bordao';
 
 @Component({
   selector: 'app-hero',
@@ -10,20 +11,8 @@ import { CONTEUDO } from '../../../../core/conteudo/perfil';
 export class Hero {
   protected readonly oferta = CONTEUDO.oferta;
 
-  /**
-   * Quebra o bordão em antes / destaque / depois, para "D1 App" sair em cor
-   * sem que o texto precise virar HTML no arquivo de conteúdo.
-   */
-  protected readonly partesDoBordao = computed(() => {
-    const { bordao, bordaoDestaque } = this.oferta;
-    const corte = bordao.indexOf(bordaoDestaque);
-    if (corte < 0) {
-      return { antes: bordao, destaque: '', depois: '' };
-    }
-    return {
-      antes: bordao.slice(0, corte),
-      destaque: bordaoDestaque,
-      depois: bordao.slice(corte + bordaoDestaque.length),
-    };
-  });
+  /** Ver `core/texto/bordao.ts`: o destaque sai em cor sem virar HTML no conteúdo. */
+  protected readonly partesDoBordao = computed(() =>
+    partirBordao(this.oferta.bordao, this.oferta.bordaoDestaque),
+  );
 }
