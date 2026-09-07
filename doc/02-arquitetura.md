@@ -31,6 +31,8 @@ src/
       models/conteudo.ts        interfaces do conteúdo, uma por bloco
       conteudo/perfil.ts        o conteúdo em si  <- único arquivo de texto
       icones/icones.ts          SVG paths de marca embutidos (Simple Icons, CC0)
+      icones/icones-de-servico.ts  desenhos próprios da seção Soluções
+      texto/bordao.ts           quebra do bordão em antes / destaque / depois
     layout/
       cabecalho/                barra fixa, menu mobile por signal
       rodape/

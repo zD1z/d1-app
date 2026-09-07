@@ -71,8 +71,13 @@ Branch: `refactor/modelo-de-conteudo`
 
 | Ponto | Ajuste |
 | --- | --- |
-| 3 | Remover `perfil.disponivel`, `perfil.desdeAno` e `perfil.apelido` do modelo e do conteúdo, junto do comentário que promete o selo "disponível para novos projetos" no hero. O conteúdo passa a refletir só o que aparece na tela **(decidido)** |
-| 8 | Extrair os SVG dos serviços do template de `solucoes` para um mapa em `core/icones/`, com `ChaveDeIcone` derivada de `keyof typeof`. Adicionar um serviço passa a custar dois arquivos em vez de três, e uma chave inválida vira erro de compilação |
+| 3 | Remover `perfil.disponivel`, `perfil.desdeAno` e `perfil.apelido` do modelo e do conteúdo, junto do comentário que promete o selo "disponível para novos projetos" no hero. O conteúdo passa a refletir só o que aparece na tela **(feito)** |
+| 8 | Extrair os SVG dos serviços do template de `solucoes` para `core/icones/icones-de-servico.ts`, com `ChaveDeIcone` derivada de `keyof typeof`. Adicionar um serviço passa a custar dois arquivos em vez de três, e uma chave inválida vira erro de compilação **(feito)** |
+
+Retângulo, círculo e elipse dos ícones foram reescritos como `<path>`. Com um
+formato só, o template desenha a lista de traçados em um `@for` e o `@switch`
+por primitiva desaparece. A geometria é a mesma, mas vale conferir os quatro
+ícones na tela antes de subir.
 
 ## Lote 4 — Compartilhamento e carregamento
 

@@ -33,12 +33,12 @@ A seção "Estrutura" ainda lista `secoes/sobre`, `secoes/trajetoria` e
 mencionada na árvore. O texto sobre `[PREENCHER]` também não corresponde mais ao
 estado do conteúdo.
 
-### 3. Campos de conteúdo que não são renderizados
+### 3. Campos de conteúdo que não são renderizados — **resolvido**
 
-`perfil.disponivel`, `perfil.desdeAno` e `perfil.apelido` estão no modelo e
-preenchidos, mas nenhum template os lê. O comentário do modelo afirma que
-`disponivel` "liga o selo *disponível para novos projetos* no hero" — esse selo
-não existe no `hero.html`. Ou o selo volta, ou os campos saem.
+`perfil.disponivel`, `perfil.desdeAno` e `perfil.apelido` estavam no modelo e
+preenchidos, mas nenhum template os lia. O comentário do modelo prometia um selo
+"disponível para novos projetos" no hero que nunca existiu. Os três campos e o
+comentário foram removidos.
 
 ### 4. Sem `og:image`
 
@@ -65,11 +65,13 @@ consciente, mas significa que qualquer mudança de conteúdo é feita no escuro.
 São strings livres. Renomear uma tecnologia deixa a combinação inconsistente sem
 erro de compilação.
 
-### 8. Adicionar um serviço custa três arquivos
+### 8. Adicionar um serviço custa três arquivos — **resolvido**
 
-O tipo `ChaveDeIcone` é uma união fechada e os SVG dos serviços estão inline no
-template de `solucoes`. Um serviço novo exige mexer no modelo, no conteúdo e no
-template — diferente de tecnologias, onde basta o `perfil.ts`.
+O tipo `ChaveDeIcone` era uma união fechada no modelo e os SVG dos serviços
+estavam inline no template de `solucoes`, cada um em um braço de `@switch`.
+Agora os desenhos vivem em `core/icones/icones-de-servico.ts`, como listas de
+`d`, e `ChaveDeIcone` é `keyof typeof` desse objeto. Custa dois arquivos, e
+chave sem desenho não compila.
 
 ### 9. Fontes vindas do Google Fonts
 

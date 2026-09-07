@@ -45,6 +45,8 @@ src/app/
     models/conteudo.ts        formato do conteúdo
     conteudo/perfil.ts        o conteúdo em si  <- edite aqui
     icones/icones.ts          SVG das marcas, embutidos
+    icones/icones-de-servico.ts  desenhos dos quatro serviços
+    texto/bordao.ts           quebra do bordão para destacar "D1 App"
   layout/
     cabecalho/                barra fixa + menu mobile
     rodape/
