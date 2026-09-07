@@ -40,12 +40,13 @@ preenchidos, mas nenhum template os lia. O comentário do modelo prometia um sel
 "disponível para novos projetos" no hero que nunca existiu. Os três campos e o
 comentário foram removidos.
 
-### 4. Sem `og:image`
+### 4. Sem `og:image` — **resolvido**
 
-O `index.html` tem Open Graph completo, menos a imagem, e o `twitter:card` é
-`summary` em vez de `summary_large_image`. Um link do site compartilhado no
-WhatsApp, LinkedIn ou Slack aparece sem prévia visual, que é justamente o
-contexto em que ele mais circula.
+O `index.html` tinha Open Graph completo, menos a imagem, e o `twitter:card` era
+`summary`. Um link compartilhado no WhatsApp, LinkedIn ou Slack aparecia sem
+prévia visual, justamente o contexto em que ele mais circula. Agora há
+`public/og.png` (1200×630, fonte em `og.svg`) e o cartão é
+`summary_large_image`.
 
 ### 5. Contato depende de `mailto:`
 
@@ -73,10 +74,11 @@ Agora os desenhos vivem em `core/icones/icones-de-servico.ts`, como listas de
 `d`, e `ChaveDeIcone` é `keyof typeof` desse objeto. Custa dois arquivos, e
 chave sem desenho não compila.
 
-### 9. Fontes vindas do Google Fonts
+### 9. Fontes vindas do Google Fonts — **resolvido**
 
-É a única requisição externa do site. Custa uma conexão a mais no carregamento e
-é o único ponto em que o visitante toca um terceiro.
+Era a única requisição externa do site. As duas famílias passaram a ser servidas
+do próprio domínio, em `public/fontes/`, como arquivos variáveis de subset
+latino. O site não toca mais nenhum terceiro em runtime.
 
 ### 10. Sem verificação automática de qualidade no CI
 

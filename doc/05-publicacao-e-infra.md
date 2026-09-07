@@ -61,7 +61,33 @@ existe.
 Em `src/index.html`: `lang="pt-BR"`, `description`, `author`, `canonical`,
 `theme-color` para os dois temas, bloco Open Graph completo
 (`og:type`, `og:url`, `og:site_name`, `og:locale`, `og:title`,
-`og:description`) e `twitter:card` do tipo `summary`.
+`og:description`, `og:image` com tipo, dimensões e `alt`) e `twitter:card` do
+tipo `summary_large_image`.
+
+A prévia é `public/og.png`, 1200×630, com o fonte ao lado em `public/og.svg`
+para poder ser reeditada. **O nome do arquivo não leva hash de propósito:** os
+robôs de WhatsApp, LinkedIn e Slack guardam a imagem em cache pela URL, e um
+nome novo a cada build faria a prévia sumir das conversas antigas.
+
+### Regerar a prévia
+
+Editar `public/og.svg` não muda o PNG: o SVG é o fonte, e o PNG é o que os
+robôs leem, porque quase nenhum deles renderiza SVG. Para rasterizar de novo,
+sem dependência nova no projeto:
+
+1. Gere um HTML temporário com o SVG dentro e as duas fontes embutidas como
+   `data:` URI. A substituição é literal, nas duas `url('fontes/...woff2')` do
+   `<style>` do SVG. Sem isso o navegador cai na fonte do sistema e o
+   resultado sai com outro desenho de letra.
+2. Rasterize com o Chrome em modo headless, na medida exata:
+
+```bash
+chrome --headless=new --disable-gpu --hide-scrollbars        --window-size=1200,630 --screenshot=public/og.png og-temporario.html
+```
+
+Depois confira o PNG a olho. A imagem circula em miniatura de conversa, então o
+teste que vale é reduzi-la para uns 300 px de largura e ver se o bordão continua
+legível.
 
 Em `app.routes.ts`, cada rota define seu `title`.
 

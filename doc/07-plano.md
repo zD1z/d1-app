@@ -76,8 +76,10 @@ Branch: `refactor/modelo-de-conteudo`
 
 Retângulo, círculo e elipse dos ícones foram reescritos como `<path>`. Com um
 formato só, o template desenha a lista de traçados em um `@for` e o `@switch`
-por primitiva desaparece. A geometria é a mesma, mas vale conferir os quatro
-ícones na tela antes de subir.
+por primitiva desaparece. Os quatro foram conferidos na tela, em tamanho de uso
+e ampliados: o monitor mantém os cantos e a proporção, os círculos saem
+redondos, a elipse do cilindro casa com o corpo e nada é cortado pela `viewBox`.
+Nenhuma correção foi necessária.
 
 ## Lote 4 — Compartilhamento e carregamento
 
@@ -85,8 +87,13 @@ Branch: `feat/og-image-e-fontes`
 
 | Ponto | Ajuste |
 | --- | --- |
-| 4 | Gerar a arte 1200×630 em SVG, com o bordão e o favicon sobre os tokens do site, converter para PNG, colocar em `public/` e ligar `og:image` mais `twitter:card: summary_large_image` **(decidido)** |
-| 9 | Hospedar Inter e JetBrains Mono no próprio domínio: `.woff2` em `public/fontes/`, `@font-face` com `font-display: swap`, e remoção do `<link>` e dos `preconnect` do Google no `index.html` **(decidido)** |
+| 4 | Gerar a arte 1200×630 em SVG, com o bordão e o favicon sobre os tokens do site, converter para PNG, colocar em `public/` e ligar `og:image` mais `twitter:card: summary_large_image` **(feito)** |
+| 9 | Hospedar Inter e JetBrains Mono no próprio domínio: `.woff2` em `public/fontes/`, `@font-face` com `font-display: swap`, e remoção do `<link>` e dos `preconnect` do Google no `index.html` **(feito)** |
+
+As duas famílias são variáveis, então um arquivo por família cobre todos os
+pesos: 79 kB somados, contra quatro requisições ao Google. O `latin-ext` ficou
+de fora depois de uma varredura confirmar que nenhum caractere do site cai fora
+do subset latino.
 
 ## Lote 5 — Altura do cabeçalho com fonte única
 
