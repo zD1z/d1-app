@@ -29,6 +29,10 @@ jobs:
 
       - run: npm ci
 
+      # Formatacao antes de tudo: e a checagem mais barata, e falhar aqui custa
+      # um `npx prettier --write .` na maquina de quem abriu o commit.
+      - run: npx prettier --check .
+
       # Antes de construir: a suite roda em jsdom, sem navegador, e cobre o
       # conteudo alem dos componentes. Quebrou, o deploy para aqui e o site no
       # ar continua sendo o ultimo que passou.

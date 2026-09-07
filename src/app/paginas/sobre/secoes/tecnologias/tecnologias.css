@@ -40,7 +40,9 @@
   border-radius: var(--raio-pequeno);
   background: var(--fundo-elevado);
   color: var(--texto-suave);
-  transition: color 0.15s ease, border-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 /* A cor oficial da marca só aparece no hover. Monocromático por padrão mantém

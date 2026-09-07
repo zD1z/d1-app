@@ -17,21 +17,21 @@ O site tem duas páginas e oito seções ao todo.
 
 ## Home (`/`)
 
-| Seção | Componente | O que faz |
-| --- | --- | --- |
-| Hero | `secoes/hero` | `h1` com "D1 App" destacado em cor por fatiamento da string; subtítulo; dois botões (`#contato` e `#solucoes`) |
+| Seção    | Componente        | O que faz                                                                                                      |
+| -------- | ----------------- | -------------------------------------------------------------------------------------------------------------- |
+| Hero     | `secoes/hero`     | `h1` com "D1 App" destacado em cor por fatiamento da string; subtítulo; dois botões (`#contato` e `#solucoes`) |
 | Soluções | `secoes/solucoes` | Quatro cartões de serviço com ícone SVG inline; abaixo, as quatro etapas de "como funciona" (`#como-funciona`) |
-| Quem faz | `secoes/quem-faz` | Credencial em prosa mais os três números; link para `/sobre` |
-| Contato | `secoes/contato` | Convite e botão `mailto:` com assunto "Tenho uma ideia" pré-preenchido |
+| Quem faz | `secoes/quem-faz` | Credencial em prosa mais os três números; link para `/sobre`                                                   |
+| Contato  | `secoes/contato`  | Convite e botão `mailto:` com assunto "Tenho uma ideia" pré-preenchido                                         |
 
 ## Sobre (`/sobre`, carregada sob demanda)
 
-| Seção | Componente | O que faz |
-| --- | --- | --- |
-| Apresentação | `secoes/apresentacao` | Nome, título, chamada, resumo de carreira e link do LinkedIn |
-| Tecnologias | `secoes/tecnologias` | Seis grupos, 20 tecnologias. Cada cartão traz ícone da marca (ou monograma) e uma frase de prova. A cor oficial da marca entra só no hover, por custom property |
-| Combinações | `secoes/combinacoes` | Três arranjos de stack com as peças em etiquetas |
-| Chamada final | `secoes/chamada-final` | Devolve o visitante para a oferta da home |
+| Seção         | Componente             | O que faz                                                                                                                                                       |
+| ------------- | ---------------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Apresentação  | `secoes/apresentacao`  | Nome, título, chamada, resumo de carreira e link do LinkedIn                                                                                                    |
+| Tecnologias   | `secoes/tecnologias`   | Seis grupos, 20 tecnologias. Cada cartão traz ícone da marca (ou monograma) e uma frase de prova. A cor oficial da marca entra só no hover, por custom property |
+| Combinações   | `secoes/combinacoes`   | Três arranjos de stack com as peças em etiquetas                                                                                                                |
+| Chamada final | `secoes/chamada-final` | Devolve o visitante para a oferta da home                                                                                                                       |
 
 ## Comportamentos transversais
 

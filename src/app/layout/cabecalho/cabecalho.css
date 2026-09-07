@@ -46,7 +46,9 @@
   color: var(--texto-suave);
   font-size: 0.92rem;
   font-weight: 500;
-  transition: color 0.15s ease, background-color 0.15s ease;
+  transition:
+    color 0.15s ease,
+    background-color 0.15s ease;
 }
 
 .menu__link:hover {
@@ -96,7 +98,9 @@
   margin: 0 auto;
   border-radius: 2px;
   background: var(--texto);
-  transition: transform 0.2s ease, opacity 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    opacity 0.2s ease;
 }
 
 .cabecalho__hamburguer::before,

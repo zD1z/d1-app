@@ -80,11 +80,12 @@ Era a única requisição externa do site. As duas famílias passaram a ser serv
 do próprio domínio, em `public/fontes/`, como arquivos variáveis de subset
 latino. O site não toca mais nenhum terceiro em runtime.
 
-### 10. Sem verificação automática de qualidade no CI
+### 10. Sem verificação automática de qualidade no CI — **resolvido**
 
-O workflow roda `npm ci` e `npm run build`, e mais nada. Não há lint, não há
-`npm test`, não há checagem de formatação com o Prettier já instalado, nem
-auditoria de acessibilidade ou performance.
+O workflow rodava `npm ci` e `npm run build`, e mais nada. Agora roda
+`npx prettier --check .` e `npm test` antes de construir, e o deploy para se
+qualquer um falhar. Continua sem lint, sem auditoria de acessibilidade e sem
+medição de performance: são assuntos abertos, não pendências deste ponto.
 
 ### 11. O duplo 96 — **resolvido**
 

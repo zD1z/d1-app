@@ -2,15 +2,15 @@
 
 ## Stack
 
-| Camada | Escolha | Versão |
-| --- | --- | --- |
-| Framework | Angular (standalone, zoneless) | `^21.2.0` |
-| Linguagem | TypeScript em modo estrito | `~5.9.2` |
-| Build | `@angular/build:application` (esbuild) | `^21.2.22` |
-| Testes | Vitest via `@angular/build:unit-test` | `^4.0.8` |
-| Estilo | CSS puro com custom properties | — |
-| Formatação | Prettier | `^3.8.1` |
-| Hospedagem | GitHub Pages (estático) | — |
+| Camada     | Escolha                                | Versão     |
+| ---------- | -------------------------------------- | ---------- |
+| Framework  | Angular (standalone, zoneless)         | `^21.2.0`  |
+| Linguagem  | TypeScript em modo estrito             | `~5.9.2`   |
+| Build      | `@angular/build:application` (esbuild) | `^21.2.22` |
+| Testes     | Vitest via `@angular/build:unit-test`  | `^4.0.8`   |
+| Estilo     | CSS puro com custom properties         | —          |
+| Formatação | Prettier                               | `^3.8.1`   |
+| Hospedagem | GitHub Pages (estático)                | —          |
 
 Sem Tailwind, sem biblioteca de componentes, sem gerenciador de estado, sem
 cliente HTTP. As únicas dependências de runtime são o próprio Angular, `rxjs` e
@@ -109,7 +109,7 @@ redireciona para a home, e funciona em produção porque o workflow duplica o
 
 ### Ícones de marca embutidos
 
-`core/icones/icones.ts` carrega os *paths* SVG extraídos do Simple Icons
+`core/icones/icones.ts` carrega os _paths_ SVG extraídos do Simple Icons
 (CC0 1.0), como constantes. Duas razões, ambas no comentário do arquivo: o site
 não faz nenhuma requisição externa por ícone, e o pacote não vira dependência
 para desenhar doze símbolos. Marcas que foram removidas do Simple Icons a pedido

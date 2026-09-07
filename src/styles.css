@@ -227,7 +227,10 @@ svg {
   font-size: 0.95rem;
   font-weight: 600;
   border: 1px solid transparent;
-  transition: transform 0.15s ease, background-color 0.15s ease, border-color 0.15s ease;
+  transition:
+    transform 0.15s ease,
+    background-color 0.15s ease,
+    border-color 0.15s ease;
 }
 
 .botao:hover {

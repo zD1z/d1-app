@@ -30,7 +30,7 @@ export const CONTEUDO: Conteudo = {
       'Quinze anos construindo software em quatro áreas diferentes: leilões online, ' +
       'consultoria corporativa, automação de estacionamento e tráfego, e o setor ' +
       'bancário. Cada uma resolve problema de um jeito próprio, e é esse repertório que ' +
-      'entra também num projeto pequeno. Só muda o tamanho.',
+      'entra também num seu projeto. Só muda que ele é seu!',
   },
 
   numeros: [
@@ -46,17 +46,20 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'Angular',
           icone: 'angular',
-          prova: 'Da versão 8 à 21. Standalone components, signals, formulários reativos tipados, lazy loading por rota e a virada de zone.js para zoneless.',
+          prova:
+            'Da versão 8 à 21. Standalone components, signals, formulários reativos tipados, lazy loading por rota e a virada de zone.js para zoneless.',
         },
         {
           nome: 'TypeScript',
           icone: 'typescript',
-          prova: 'Modo estrito, sem `any`. Contrato de API tipado à mão quando o backend não gera cliente, e tipos utilitários no lugar de modelo repetido.',
+          prova:
+            'Modo estrito, sem `any`. Contrato de API tipado à mão quando o backend não gera cliente, e tipos utilitários no lugar de modelo repetido.',
         },
         {
           nome: 'Tailwind CSS',
           icone: 'tailwind',
-          prova: 'Tema claro e escuro por classe, com design tokens em custom properties e componente montado sem sair do utilitário.',
+          prova:
+            'Tema claro e escuro por classe, com design tokens em custom properties e componente montado sem sair do utilitário.',
         },
       ],
     },
@@ -66,7 +69,8 @@ export const CONTEUDO: Conteudo = {
         {
           nome: '.NET e C#',
           icone: 'dotnet',
-          prova: 'A linguagem em que trabalho há mais tempo. Minimal APIs, injeção de dependência, async em tudo que toca rede, e C# moderno: records, pattern matching e nullable habilitado.',
+          prova:
+            'A linguagem em que trabalho há mais tempo. Minimal APIs, injeção de dependência, async em tudo que toca rede, e C# moderno: records, pattern matching e nullable habilitado.',
         },
         {
           nome: 'Java',
@@ -81,7 +85,8 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'C e C++',
           icone: 'cpp',
-          prova: 'Camada baixa, onde o software conversa com equipamento: leitura de dispositivo, protocolo serial e resposta em tempo real.',
+          prova:
+            'Camada baixa, onde o software conversa com equipamento: leitura de dispositivo, protocolo serial e resposta em tempo real.',
         },
       ],
     },
@@ -91,7 +96,8 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'SQL Server',
           sigla: 'SQL',
-          prova: 'Modelagem, T-SQL, índice e plano de execução. Migração de base entre servidores e conserto de consulta que ficou lenta quando o volume cresceu.',
+          prova:
+            'Modelagem, T-SQL, índice e plano de execução. Migração de base entre servidores e conserto de consulta que ficou lenta quando o volume cresceu.',
         },
         {
           nome: 'PostgreSQL',
@@ -101,7 +107,8 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'DynamoDB',
           sigla: 'DDB',
-          prova: 'Modelagem por padrão de acesso, chave composta e leitura barata em escala. Não é SQL, e tratar como se fosse é o erro que custa caro depois.',
+          prova:
+            'Modelagem por padrão de acesso, chave composta e leitura barata em escala. Não é SQL, e tratar como se fosse é o erro que custa caro depois.',
         },
         {
           nome: 'Oracle',
@@ -116,7 +123,8 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'AWS',
           sigla: 'AWS',
-          prova: 'ECS Fargate, RDS, S3, CloudFront, Route 53, ACM, VPC privada e CloudWatch. Aplicação em contêiner atrás de load balancer, com HTTPS e log centralizado.',
+          prova:
+            'ECS Fargate, RDS, S3, CloudFront, Route 53, ACM, VPC privada e CloudWatch. Aplicação em contêiner atrás de load balancer, com HTTPS e log centralizado.',
         },
         {
           nome: 'Azure',
@@ -126,7 +134,8 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'Terraform',
           icone: 'terraform',
-          prova: 'Infraestrutura e esteira descritas em código, versionadas e governadas, em vez de configuração feita à mão no console.',
+          prova:
+            'Infraestrutura e esteira descritas em código, versionadas e governadas, em vez de configuração feita à mão no console.',
         },
         {
           nome: 'Docker',
@@ -136,7 +145,8 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'GitHub Actions',
           icone: 'githubActions',
-          prova: 'Esteira de build, teste e deploy. Inclusive a deste site, que publica sozinho a cada push.',
+          prova:
+            'Esteira de build, teste e deploy. Inclusive a deste site, que publica sozinho a cada push.',
         },
       ],
     },
@@ -146,7 +156,8 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'Playwright',
           sigla: 'PW',
-          prova: 'Teste ponta a ponta rodando o navegador de verdade, com banco separado do de produção e trava que aborta a suíte se ela apontar para a base errada.',
+          prova:
+            'Teste ponta a ponta rodando o navegador de verdade, com banco separado do de produção e trava que aborta a suíte se ela apontar para a base errada.',
         },
         {
           nome: 'xUnit e Vitest',
@@ -161,7 +172,8 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'Model Context Protocol',
           sigla: 'MCP',
-          prova: 'Servidor MCP referenciando a camada de aplicação direto, sem passar por HTTP, para um agente consultar o sistema com tools tipadas.',
+          prova:
+            'Servidor MCP referenciando a camada de aplicação direto, sem passar por HTTP, para um agente consultar o sistema com tools tipadas.',
         },
         {
           nome: 'Claude Code',

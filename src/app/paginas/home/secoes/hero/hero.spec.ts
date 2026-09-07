@@ -18,9 +18,12 @@ describe('Hero', () => {
     raiz = fixture.nativeElement;
   });
 
-  it('usa o bordão do conteúdo como h1, inteiro', () => {
+  // O `trim` tira a indentação do template, mas o miolo é comparado como está:
+  // o destaque fica dentro de um `span` colado no texto, e uma quebra de linha
+  // injetada ali viraria um espaço a mais no meio do título, visível na tela.
+  it('usa o bordão do conteúdo como h1, inteiro e sem espaço sobrando', () => {
     const titulo = raiz.querySelector('h1');
-    expect(titulo?.textContent?.replace(/\s+/g, ' ').trim()).toBe(CONTEUDO.oferta.bordao);
+    expect(titulo?.textContent?.trim()).toBe(CONTEUDO.oferta.bordao);
   });
 
   it('isola o trecho destacado em seu próprio elemento', () => {

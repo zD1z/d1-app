@@ -3,16 +3,22 @@
     <p class="secao__rotulo">01 · Soluções</p>
     <h2 class="secao__titulo" id="titulo-solucoes">Sua ideia virando software</h2>
     <p class="secao__intro">
-      Não precisa chegar com requisito pronto nem saber o nome da tecnologia. Chega com o
-      problema, que a parte técnica eu faço.
+      Não precisa chegar com requisito pronto nem saber o nome da tecnologia. Chega com o problema,
+      que a parte técnica eu faço.
     </p>
 
     <ul class="servicos">
       @for (servico of servicos; track servico.titulo) {
         <li class="servico">
           <span class="servico__icone" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
-                 stroke-linecap="round" stroke-linejoin="round">
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.6"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
               @for (caminho of desenhoDoIcone(servico.icone); track caminho) {
                 <path [attr.d]="caminho" />
               }
