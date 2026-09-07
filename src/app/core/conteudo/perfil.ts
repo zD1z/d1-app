@@ -9,18 +9,15 @@ import type { Conteudo } from '../models/conteudo';
 export const CONTEUDO: Conteudo = {
   perfil: {
     nome: 'Danilo Pereira da Silva',
-    apelido: 'D1',
     titulo: 'Engenheiro de software sênior',
     chamada:
       'Quinze anos escrevendo software, do banco de dados à tela. Abaixo está o ' +
       'ferramental que eu uso e o que costumo montar com ele.',
     localizacao: 'Brasil',
-    desdeAno: 2011,
     resumoDeCarreira:
       'Quatro setores até aqui: leilões online, consultoria corporativa, automação de ' +
       'estacionamento e tráfego, e o sistema bancário. Empresas, cargos e períodos estão ' +
       'no LinkedIn.',
-    disponivel: false,
   },
 
   oferta: {

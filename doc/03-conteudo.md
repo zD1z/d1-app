@@ -19,10 +19,10 @@ Exceções conhecidas (texto que está no template, não no `perfil.ts`):
 ## O modelo, bloco a bloco
 
 ### `perfil: Perfil`
-Identidade. `nome`, `apelido` (D1), `titulo`, `chamada`, `localizacao`,
-`desdeAno`, `resumoDeCarreira` (uma linha no lugar da linha do tempo) e
-`disponivel` — este último liga o selo "disponível para novos projetos" no hero
-e hoje está `false`.
+Identidade. `nome`, `titulo`, `chamada`, `localizacao` e `resumoDeCarreira`
+(uma linha no lugar da linha do tempo). Cinco campos, todos renderizados: os
+antigos `apelido`, `desdeAno` e `disponivel` foram removidos por não aparecerem
+em lugar nenhum.
 
 ### `oferta: Oferta`
 A oferta comercial da home. `bordao` vira o `h1`; `bordaoDestaque` é o trecho
@@ -59,9 +59,10 @@ oferta comercial da home.
 ### `servicos: Servico[]`
 Os quatro tipos de trabalho contratáveis: sistema sob medida, automação de
 processo, dados que você já tem, integração entre sistemas. O campo `icone` é do
-tipo `ChaveDeIcone`, uma união fechada (`'sistema' | 'automacao' | 'dados' |
-'integracao'`) cujos SVG estão no template de `solucoes`. Adicionar um serviço
-novo exige tocar no tipo **e** no template.
+tipo `ChaveDeIcone`, derivado das chaves de `ICONES_DE_SERVICO` em
+`core/icones/icones-de-servico.ts`, onde cada ícone é uma lista de `d` de
+`<path>`. Um serviço novo custa dois arquivos: o desenho lá e o texto aqui. Uma
+chave sem desenho não compila.
 
 ### `processo: EtapaDoProcesso[]`
 As quatro etapas do trabalho: conversa, escopo e proposta, construção com

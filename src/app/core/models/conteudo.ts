@@ -4,21 +4,19 @@
  * para mudar qualquer texto da página.
  */
 
+import type { ChaveDeIcone } from '../icones/icones-de-servico';
+
 export interface Perfil {
   readonly nome: string;
-  readonly apelido: string;
   readonly titulo: string;
-  /** Uma frase. Aparece no hero, logo abaixo do nome. */
+  /** Uma frase. Abre a página /sobre, logo abaixo do nome. */
   readonly chamada: string;
   readonly localizacao: string;
-  readonly desdeAno: number;
   /**
    * Uma linha no lugar da linha do tempo. O currículo detalhado vive no
    * LinkedIn, que atualiza sozinho e não envelhece aqui sem ninguém notar.
    */
   readonly resumoDeCarreira: string;
-  /** Liga o selo "disponível para novos projetos" no hero. */
-  readonly disponivel: boolean;
 }
 
 /** A oferta comercial. É o que a home diz antes de qualquer coisa sobre mim. */
@@ -63,9 +61,6 @@ export interface Combinacao {
   readonly descricao: string;
   readonly pecas: readonly string[];
 }
-
-/** Ícone da seção "Soluções". Cada chave tem um SVG no template. */
-export type ChaveDeIcone = 'sistema' | 'automacao' | 'dados' | 'integracao';
 
 export interface Servico {
   readonly icone: ChaveDeIcone;
