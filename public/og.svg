@@ -1,0 +1,75 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630"
+     role="img" aria-label="D1 App para sua ideia">
+  <!-- Previa do link, referenciada em og:image. O PNG servido ao lado nasce
+       daqui: ver o comando de rasterizacao em doc/05-publicacao-e-infra.md.
+
+       As cores sao os tokens do tema escuro do site, em src/styles.css. A fonte
+       e a mesma Inter de public/fontes, declarada em url relativa: aberto pelo
+       dominio o texto sai certo, aberto do disco pode cair na fonte de sistema.
+       Isso nao afeta o PNG, que e gerado com a fonte embutida. -->
+  <defs>
+    <style>
+      @font-face {
+        font-family: 'Inter';
+        font-weight: 400 700;
+        src: url('fontes/inter-latin.woff2') format('woff2');
+      }
+      @font-face {
+        font-family: 'JetBrains Mono';
+        font-weight: 400 500;
+        src: url('fontes/jetbrains-mono-latin.woff2') format('woff2');
+      }
+      .titulo {
+        font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        font-size: 96px;
+        font-weight: 700;
+        letter-spacing: -3.5px;
+      }
+      .apoio {
+        font-family: 'Inter', 'Segoe UI', system-ui, sans-serif;
+        font-size: 31px;
+        font-weight: 400;
+        letter-spacing: -0.3px;
+      }
+      .dominio {
+        font-family: 'JetBrains Mono', ui-monospace, monospace;
+        font-size: 26px;
+        font-weight: 500;
+        letter-spacing: 1px;
+      }
+    </style>
+
+    <radialGradient id="brilho" cx="0" cy="0" r="1"
+                    gradientTransform="translate(120 60) scale(620 520)">
+      <stop offset="0" stop-color="#56B6FF" stop-opacity="0.10"/>
+      <stop offset="1" stop-color="#56B6FF" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+
+  <rect width="1200" height="630" fill="#08090c"/>
+  <rect width="1200" height="630" fill="url(#brilho)"/>
+
+  <!-- A marca, o mesmo desenho do favicon, reduzida para 72. -->
+  <g transform="translate(88 74) scale(1.125)">
+    <rect width="64" height="64" rx="14" fill="#0B0D11"/>
+    <path fill="#56B6FF" fill-rule="evenodd"
+          d="M12 18 H24 C31.7 18 38 24.3 38 32 C38 39.7 31.7 46 24 46 H12 Z
+             M19 25 H24 C27.9 25 31 28.1 31 32 C31 35.9 27.9 39 24 39 H19 Z"/>
+    <path fill="#56B6FF"
+          d="M52 18 v28 h-6 V24.8 l-4.2 2.4 -2.4 -4.5 8 -4.7 Z"/>
+  </g>
+
+  <text class="titulo" x="88" y="330" fill="#56B6FF">D1 App</text>
+  <text class="titulo" x="88" y="434" fill="#E8ECF2">para sua ideia</text>
+
+  <text class="apoio" x="88" y="510" fill="#99A3B2">
+    Você traz o problema. Eu trago a parte técnica.
+  </text>
+
+  <line x1="88" y1="552" x2="1112" y2="552" stroke="#1D232C" stroke-width="1"/>
+
+  <text class="dominio" x="88" y="592" fill="#56B6FF">d1.app.br</text>
+  <text class="apoio" x="1112" y="591" fill="#6B7484" font-size="24" text-anchor="end">
+    Engenheiro de software · 15 anos
+  </text>
+</svg>

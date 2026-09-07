@@ -1,5 +1,27 @@
 /* Tokens e base. Nada de componente aqui, cada seção tem seu próprio arquivo. */
 
+/* As fontes são servidas do próprio domínio, e não do Google Fonts: o site
+   deixa de depender de terceiro para desenhar o texto e economiza duas
+   conexões no carregamento. Os dois arquivos são variáveis, então um único
+   woff2 por família cobre todos os pesos usados. Só o subset latino veio: o
+   conteúdo é português e nenhum caractere dele cai fora. Licença em
+   `public/fontes/LICENCA.txt`. */
+@font-face {
+  font-family: 'Inter';
+  font-style: normal;
+  font-weight: 400 700;
+  font-display: swap;
+  src: url('/fontes/inter-latin.woff2') format('woff2');
+}
+
+@font-face {
+  font-family: 'JetBrains Mono';
+  font-style: normal;
+  font-weight: 400 500;
+  font-display: swap;
+  src: url('/fontes/jetbrains-mono-latin.woff2') format('woff2');
+}
+
 :root {
   color-scheme: dark light;
 

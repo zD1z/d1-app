@@ -45,6 +45,8 @@ src/
         secoes/apresentacao|tecnologias|combinacoes|chamada-final/
 public/
   CNAME  favicon.svg  favicon.ico  robots.txt  sitemap.xml
+  og.png  og.svg                    prévia do link, e o fonte da arte
+  fontes/                           Inter e JetBrains Mono, subset latino
 ```
 
 Convenções que valem em todo o projeto:
@@ -110,6 +112,16 @@ não faz nenhuma requisição externa por ícone, e o pacote não vira dependên
 para desenhar doze símbolos. Marcas que foram removidas do Simple Icons a pedido
 dos donos (AWS, Azure, SQL Server, Oracle, DynamoDB, Playwright) aparecem como
 monograma via campo `sigla`.
+
+### Fontes servidas do próprio domínio
+
+Inter e JetBrains Mono vivem em `public/fontes/`, declaradas em `@font-face` no
+`styles.css`, e o site não fala com o Google Fonts. São arquivos variáveis, um
+por família, então um único `woff2` cobre todos os pesos usados. Só o subset
+latino foi baixado: o conteúdo é português e nenhum caractere dele cai fora
+dele, o que foi verificado antes de descartar o `latin-ext`. São 79 kB no total,
+com `font-display: swap`, e a Inter entra em `preload` por desenhar a primeira
+tela. Licença OFL em `public/fontes/LICENCA.txt`.
 
 ### CSS: tokens globais, resto escopado
 
