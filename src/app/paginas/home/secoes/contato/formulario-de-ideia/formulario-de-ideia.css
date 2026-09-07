@@ -1,6 +1,7 @@
 /* O `<dialog>` nativo cuida do foco preso, do `Esc` e da camada por cima de
    tudo. Biblioteca de modal aqui só repetiria o que o navegador já faz. */
 .ideia {
+  position: relative;
   width: min(560px, calc(100vw - 32px));
   padding: 0;
   border: 1px solid var(--borda-forte);
@@ -137,6 +138,51 @@
 
 .ideia__enviar {
   align-self: flex-start;
+}
+
+/* A camada de envio. `position: relative` no dialogo e o que a prende aqui
+   dentro, e o `<dialog>` modal ja bloqueia o resto da pagina. */
+.ideia__bloqueio {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  border-radius: var(--raio);
+  background: color-mix(in srgb, var(--fundo-cartao) 88%, transparent);
+  backdrop-filter: blur(1px);
+}
+
+.ideia__enviando {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--texto);
+}
+
+.ideia__girador {
+  width: 30px;
+  height: 30px;
+  border: 2px solid var(--borda-forte);
+  border-top-color: var(--acento);
+  border-radius: 50%;
+  animation: girar 0.7s linear infinite;
+}
+
+@keyframes girar {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+/* Sem movimento, o girador congelaria numa posicao qualquer e viraria enfeite
+   sem significado. A frase sozinha ja diz o que esta acontecendo. */
+@media (prefers-reduced-motion: reduce) {
+  .ideia__girador {
+    display: none;
+  }
 }
 
 .ideia__recado {

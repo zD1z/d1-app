@@ -17,6 +17,8 @@ describe('FormularioDeIdeia', () => {
   let raiz: HTMLElement;
   let enviar: ReturnType<typeof vi.fn>;
   let reset: ReturnType<typeof vi.fn>;
+  let remove: ReturnType<typeof vi.fn>;
+  let desenhouEm: HTMLElement[];
   let desafioDevolveToken: boolean;
 
   function preencher(ideia = IDEIA_BOA, contato = 'pessoa@exemplo.com.br'): void {
@@ -46,16 +48,20 @@ describe('FormularioDeIdeia', () => {
     enviar = vi.fn().mockResolvedValue('enviado' satisfies ResultadoDoEnvio);
     reset = vi.fn();
 
+    desenhouEm = [];
+    remove = vi.fn();
+
     const desafio = {
       carregar: vi.fn().mockResolvedValue({
-        render: (_alvo: HTMLElement, opcoes: { callback: (token: string) => void }) => {
+        render: (alvo: HTMLElement, opcoes: { callback: (token: string) => void }) => {
+          desenhouEm.push(alvo);
           if (desafioDevolveToken) {
             opcoes.callback('token-de-teste');
           }
           return 'id-do-desafio';
         },
         reset,
-        remove: vi.fn(),
+        remove,
       }),
     };
 
@@ -73,7 +79,9 @@ describe('FormularioDeIdeia', () => {
     // O jsdom conhece o elemento, mas não abre janela de verdade.
     const dialogo = raiz.querySelector('dialog') as HTMLDialogElement;
     dialogo.showModal = vi.fn();
-    dialogo.close = vi.fn();
+    // O `close` real dispara o evento; o dublê precisa disparar também, porque é
+    // o `(close)` do template que descarta o desafio para a próxima abertura.
+    dialogo.close = vi.fn(() => dialogo.dispatchEvent(new Event('close')));
 
     await fixture.whenStable();
   });
@@ -141,6 +149,117 @@ describe('FormularioDeIdeia', () => {
     await submeter();
 
     expect(reset).toHaveBeenCalledWith('id-do-desafio');
+  });
+
+  describe('enquanto envia', () => {
+    /** Segura a resposta do envio para a tela ficar no estado "enviando". */
+    function envioPendurado(): () => void {
+      let liberar = () => {};
+      enviar.mockReturnValue(
+        new Promise((resolve) => {
+          liberar = () => resolve('enviado');
+        }),
+      );
+      return liberar;
+    }
+
+    it('cobre a caixa e anuncia o que está acontecendo', async () => {
+      envioPendurado();
+
+      await abrir();
+      preencher();
+      await submeter();
+
+      const bloqueio = raiz.querySelector('.ideia__bloqueio');
+      expect(bloqueio).not.toBeNull();
+      expect(bloqueio?.getAttribute('aria-live')).toBe('polite');
+      expect(bloqueio?.textContent).toContain('Enviando minha ideia...');
+    });
+
+    // O botão desabilitado sozinho não impede o Enter dentro do campo de texto.
+    // O `inert` tira o formulário inteiro do alcance de mouse, teclado e leitor
+    // de tela, que é o que de fato barra o clique duplo.
+    it('deixa o formulário inerte e o fechar desabilitado', async () => {
+      envioPendurado();
+
+      await abrir();
+      preencher();
+      await submeter();
+
+      expect(raiz.querySelector('form')?.hasAttribute('inert')).toBe(true);
+      expect(raiz.querySelector('.ideia__fechar')?.hasAttribute('disabled')).toBe(true);
+    });
+
+    it('não dispara um segundo envio se a submissão se repetir', async () => {
+      const liberar = envioPendurado();
+
+      await abrir();
+      preencher();
+      await submeter();
+      await submeter();
+
+      expect(enviar).toHaveBeenCalledTimes(1);
+
+      liberar();
+      await fixture.whenStable();
+    });
+
+    it('tira a camada quando a resposta chega', async () => {
+      const liberar = envioPendurado();
+
+      await abrir();
+      preencher();
+      await submeter();
+      expect(raiz.querySelector('.ideia__bloqueio')).not.toBeNull();
+
+      liberar();
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      expect(raiz.querySelector('.ideia__bloqueio')).toBeNull();
+      expect(raiz.querySelector('.ideia__recado')).not.toBeNull();
+    });
+  });
+
+  describe('ao reabrir', () => {
+    // Depois de um envio que deu certo, o template troca o formulário pelo
+    // recado e destrói o `div` do desafio. Reabrir cria um `div` novo, e sem
+    // desenhar de novo a caixa da Cloudflare fica vazia até alguém recarregar a
+    // página, que era o defeito relatado.
+    it('desenha o desafio de novo, no elemento novo', async () => {
+      await abrir();
+      preencher();
+      await submeter();
+
+      const primeiro = desenhouEm[0];
+      expect(primeiro).toBeDefined();
+
+      raiz.querySelector('.ideia__final button')?.dispatchEvent(new Event('click'));
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      await abrir();
+
+      expect(remove).toHaveBeenCalledWith('id-do-desafio');
+      expect(desenhouEm.length).toBe(2);
+      expect(desenhouEm[1]).not.toBe(primeiro);
+    });
+
+    it('volta a mostrar o formulário, e não o recado do envio anterior', async () => {
+      await abrir();
+      preencher();
+      await submeter();
+
+      raiz.querySelector('.ideia__final button')?.dispatchEvent(new Event('click'));
+      await fixture.whenStable();
+      fixture.detectChanges();
+
+      await abrir();
+
+      expect(raiz.querySelector('form')).not.toBeNull();
+      expect(raiz.querySelector('.ideia__recado')).toBeNull();
+      expect(raiz.querySelector('textarea')?.value).toBe('');
+    });
   });
 
   // Sem token não adianta postar: o endpoint recusaria, e a pessoa levaria um

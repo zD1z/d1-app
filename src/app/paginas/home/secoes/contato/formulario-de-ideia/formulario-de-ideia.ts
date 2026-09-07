@@ -3,6 +3,7 @@ import {
   Component,
   DestroyRef,
   computed,
+  effect,
   inject,
   signal,
   viewChild,
@@ -13,8 +14,8 @@ import {
   FormGroup,
   ReactiveFormsModule,
   type AbstractControl,
-  type ValidatorFn,
   type ValidationErrors,
+  type ValidatorFn,
 } from '@angular/forms';
 import { CONFIGURACAO_DE_CONTATO } from '../../../../../core/config/contato';
 import { DesafioDeSeguranca, EnvioDeIdeias } from '../../../../../core/contato/servicos';
@@ -39,7 +40,6 @@ function comoValidador(regra: (valor: string) => string | null): ValidatorFn {
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class FormularioDeIdeia {
-  private readonly aoDestruir = inject(DestroyRef);
   private readonly envio = inject(EnvioDeIdeias);
   private readonly desafio = inject(DesafioDeSeguranca);
 
@@ -60,18 +60,47 @@ export class FormularioDeIdeia {
   protected readonly tentouEnviar = signal(false);
   protected readonly enviando = computed(() => this.estado() === 'enviando');
 
+  private readonly aberto = signal(false);
+
   /** Quando o formulário abriu. Vai no corpo e alimenta a trava de tempo. */
   private abertoEm = 0;
   private token = '';
   private idDoDesafio: string | null = null;
   private api: ApiDoTurnstile | null = null;
 
+  /**
+   * O elemento em que o desafio foi desenhado. Depois de um envio que deu certo,
+   * o template troca o formulário pelo recado e destrói esse `div`; ao reabrir,
+   * o Angular cria um novo. Guardar qual elemento foi usado é o que faz o
+   * desafio ser desenhado de novo no elemento novo, em vez de o código achar que
+   * já desenhou e deixar a caixa vazia.
+   */
+  private elementoDoDesafio: HTMLElement | null = null;
+
+  constructor() {
+    // `viewChild` é signal, então este efeito roda de novo assim que o `div` do
+    // desafio aparece na tela, sem precisar esperar ciclo de renderização na
+    // mão.
+    effect(() => {
+      const alvo = this.alvoDoDesafio()?.nativeElement;
+
+      if (!this.aberto() || !alvo || alvo === this.elementoDoDesafio) {
+        return;
+      }
+
+      this.elementoDoDesafio = alvo;
+      void this.desenharDesafio(alvo);
+    });
+
+    inject(DestroyRef).onDestroy(() => this.removerDesafio());
+  }
+
   abrir(): void {
     this.abertoEm = Date.now();
     this.estado.set('parado');
     this.tentouEnviar.set(false);
+    this.aberto.set(true);
     this.dialogo().nativeElement.showModal();
-    void this.prepararDesafio();
   }
 
   protected fechar(): void {
@@ -80,13 +109,16 @@ export class FormularioDeIdeia {
 
   /**
    * Roda tanto no botão de fechar quanto no `Esc`, que o `<dialog>` trata
-   * sozinho. Depois de um envio que deu certo, limpa para a próxima abertura não
-   * mostrar o texto antigo.
+   * sozinho. O desafio é descartado aqui de propósito: o token vale uma vez só,
+   * e a próxima abertura precisa de um novo.
    */
   protected aoFechar(): void {
+    this.aberto.set(false);
+    this.removerDesafio();
+
     if (this.estado() === 'enviado') {
       this.formulario.reset();
-      this.token = '';
+      this.estado.set('parado');
     }
   }
 
@@ -128,12 +160,7 @@ export class FormularioDeIdeia {
     this.mensagemDeErro.set(MENSAGENS_DE_ERRO[resultado]);
   }
 
-  private async prepararDesafio(): Promise<void> {
-    const alvo = this.alvoDoDesafio()?.nativeElement;
-    if (!alvo || this.idDoDesafio !== null) {
-      return;
-    }
-
+  private async desenharDesafio(alvo: HTMLElement): Promise<void> {
     try {
       const api = await this.desafio.carregar();
       this.api = api;
@@ -152,18 +179,22 @@ export class FormularioDeIdeia {
         theme: 'auto',
         language: 'pt-BR',
       });
-
-      this.aoDestruir.onDestroy(() => {
-        if (this.idDoDesafio !== null) {
-          api.remove(this.idDoDesafio);
-        }
-      });
     } catch {
       this.estado.set('erro');
       this.mensagemDeErro.set(
         'Não consegui carregar a verificação de segurança. Escreva por e-mail que eu respondo igual.',
       );
     }
+  }
+
+  private removerDesafio(): void {
+    if (this.api !== null && this.idDoDesafio !== null) {
+      this.api.remove(this.idDoDesafio);
+    }
+
+    this.idDoDesafio = null;
+    this.elementoDoDesafio = null;
+    this.token = '';
   }
 
   private reiniciarDesafio(): void {
