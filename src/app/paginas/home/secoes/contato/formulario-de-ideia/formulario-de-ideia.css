@@ -1,0 +1,156 @@
+/* O `<dialog>` nativo cuida do foco preso, do `Esc` e da camada por cima de
+   tudo. Biblioteca de modal aqui só repetiria o que o navegador já faz. */
+.ideia {
+  width: min(560px, calc(100vw - 32px));
+  padding: 0;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio);
+  background: var(--fundo-cartao);
+  color: var(--texto);
+  box-shadow: var(--sombra);
+}
+
+.ideia::backdrop {
+  background: rgba(4, 6, 10, 0.66);
+  backdrop-filter: blur(2px);
+}
+
+.ideia__topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  border-bottom: 1px solid var(--borda);
+}
+
+.ideia__titulo {
+  font-size: 1.25rem;
+}
+
+.ideia__fechar {
+  display: grid;
+  place-items: center;
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  border: 1px solid transparent;
+  border-radius: var(--raio-pequeno);
+  background: none;
+  color: var(--texto-suave);
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.ideia__fechar:hover {
+  border-color: var(--borda-forte);
+  color: var(--texto);
+}
+
+.ideia__formulario,
+.ideia__final {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding: 24px;
+  text-align: left;
+}
+
+.ideia__intro,
+.ideia__aviso {
+  margin: 0;
+  color: var(--texto-suave);
+}
+
+.ideia__intro {
+  font-size: 0.98rem;
+}
+
+.ideia__aviso {
+  font-size: 0.82rem;
+  color: var(--texto-fraco);
+}
+
+.campo {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.campo__rotulo {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--texto-suave);
+}
+
+.campo__entrada {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--borda-forte);
+  border-radius: var(--raio-pequeno);
+  background: var(--fundo-elevado);
+  color: var(--texto);
+  font-family: inherit;
+  font-size: 1rem;
+  transition: border-color 0.15s ease;
+}
+
+.campo__entrada--texto {
+  resize: vertical;
+  min-height: 120px;
+  line-height: 1.55;
+}
+
+.campo__entrada:focus {
+  border-color: var(--acento-borda);
+}
+
+.campo__entrada::placeholder {
+  color: var(--texto-fraco);
+}
+
+.campo__entrada[aria-invalid='true'] {
+  border-color: #e5484d;
+}
+
+.campo__erro,
+.ideia__erro {
+  margin: 0;
+  color: #e5484d;
+  font-size: 0.85rem;
+}
+
+/* Fora da tela, e não `display: none`: campo escondido assim continua no DOM
+   para o robô achar, que é o ponto da armadilha. */
+.ideia__armadilha {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.ideia__desafio:empty {
+  display: none;
+}
+
+.ideia__enviar {
+  align-self: flex-start;
+}
+
+.ideia__recado {
+  margin: 0;
+  font-size: 1.05rem;
+}
+
+@media (max-width: 640px) {
+  .ideia__formulario,
+  .ideia__final {
+    padding: 20px;
+  }
+
+  .ideia__enviar {
+    align-self: stretch;
+  }
+}

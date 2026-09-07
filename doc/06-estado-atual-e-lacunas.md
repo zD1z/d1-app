@@ -48,18 +48,23 @@ prévia visual, justamente o contexto em que ele mais circula. Agora há
 `public/og.png` (1200×630, fonte em `og.svg`) e o cartão é
 `summary_large_image`.
 
-### 5. Contato depende de `mailto:`
+### 5. Contato depende de `mailto:` — **revisto**
 
 É uma decisão consciente (ver [01-contexto-e-objetivo.md](01-contexto-e-objetivo.md)),
 mas com custo real: o `mailto:` falha ou frustra em quem usa webmail sem cliente
 padrão configurado, e não há como medir quantas pessoas chegaram ao botão e
 desistiram.
 
-### 6. Nenhuma medição
+### 6. Nenhuma medição — **revisto**
 
 Sem analytics, sem Search Console documentado, sem nenhum sinal de quantas
 pessoas visitam, por onde entram ou onde param de rolar. Também é decisão
 consciente, mas significa que qualquer mudança de conteúdo é feita no escuro.
+
+As duas decisões foram revertidas em 2026-09-06: o `mailto:` dá lugar a um
+formulário com envio de verdade, e o GA4 entra com banner de consentimento. O
+raciocínio antigo fica registrado acima, e o novo está em
+[08-plano-formulario-e-medicao.md](08-plano-formulario-e-medicao.md).
 
 ### 7. `combinacoes.pecas` sem vínculo com `tecnologias`
 

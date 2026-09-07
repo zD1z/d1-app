@@ -1,0 +1,77 @@
+<dialog #dialogo class="ideia" aria-labelledby="titulo-da-ideia" (close)="aoFechar()">
+  <div class="ideia__topo">
+    <h3 class="ideia__titulo" id="titulo-da-ideia">Conte a sua ideia</h3>
+    <button type="button" class="ideia__fechar" (click)="fechar()">
+      <span class="apenas-leitor">Fechar</span>
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  @if (estado() === 'enviado') {
+    <div class="ideia__final" role="status">
+      <p class="ideia__recado">Recebido. Respondo no contato que você deixou.</p>
+      <button type="button" class="botao botao--primario" (click)="fechar()">Fechar</button>
+    </div>
+  } @else {
+    <form class="ideia__formulario" [formGroup]="formulario" (ngSubmit)="enviar()">
+      <p class="ideia__intro">
+        Não precisa de termo técnico nem de requisito pronto. Descreva o problema como você contaria
+        para alguém do seu negócio.
+      </p>
+
+      <label class="campo">
+        <span class="campo__rotulo">A sua ideia</span>
+        <textarea
+          class="campo__entrada campo__entrada--texto"
+          formControlName="ideia"
+          rows="6"
+          [maxlength]="limiteDaIdeia"
+          [attr.aria-invalid]="tentouEnviar() && formulario.controls.ideia.invalid"
+          placeholder="Hoje eu controlo as entregas numa planilha e sempre some alguma coisa..."
+        ></textarea>
+        @if (tentouEnviar() && formulario.controls.ideia.errors; as erros) {
+          <span class="campo__erro">{{ erros['mensagem'] }}</span>
+        }
+      </label>
+
+      <label class="campo">
+        <span class="campo__rotulo">Onde eu respondo</span>
+        <input
+          class="campo__entrada"
+          formControlName="contato"
+          type="text"
+          autocomplete="email"
+          [attr.aria-invalid]="tentouEnviar() && formulario.controls.contato.invalid"
+          placeholder="seu@email.com ou (11) 98888-7777"
+        />
+        @if (tentouEnviar() && formulario.controls.contato.errors; as erros) {
+          <span class="campo__erro">{{ erros['mensagem'] }}</span>
+        }
+      </label>
+
+      <!-- A armadilha. Fora da tela, fora da ordem de tabulação e fora do leitor
+           de tela: só robô que preenche tudo cai nela. -->
+      <div class="ideia__armadilha" aria-hidden="true">
+        <label>
+          Deixe este campo em branco
+          <input formControlName="armadilha" type="text" tabindex="-1" autocomplete="off" />
+        </label>
+      </div>
+
+      <div #desafio class="ideia__desafio"></div>
+
+      @if (estado() === 'erro') {
+        <p class="ideia__erro" role="alert">{{ mensagemDeErro() }}</p>
+      }
+
+      <button type="submit" class="botao botao--primario ideia__enviar" [disabled]="enviando()">
+        {{ enviando() ? 'Enviando...' : 'Enviar ideia' }}
+      </button>
+
+      <p class="ideia__aviso">
+        Uso o que você escrever só para responder esta mensagem. Nada vai para lista, anúncio ou
+        terceiro.
+      </p>
+    </form>
+  }
+</dialog>

@@ -5,9 +5,26 @@
       <h2 class="secao__titulo" id="titulo-contato">Vamos conversar</h2>
       <p class="contato__convite">{{ contato.convite }}</p>
 
-      <div class="contato__acoes">
-        <a class="botao botao--primario" [href]="enderecoDeEmail">{{ contato.email }}</a>
-      </div>
+      @if (temFormulario) {
+        <div class="contato__acoes">
+          <button type="button" class="botao botao--primario" (click)="abrirFormulario()">
+            Contar minha ideia
+          </button>
+        </div>
+
+        <p class="contato__alternativa">
+          Ou escreva direto para
+          <a [href]="enderecoDeEmail">{{ contato.email }}</a>
+        </p>
+
+        <app-formulario-de-ideia />
+      } @else {
+        <div class="contato__acoes">
+          <a class="botao botao--primario contato__email" [href]="enderecoDeEmail">
+            {{ contato.email }}
+          </a>
+        </div>
+      }
     </div>
   </div>
 </section>

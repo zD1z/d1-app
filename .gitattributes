@@ -1,0 +1,5 @@
+# O Prettier normaliza tudo em LF, e o `prettier --check` do CI reprova CRLF.
+# Sem esta linha, o Git entrega CRLF no Windows e a verificacao de formato falha
+# na maquina de quem desenvolve, mesmo passando no CI. Com ela, o diretorio de
+# trabalho fica em LF em qualquer sistema, igual ao que esta versionado.
+* text=auto eol=lf

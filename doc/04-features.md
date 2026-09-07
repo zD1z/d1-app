@@ -17,12 +17,12 @@ O site tem duas páginas e oito seções ao todo.
 
 ## Home (`/`)
 
-| Seção    | Componente        | O que faz                                                                                                      |
-| -------- | ----------------- | -------------------------------------------------------------------------------------------------------------- |
-| Hero     | `secoes/hero`     | `h1` com "D1 App" destacado em cor por fatiamento da string; subtítulo; dois botões (`#contato` e `#solucoes`) |
-| Soluções | `secoes/solucoes` | Quatro cartões de serviço com ícone SVG inline; abaixo, as quatro etapas de "como funciona" (`#como-funciona`) |
-| Quem faz | `secoes/quem-faz` | Credencial em prosa mais os três números; link para `/sobre`                                                   |
-| Contato  | `secoes/contato`  | Convite e botão `mailto:` com assunto "Tenho uma ideia" pré-preenchido                                         |
+| Seção    | Componente        | O que faz                                                                                                                                               |
+| -------- | ----------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| Hero     | `secoes/hero`     | `h1` com "D1 App" destacado em cor por fatiamento da string; subtítulo; dois botões (`#contato` e `#solucoes`)                                          |
+| Soluções | `secoes/solucoes` | Quatro cartões de serviço com ícone SVG inline; abaixo, as quatro etapas de "como funciona" (`#como-funciona`)                                          |
+| Quem faz | `secoes/quem-faz` | Credencial em prosa mais os três números; link para `/sobre`                                                                                            |
+| Contato  | `secoes/contato`  | Botão que abre o formulário de ideia num `<dialog>`, com o `mailto:` logo abaixo como alternativa. Sem endpoint configurado, volta a ser só o `mailto:` |
 
 ## Sobre (`/sobre`, carregada sob demanda)
 
@@ -32,6 +32,23 @@ O site tem duas páginas e oito seções ao todo.
 | Tecnologias   | `secoes/tecnologias`   | Seis grupos, 20 tecnologias. Cada cartão traz ícone da marca (ou monograma) e uma frase de prova. A cor oficial da marca entra só no hover, por custom property |
 | Combinações   | `secoes/combinacoes`   | Três arranjos de stack com as peças em etiquetas                                                                                                                |
 | Chamada final | `secoes/chamada-final` | Devolve o visitante para a oferta da home                                                                                                                       |
+
+## Formulário de ideia
+
+Abre no botão da seção de contato, dentro de um `<dialog>` nativo.
+
+- Dois campos: a ideia, e um campo livre de contato que aceita e-mail ou
+  WhatsApp.
+- Validação na hora do envio, com a mensagem sob o campo que falhou.
+- Campo-armadilha invisível, carimbo de abertura e desafio do Turnstile, os três
+  conferidos do lado do servidor.
+- Estados de envio na própria caixa: enviando, recebido, ou o erro com uma frase
+  por caso, sempre oferecendo o e-mail como saída.
+- Uma linha dizendo que o contato serve só para responder.
+
+**Enquanto `core/config/contato.ts` estiver vazio, o formulário não aparece** e
+a seção volta a ser o `mailto:` de sempre. É o estado do site antes de a
+infraestrutura de envio subir, e a rede de segurança se ela cair.
 
 ## Comportamentos transversais
 
