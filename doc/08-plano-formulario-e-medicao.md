@@ -18,7 +18,7 @@ este documento passa a valer sobre eles.
 
 | Assunto             | Decisão                                                                   |
 | ------------------- | ------------------------------------------------------------------------- |
-| Envio do e-mail     | AWS Lambda com Function URL, entregando pelo SES                          |
+| Envio do e-mail     | AWS Lambda atrás de um HTTP API, entregando pelo SES                      |
 | Linguagem do Lambda | Node 22 com TypeScript                                                    |
 | Remetente           | `ideias@d1.app.br`, com o domínio verificado no SES                       |
 | Anti-spam           | Campo-armadilha, trava de tempo, limite por IP **e** Cloudflare Turnstile |
@@ -61,7 +61,7 @@ navegador                        AWS
 formulário no <dialog>
   valida no cliente
   pega o token do Turnstile
-  POST JSON  ------------------> Function URL (HTTPS, sem API Gateway)
+  POST JSON  ------------------> HTTP API (CORS e limite de rajada no gateway)
                                    Lambda (Node 22)
                                      valida os campos
                                      confere o token no Turnstile
@@ -85,7 +85,7 @@ seu, e a chamada só acontece quando alguém decide falar com você.
 
 É o único acoplamento entre os dois repositórios. Mudou aqui, muda nos dois.
 
-`POST` na Function URL, `Content-Type: application/json`:
+`POST /contato` no HTTP API, `Content-Type: application/json`:
 
 | Campo       | Tipo   | Regra                                    |
 | ----------- | ------ | ---------------------------------------- |
@@ -101,6 +101,16 @@ por IP estourado; `502` quando o SES falha.
 
 CORS liberado só para `https://d1.app.br`, em `POST` e `OPTIONS`.
 
+> **A porta de entrada mudou durante a execução.** O plano previa Function URL,
+> que é mais curta e sai de graça. Ela não funcionou: esta conta da AWS recusa
+> invocação anônima, e toda chamada voltava 403 mesmo com `AuthType = NONE`, com
+> a política de recurso liberando `lambda:InvokeFunctionUrl` para `*`, numa URL
+> recém-criada e sem nenhuma política de organização em vigor. O HTTP API não
+> depende de permissão anônima: quem invoca é o gateway, com principal
+> identificado. Custa cerca de US$ 1 por milhão de requisições, contra zero da
+> Function URL, e em troca resolve o preflight sem invocar Lambda e limita
+> rajada antes de virar execução.
+
 ## Lote 6 — Infraestrutura de envio
 
 Repositório novo, privado. Nada aqui toca o repositório do site.
@@ -109,7 +119,7 @@ Repositório novo, privado. Nada aqui toca o repositório do site.
   OIDC do GitHub na conta, e a role de deploy com confiança restrita àquele
   repositório e à branch `main`. É o mínimo que precisa existir antes de a
   esteira conseguir aplicar qualquer coisa.
-- **Terraform:** função Lambda, Function URL com CORS, tabela DynamoDB do limite
+- **Terraform:** função Lambda, HTTP API com CORS, tabela DynamoDB do limite
   por IP com TTL, identidade e configuração do SES, política IAM de execução no
   mínimo necessário, e alarme no CloudWatch para pico de invocação.
 - **Lambda em TypeScript:** validação, verificação do Turnstile, contagem por
