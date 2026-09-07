@@ -33,6 +33,7 @@ src/
       icones/icones.ts          SVG paths de marca embutidos (Simple Icons, CC0)
       icones/icones-de-servico.ts  desenhos próprios da seção Soluções
       texto/bordao.ts           quebra do bordão em antes / destaque / depois
+      layout/folga-do-cabecalho.ts  altura do cabeçalho, lida do token do CSS
     layout/
       cabecalho/                barra fixa, menu mobile por signal
       rodape/
@@ -89,8 +90,10 @@ em `y=0` e o cabeçalho fixo cobre o título. O `scroll-padding-top` no
 `styles.css` continua valendo para a rolagem nativa do navegador, quando o `#`
 é processado antes de o Angular subir.
 
-**Os dois valores são 96 e precisam ser mudados juntos** se a altura do
-cabeçalho mudar.
+Os dois caminhos leem o mesmo número, o token `--altura-do-cabecalho` do
+`styles.css`: o CSS usa direto, e o inicializador o lê por
+`core/layout/folga-do-cabecalho.ts`. Mudar a altura do cabeçalho é mexer em um
+lugar só.
 
 ### Rotas: home eager, `/sobre` lazy
 

@@ -47,6 +47,7 @@ src/app/
     icones/icones.ts          SVG das marcas, embutidos
     icones/icones-de-servico.ts  desenhos dos quatro serviços
     texto/bordao.ts           quebra do bordão para destacar "D1 App"
+    layout/folga-do-cabecalho.ts  altura do cabeçalho, do token do CSS
   layout/
     cabecalho/                barra fixa + menu mobile
     rodape/

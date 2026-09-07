@@ -101,7 +101,19 @@ Branch: `refactor/altura-do-cabecalho`
 
 | Ponto | Ajuste |
 | --- | --- |
-| 11 | Declarar `--altura-do-cabecalho: 96px` em `styles.css`, usar a variável no `scroll-padding-top`, e ler o mesmo valor em `app.config.ts` via `getComputedStyle` no `provideAppInitializer`. Um valor, um lugar |
+| 11 | Declarar `--altura-do-cabecalho: 96px` em `styles.css`, usar a variável no `scroll-padding-top`, e ler o mesmo valor em `app.config.ts` via `getComputedStyle` no `provideAppInitializer`. Um valor, um lugar **(feito)** |
+
+O valor de reserva na leitura é zero, e não outro 96: o CSS chega ao navegador
+antes do JavaScript, então o token sempre existe, e o zero só apareceria se
+alguém apagasse o token. Nesse caso a âncora volta a pousar sob o cabeçalho e o
+defeito aparece na primeira navegação por menu, em vez de ficar escondido atrás
+de uma cópia do número.
+
+A leitura mora em `core/layout/folga-do-cabecalho.ts`, com teste, e não inline
+no `app.config.ts`. Tentar provar o deslocamento por screenshot em navegador
+headless não funcionou, porque a captura acontece antes de o roteador terminar a
+rolagem. Com a função isolada, o teste fixa o token, muda o token e apaga o
+token, e cobre os três casos sem subir a aplicação.
 
 ## Fora de código: decisões de produto
 
