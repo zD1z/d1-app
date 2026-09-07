@@ -1,7 +1,7 @@
 <dialog #dialogo class="ideia" aria-labelledby="titulo-da-ideia" (close)="aoFechar()">
   <div class="ideia__topo">
     <h3 class="ideia__titulo" id="titulo-da-ideia">Conte a sua ideia</h3>
-    <button type="button" class="ideia__fechar" (click)="fechar()">
+    <button type="button" class="ideia__fechar" [disabled]="enviando()" (click)="fechar()">
       <span class="apenas-leitor">Fechar</span>
       <span aria-hidden="true">&times;</span>
     </button>
@@ -13,7 +13,15 @@
       <button type="button" class="botao botao--primario" (click)="fechar()">Fechar</button>
     </div>
   } @else {
-    <form class="ideia__formulario" [formGroup]="formulario" (ngSubmit)="enviar()">
+    <!-- `inert` durante o envio tira a caixa inteira do alcance do mouse, do
+         teclado e do leitor de tela. O botao desabilitado sozinho nao bastaria:
+         o Enter dentro do campo de texto continuaria submetendo. -->
+    <form
+      class="ideia__formulario"
+      [formGroup]="formulario"
+      [attr.inert]="enviando() ? '' : null"
+      (ngSubmit)="enviar()"
+    >
       <p class="ideia__intro">
         Não precisa de termo técnico nem de requisito pronto. Descreva o problema como você contaria
         para alguém do seu negócio.
@@ -64,14 +72,22 @@
         <p class="ideia__erro" role="alert">{{ mensagemDeErro() }}</p>
       }
 
-      <button type="submit" class="botao botao--primario ideia__enviar" [disabled]="enviando()">
-        {{ enviando() ? 'Enviando...' : 'Enviar ideia' }}
-      </button>
+      <button type="submit" class="botao botao--primario ideia__enviar">Enviar ideia</button>
 
       <p class="ideia__aviso">
         Uso o que você escrever só para responder esta mensagem. Nada vai para lista, anúncio ou
         terceiro.
       </p>
     </form>
+
+    <!-- Cobre a caixa inteira enquanto o envio acontece. O `<dialog>` ja e
+         modal, entao a pagina atras ja esta bloqueada, e esta camada fecha o que
+         faltava: nada na tela aceita clique ate a resposta chegar. -->
+    @if (enviando()) {
+      <div class="ideia__bloqueio" role="status" aria-live="polite">
+        <span class="ideia__girador" aria-hidden="true"></span>
+        <p class="ideia__enviando">Enviando minha ideia...</p>
+      </div>
+    }
   }
 </dialog>

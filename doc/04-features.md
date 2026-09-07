@@ -44,6 +44,11 @@ Abre no botão da seção de contato, dentro de um `<dialog>` nativo.
   conferidos do lado do servidor.
 - Estados de envio na própria caixa: enviando, recebido, ou o erro com uma frase
   por caso, sempre oferecendo o e-mail como saída.
+- Enquanto envia, uma camada cobre a caixa inteira com "Enviando minha ideia..."
+  e o formulário fica `inert`. O botão desabilitado sozinho não bastava: o
+  `Enter` dentro do campo de texto continuaria submetendo.
+- O desafio é descartado ao fechar e desenhado de novo ao abrir. O token vale uma
+  vez só, e sem isso a caixa da Cloudflare vinha vazia na segunda abertura.
 - Uma linha dizendo que o contato serve só para responder.
 
 **Enquanto `core/config/contato.ts` estiver vazio, o formulário não aparece** e
