@@ -7,6 +7,9 @@ Angular sem servidor: o build gera arquivos estáticos e nada roda no backend. A
 escolha do framework é para o que vem depois, seja integração com API, área logada
 ou formulário de contato de verdade, sem precisar reescrever a base.
 
+O contexto longo do projeto, com objetivo, decisões técnicas e o estado atual,
+está em [`doc/`](doc/README.md).
+
 ## Rodar localmente
 
 ```bash
@@ -30,9 +33,9 @@ edite esse arquivo e nada mais.
 O formato está descrito em `src/app/core/models/conteudo.ts`, com um comentário
 por campo dizendo onde ele aparece e que tamanho de texto cabe.
 
-> Os campos marcados com `[PREENCHER]` ainda são rascunho e **aparecem assim no
-> site**. Estão ali de propósito, para a página ter forma real antes do conteúdo
-> real. Troque todos antes de apontar o domínio.
+> Campos ainda em rascunho ficam marcados com `[PREENCHER]` e **aparecem assim
+> no site**, de propósito, para a página ter forma real antes do conteúdo real.
+> Hoje não resta nenhum: todo o conteúdo publicado é real.
 
 ## Estrutura
 
@@ -41,18 +44,25 @@ src/app/
   core/
     models/conteudo.ts        formato do conteúdo
     conteudo/perfil.ts        o conteúdo em si  <- edite aqui
+    icones/icones.ts          SVG das marcas, embutidos
   layout/
     cabecalho/                barra fixa + menu mobile
     rodape/
-  paginas/home/
-    home.ts                   monta as seções na ordem
-    secoes/
-      hero/                   nome, chamada, números
-      sobre/                  bio + habilidades
-      trajetoria/             linha do tempo profissional
-      projetos/               cartões de projeto
-      solucoes/               serviços + como funciona
-      contato/
+  paginas/
+    home/                     a oferta
+      home.ts                 monta as seções na ordem
+      secoes/
+        hero/                 bordão, subtítulo e os dois botões
+        solucoes/             serviços + como funciona
+        quem-faz/             credencial + números, leva para /sobre
+        contato/
+    sobre/                    o aprofundamento técnico, carregada sob demanda
+      pagina-sobre.ts         monta as seções na ordem
+      secoes/
+        apresentacao/         nome, resumo de carreira e LinkedIn
+        tecnologias/          seis grupos, cada item com uma frase de prova
+        combinacoes/          arranjos típicos de stack
+        chamada-final/        devolve o visitante para a home
 ```
 
 Os tokens de cor, tipografia e espaçamento ficam em `src/styles.css`, junto das
