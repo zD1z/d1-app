@@ -2,6 +2,7 @@ import { describe, expect, it, vi } from 'vitest';
 import { enviarIdeia, type PedidoDeContato } from './envio';
 
 const PEDIDO: PedidoDeContato = {
+  nome: 'Diego',
   ideia: 'Preciso de um sistema para controlar as entregas da minha loja.',
   contato: 'pessoa@exemplo.com.br',
   abertoEm: 1_800_000_000_000,

@@ -3,13 +3,39 @@ import {
   CONTATO_MAXIMO,
   IDEIA_MAXIMA,
   IDEIA_MINIMA,
+  NOME_MAXIMO,
   erroDaIdeia,
   erroDoContato,
+  erroDoNome,
   pareceCelularComDdd,
   pareceEmail,
 } from './validacao';
 
 const IDEIA_BOA = 'Preciso de um sistema para controlar as entregas da minha loja.';
+
+describe('erroDoNome', () => {
+  it.each(['Diego', 'Ana Paula de Souza', 'Zé'])('aceita %s', (valor) => {
+    expect(erroDoNome(valor)).toBeNull();
+  });
+
+  it('cobra preenchimento quando está vazio', () => {
+    expect(erroDoNome('   ')).toContain('chamo');
+  });
+
+  it('recusa uma letra só', () => {
+    expect(erroDoNome('D')).toContain('curto');
+  });
+
+  it('recusa acima do limite', () => {
+    expect(erroDoNome('a'.repeat(NOME_MAXIMO + 1))).toContain(String(NOME_MAXIMO));
+  });
+
+  // Nome sem letra nenhuma é teclado batido ou robô. Sobrenome, acento e
+  // maiúscula continuam livres: gente se apresenta como quer.
+  it('recusa nome sem letra', () => {
+    expect(erroDoNome('12345')).toContain('letras');
+  });
+});
 
 describe('erroDaIdeia', () => {
   it('aceita uma ideia com tamanho de gente', () => {

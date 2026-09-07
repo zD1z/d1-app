@@ -5,6 +5,7 @@
 
 /** O corpo que viaja. É o contrato, e o espelho de `src/tipos.ts` no d1-app-api. */
 export interface PedidoDeContato {
+  readonly nome: string;
   readonly ideia: string;
   readonly contato: string;
   readonly abertoEm: number;

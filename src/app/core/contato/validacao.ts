@@ -13,6 +13,8 @@
  * domínio, em vez de a resposta se perder por um contato que não existe.
  */
 
+export const NOME_MINIMO = 2;
+export const NOME_MAXIMO = 80;
 export const IDEIA_MINIMA = 20;
 export const IDEIA_MAXIMA = 4000;
 export const CONTATO_MINIMO = 5;
@@ -84,6 +86,29 @@ function diagnosticoDoCelular(contato: string): DiagnosticoDoCelular {
     return 'sem-nove';
   }
   return 'ok';
+}
+
+/**
+ * Como chamar quem escreveu, na hora de responder. Exige uma letra de verdade,
+ * o que recusa `...` e `12345` sem exigir sobrenome, acento ou formato: gente se
+ * apresenta como quer, e cobrar nome completo aqui só espantaria.
+ */
+export function erroDoNome(valor: string): string | null {
+  const nome = valor.trim();
+
+  if (nome.length === 0) {
+    return 'Diz como eu te chamo.';
+  }
+  if (nome.length < NOME_MINIMO) {
+    return `Nome curto demais. Pelo menos ${NOME_MINIMO} letras.`;
+  }
+  if (nome.length > NOME_MAXIMO) {
+    return `Ficou longo demais. O limite é ${NOME_MAXIMO} caracteres.`;
+  }
+  if (!/\p{L}/u.test(nome)) {
+    return 'Escreva o seu nome, com letras.';
+  }
+  return null;
 }
 
 /** `null` quando está tudo certo. Quando não, o texto que aparece sob o campo. */
