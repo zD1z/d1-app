@@ -49,6 +49,10 @@ Abre no botão da seção de contato, dentro de um `<dialog>` nativo.
   `Enter` dentro do campo de texto continuaria submetendo.
 - O desafio é descartado ao fechar e desenhado de novo ao abrir. O token vale uma
   vez só, e sem isso a caixa da Cloudflare vinha vazia na segunda abertura.
+- Estourada a cota de envios da hora, a caixa troca de conteúdo por um alerta com
+  saída, em vez de um aviso embaixo do formulário: insistir não adianta, e deixar
+  os campos ali convidaria a tentar de novo. O botão fecha e devolve a página ao
+  topo. O texto escrito é preservado para a tentativa seguinte.
 - Uma linha dizendo que o contato serve só para responder.
 
 **Enquanto `core/config/contato.ts` estiver vazio, o formulário não aparece** e

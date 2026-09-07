@@ -1,6 +1,7 @@
 import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed, type ComponentFixture } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { ViewportScroller } from '@angular/common';
 import { DesafioDeSeguranca, EnvioDeIdeias } from '../../../../../core/contato/servicos';
 import type { ResultadoDoEnvio } from '../../../../../core/contato/envio';
 import { FormularioDeIdeia } from './formulario-de-ideia';
@@ -19,6 +20,7 @@ describe('FormularioDeIdeia', () => {
   let reset: ReturnType<typeof vi.fn>;
   let remove: ReturnType<typeof vi.fn>;
   let desenhouEm: HTMLElement[];
+  let rolarPara: ReturnType<typeof vi.fn>;
   let desafioDevolveToken: boolean;
 
   function preencher(ideia = IDEIA_BOA, contato = 'pessoa@exemplo.com.br'): void {
@@ -65,11 +67,14 @@ describe('FormularioDeIdeia', () => {
       }),
     };
 
+    rolarPara = vi.fn();
+
     TestBed.configureTestingModule({
       providers: [
         provideZonelessChangeDetection(),
         { provide: EnvioDeIdeias, useValue: { enviar } },
         { provide: DesafioDeSeguranca, useValue: desafio },
+        { provide: ViewportScroller, useValue: { scrollToPosition: rolarPara } },
       ],
     });
 
@@ -124,7 +129,6 @@ describe('FormularioDeIdeia', () => {
   });
 
   it.each([
-    ['limite', 'várias mensagens'],
     ['falha', 'não completou'],
     ['recusado', 'não passou'],
   ])('mostra recado próprio quando o envio volta %s', async (resultado, trecho) => {
@@ -218,6 +222,55 @@ describe('FormularioDeIdeia', () => {
 
       expect(raiz.querySelector('.ideia__bloqueio')).toBeNull();
       expect(raiz.querySelector('.ideia__recado')).not.toBeNull();
+    });
+  });
+
+  describe('quando a cota da hora acaba', () => {
+    beforeEach(() => {
+      enviar.mockResolvedValue('limite');
+    });
+
+    // Tela inteira, e não aviso embaixo do formulário: insistir não adianta, e
+    // deixar os campos ali convidaria a tentar de novo.
+    it('troca o formulário por um alerta com saída', async () => {
+      await abrir();
+      preencher();
+      await submeter();
+
+      const alerta = raiz.querySelector('.ideia__final--limite');
+      expect(alerta?.getAttribute('role')).toBe('alert');
+      expect(alerta?.textContent).toContain('última hora');
+      expect(raiz.querySelector('form')).toBeNull();
+      expect(raiz.querySelector('.ideia__erro')).toBeNull();
+    });
+
+    it('fecha e devolve a página ao topo no Ok', async () => {
+      await abrir();
+      preencher();
+      await submeter();
+
+      raiz.querySelector('.ideia__final--limite button')?.dispatchEvent(new Event('click'));
+      await fixture.whenStable();
+
+      expect(rolarPara).toHaveBeenCalledWith([0, 0]);
+      expect((raiz.querySelector('dialog') as HTMLDialogElement).close).toHaveBeenCalled();
+    });
+
+    // A cota é que acabou, não o texto. Reabrir e ter que digitar tudo de novo
+    // seria castigo dobrado.
+    it('preserva o que foi escrito para a próxima tentativa', async () => {
+      await abrir();
+      preencher();
+      await submeter();
+
+      raiz.querySelector('.ideia__final--limite button')?.dispatchEvent(new Event('click'));
+      await fixture.whenStable();
+
+      enviar.mockResolvedValue('enviado');
+      await abrir();
+
+      expect(raiz.querySelector('form')).not.toBeNull();
+      expect(raiz.querySelector('textarea')?.value).toBe(IDEIA_BOA);
     });
   });
 

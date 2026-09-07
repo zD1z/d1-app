@@ -12,6 +12,35 @@
       <p class="ideia__recado">Recebido. Respondo no contato que você deixou.</p>
       <button type="button" class="botao botao--primario" (click)="fechar()">Fechar</button>
     </div>
+  } @else if (estado() === 'limite') {
+    <!-- Tela inteira, e nao aviso embaixo do formulario: quando a cota da hora
+         acaba, insistir nao adianta, e deixar os campos ali convidaria a tentar
+         de novo. O texto e o e-mail continuam a saida possivel. -->
+    <div class="ideia__final ideia__final--limite" role="alert">
+      <span class="ideia__sinal" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.6"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path
+            d="M11 3.5a1.15 1.15 0 0 1 2 0l8.2 15.4a1.15 1.15 0 0 1-1 1.7H3.8a1.15 1.15 0 0 1-1-1.7z"
+          />
+          <path d="M12 9.5v4.2" />
+          <path d="M12 17.1h.01" />
+        </svg>
+      </span>
+
+      <p class="ideia__recado">
+        Já chegaram várias mensagens deste dispositivo na última hora. Tente de novo mais tarde, ou
+        me escreva por e-mail.
+      </p>
+
+      <button type="button" class="botao botao--primario" (click)="sairDoLimite()">Ok</button>
+    </div>
   } @else {
     <!-- `inert` durante o envio tira a caixa inteira do alcance do mouse, do
          teclado e do leitor de tela. O botao desabilitado sozinho nao bastaria:

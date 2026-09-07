@@ -185,6 +185,35 @@
   }
 }
 
+.ideia__final--limite {
+  align-items: center;
+  text-align: center;
+  gap: 14px;
+}
+
+/* Alerta em amarelo, e nao em vermelho: nada quebrou e ninguem errou, so a cota
+   da hora acabou. Vermelho aqui leria como falha da pessoa. */
+.ideia__sinal {
+  display: grid;
+  place-items: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(233, 163, 25, 0.14);
+  color: #e9a319;
+}
+
+.ideia__sinal svg {
+  width: 26px;
+  height: 26px;
+}
+
+.ideia__final--limite .ideia__recado {
+  max-width: 42ch;
+  color: var(--texto-suave);
+  font-size: 1rem;
+}
+
 .ideia__recado {
   margin: 0;
   font-size: 1.05rem;
