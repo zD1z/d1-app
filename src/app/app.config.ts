@@ -8,10 +8,8 @@ import {
 import { ViewportScroller } from '@angular/common';
 import { provideRouter, withInMemoryScrolling } from '@angular/router';
 
+import { folgaDoCabecalho } from './core/layout/folga-do-cabecalho';
 import { routes } from './app.routes';
-
-/** Altura do cabeçalho fixo mais um respiro. Ver `setOffset` abaixo. */
-const FOLGA_DO_CABECALHO = 96;
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -30,8 +28,11 @@ export const appConfig: ApplicationConfig = {
     // `scroll-margin` entram na conta. Sem este offset o alvo pousa em y=0 e o
     // cabecalho fixo cobre o titulo. O CSS continua valendo para a rolagem
     // nativa, quando o navegador processa o # antes de o Angular subir.
+    //
+    // A altura tem uma fonte so, o token `--altura-do-cabecalho` do styles.css,
+    // lido por `folgaDoCabecalho`. Mexer no token move o CSS e o offset juntos.
     provideAppInitializer(() => {
-      inject(ViewportScroller).setOffset([0, FOLGA_DO_CABECALHO]);
+      inject(ViewportScroller).setOffset([0, folgaDoCabecalho()]);
     }),
   ],
 };

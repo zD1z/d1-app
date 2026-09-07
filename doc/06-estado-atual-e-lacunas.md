@@ -86,9 +86,10 @@ O workflow roda `npm ci` e `npm run build`, e mais nada. Não há lint, não há
 `npm test`, não há checagem de formatação com o Prettier já instalado, nem
 auditoria de acessibilidade ou performance.
 
-### 11. `app.css` e o duplo 96
+### 11. O duplo 96 — **resolvido**
 
-A altura do cabeçalho aparece como `96` em dois lugares independentes
+A altura do cabeçalho aparecia como `96` em dois lugares independentes
 (`FOLGA_DO_CABECALHO` em `app.config.ts` e `scroll-padding-top` em
-`styles.css`). Mudar um sem o outro quebra a rolagem por âncora de um dos dois
-caminhos, e nada avisa.
+`styles.css`), e mudar um sem o outro quebrava a rolagem por âncora de um dos
+dois caminhos sem aviso. Agora o valor é o token `--altura-do-cabecalho` no
+`styles.css`, e o `app.config.ts` o lê com `getComputedStyle`.
