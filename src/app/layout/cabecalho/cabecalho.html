@@ -7,6 +7,7 @@
     </a>
 
     <button
+      #alternador
       type="button"
       class="cabecalho__alternar"
       [attr.aria-expanded]="menuAberto()"
@@ -34,7 +35,7 @@
               class="menu__link"
               [routerLink]="item.rota"
               [fragment]="item.fragmento"
-              routerLinkActive="menu__link--ativo"
+              [routerLinkActive]="classeDeAtivo(item)"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="fecharMenu()"
               >{{ item.rotulo }}</a

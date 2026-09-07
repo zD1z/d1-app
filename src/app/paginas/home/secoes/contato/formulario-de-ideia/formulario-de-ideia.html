@@ -9,7 +9,28 @@
 
   @if (estado() === 'enviado') {
     <div class="ideia__final" role="status">
+      <span class="ideia__sinal ideia__sinal--ok" aria-hidden="true">
+        <svg
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="1.8"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+        >
+          <path d="M4.5 12.5 9.5 17.5 19.5 7" />
+        </svg>
+      </span>
+
       <p class="ideia__recado">Recebido. Respondo no contato que você deixou.</p>
+
+      <!-- Quem acabou de mandar a ideia é a pessoa mais interessada do site, e
+           até aqui a única coisa oferecida a ela era fechar a caixa. -->
+      <p class="ideia__detalhe">
+        Enquanto isso, dá para ver
+        <a routerLink="/sobre">com o que eu construo</a>.
+      </p>
+
       <button type="button" class="botao botao--primario" (click)="fechar()">Fechar</button>
     </div>
   } @else if (estado() === 'limite') {
@@ -17,7 +38,7 @@
          acaba, insistir nao adianta, e deixar os campos ali convidaria a tentar
          de novo. O texto e o e-mail continuam a saida possivel. -->
     <div class="ideia__final ideia__final--limite" role="alert">
-      <span class="ideia__sinal" aria-hidden="true">
+      <span class="ideia__sinal ideia__sinal--aviso" aria-hidden="true">
         <svg
           viewBox="0 0 24 24"
           fill="none"
@@ -56,55 +77,77 @@
         para alguém do seu negócio.
       </p>
 
-      <label class="campo">
-        <span class="campo__rotulo">Seu nome</span>
+      <!-- O rótulo é `<label for>` e a mensagem de erro fica fora dele, ligada
+           por `aria-describedby`. Com o erro dentro do `<label>`, como estava, o
+           texto virava parte do **nome** do campo, e o leitor de tela anunciava
+           "A sua ideia Conte um pouco mais" como se fosse o rótulo. -->
+      <div class="campo">
+        <label class="campo__rotulo" for="campo-nome">Seu nome</label>
         <input
+          id="campo-nome"
           class="campo__entrada"
           formControlName="nome"
           type="text"
           autocomplete="name"
+          autofocus
           [maxlength]="limiteDoNome"
           [attr.aria-invalid]="mostrarErro('nome') && formulario.controls.nome.invalid"
+          [attr.aria-describedby]="
+            mostrarErro('nome') && formulario.controls.nome.invalid ? 'erro-nome' : null
+          "
           placeholder="Como eu te chamo"
           (blur)="marcarTocado('nome')"
         />
         @if (mostrarErro('nome') && formulario.controls.nome.errors; as erros) {
-          <span class="campo__erro">{{ erros['mensagem'] }}</span>
+          <span class="campo__erro" id="erro-nome">{{ erros['mensagem'] }}</span>
         }
-      </label>
+      </div>
 
-      <label class="campo">
-        <span class="campo__rotulo">A sua ideia</span>
+      <div class="campo">
+        <label class="campo__rotulo" for="campo-ideia">A sua ideia</label>
         <textarea
+          id="campo-ideia"
           class="campo__entrada campo__entrada--texto"
           formControlName="ideia"
           rows="6"
           [maxlength]="limiteDaIdeia"
           [attr.aria-invalid]="mostrarErro('ideia') && formulario.controls.ideia.invalid"
+          [attr.aria-describedby]="
+            mostrarErro('ideia') && formulario.controls.ideia.invalid ? 'erro-ideia' : null
+          "
           placeholder="Hoje eu controlo as entregas numa planilha e sempre some alguma coisa..."
           (blur)="marcarTocado('ideia')"
         ></textarea>
-        @if (mostrarErro('ideia') && formulario.controls.ideia.errors; as erros) {
-          <span class="campo__erro">{{ erros['mensagem'] }}</span>
+        @if (restanteDaIdeia() <= avisarRestante) {
+          <span class="campo__contador" role="status">
+            {{ restanteDaIdeia() }} caracteres restantes
+          </span>
         }
-      </label>
+        @if (mostrarErro('ideia') && formulario.controls.ideia.errors; as erros) {
+          <span class="campo__erro" id="erro-ideia">{{ erros['mensagem'] }}</span>
+        }
+      </div>
 
-      <label class="campo">
-        <span class="campo__rotulo">Onde eu respondo</span>
+      <div class="campo">
+        <label class="campo__rotulo" for="campo-contato">Onde eu respondo</label>
         <input
+          id="campo-contato"
           class="campo__entrada"
           formControlName="contato"
           type="text"
           autocomplete="email"
           [maxlength]="limiteDoContato"
           [attr.aria-invalid]="mostrarErro('contato') && formulario.controls.contato.invalid"
+          [attr.aria-describedby]="
+            mostrarErro('contato') && formulario.controls.contato.invalid ? 'erro-contato' : null
+          "
           placeholder="seu@email.com ou (11) 98888-7777"
           (blur)="marcarTocado('contato')"
         />
         @if (mostrarErro('contato') && formulario.controls.contato.errors; as erros) {
-          <span class="campo__erro">{{ erros['mensagem'] }}</span>
+          <span class="campo__erro" id="erro-contato">{{ erros['mensagem'] }}</span>
         }
-      </label>
+      </div>
 
       <!-- A armadilha. Fora da tela, fora da ordem de tabulação e fora do leitor
            de tela: só robô que preenche tudo cai nela. -->

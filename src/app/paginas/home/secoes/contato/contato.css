@@ -1,9 +1,12 @@
+/* O gradiente radial de acento que ficava no topo da caixa saiu pelo mesmo
+   motivo do brilho do hero: a 10% de opacidade sobre o fundo do cartão ele não
+   chegava a 1,1:1 de diferença. A borda em acento continua, e agora é ela
+   sozinha que marca esta caixa como a área de ação da página. */
 .contato__caixa {
-  padding: 56px;
+  padding: var(--e-9);
   border: 1px solid var(--acento-borda);
   border-radius: var(--raio);
-  background:
-    radial-gradient(ellipse at top left, var(--acento-fundo), transparent 60%), var(--fundo-cartao);
+  background: var(--cartao);
   text-align: center;
 }
 
@@ -13,8 +16,8 @@
 
 .contato__convite {
   max-width: 58ch;
-  margin: 0 auto 32px;
-  font-size: 1.05rem;
+  margin: 0 auto var(--e-7);
+  font-size: var(--t-md);
   color: var(--texto-suave);
 }
 
@@ -22,7 +25,7 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
-  gap: 12px;
+  gap: var(--e-3);
 }
 
 /* O e-mail é um endereço: monoespaçado lê melhor. Vale para o botão que é o
@@ -33,13 +36,13 @@
 }
 
 .contato__alternativa {
-  margin-top: 16px;
-  font-size: 0.9rem;
+  margin-top: var(--e-4);
+  font-size: var(--t-sm);
   color: var(--texto-fraco);
 }
 
 @media (max-width: 640px) {
   .contato__caixa {
-    padding: 32px 22px;
+    padding: var(--e-7) var(--e-6);
   }
 }

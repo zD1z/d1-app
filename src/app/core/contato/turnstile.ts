@@ -15,6 +15,12 @@ export interface OpcoesDoDesafio {
   readonly 'expired-callback': () => void;
   readonly theme: 'auto' | 'light' | 'dark';
   readonly language: string;
+  /**
+   * `flexible` faz a caixa do desafio acompanhar a largura do contêiner. No
+   * tamanho padrão ela tem 300px fixos, e dentro do diálogo a 360px de tela
+   * sobram 288px: o widget estourava para fora da caixa.
+   */
+  readonly size: 'normal' | 'flexible' | 'compact';
 }
 
 export interface ApiDoTurnstile {

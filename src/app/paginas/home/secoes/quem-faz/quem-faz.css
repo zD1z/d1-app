@@ -1,29 +1,35 @@
 .quem-faz__cargo {
-  margin-top: 6px;
-  margin-bottom: 20px;
+  margin-top: var(--e-2);
+  margin-bottom: var(--e-5);
   font-family: var(--fonte-mono);
-  font-size: 0.92rem;
-  color: var(--acento);
+  font-size: var(--t-sm);
+  color: var(--texto-suave);
 }
 
 .quem-faz__numeros {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
-  gap: 24px;
-  margin: 0 0 36px;
-  padding-top: 28px;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: var(--e-6);
+  margin: 0 0 var(--e-8);
+  padding-top: var(--e-7);
   border-top: 1px solid var(--borda);
 }
 
+/* Os três números são a única prova quantitativa do site, e estavam saindo a
+   27px: menores que o título da seção e do mesmo peso visual que um subtítulo
+   de cartão. A credencial perdia para o rótulo administrativo em cima dela.
+   `tabular-nums` alinha os dígitos entre as três colunas. */
 .quem-faz__valor {
-  font-size: 1.7rem;
+  font-size: var(--t-2xl);
   font-weight: 700;
+  line-height: 1.05;
   letter-spacing: -0.03em;
+  font-variant-numeric: tabular-nums;
 }
 
 .quem-faz__rotulo {
-  margin: 4px 0 0;
-  font-size: 0.88rem;
+  margin: var(--e-2) 0 0;
+  font-size: var(--t-sm);
   color: var(--texto-fraco);
   max-width: 28ch;
 }

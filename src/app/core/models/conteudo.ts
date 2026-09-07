@@ -27,6 +27,13 @@ export interface Oferta {
   readonly bordaoDestaque: string;
   /** Um parágrafo. Explica o bordão para quem não é técnico. */
   readonly subtitulo: string;
+  /**
+   * Uma linha, logo abaixo da chamada principal do hero. Diz o que a pessoa
+   * ganha ao clicar, antes de ela clicar. É a mesma promessa que o `convite`
+   * do contato já fazia, trazida para o alto da página: quem lê o bordão
+   * hesita ali, e não três mil pixels adiante.
+   */
+  readonly reasseguranca: string;
   /** Duas ou três frases. Fecha a faixa "quem faz" da home e leva para /sobre. */
   readonly quemFaz: string;
 }

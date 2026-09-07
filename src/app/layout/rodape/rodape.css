@@ -1,7 +1,7 @@
 .rodape {
   border-top: 1px solid var(--borda);
-  background: var(--fundo-elevado);
-  padding: 40px 0;
+  background: var(--superficie);
+  padding: var(--e-8) 0;
 }
 
 .rodape__grade {
@@ -9,7 +9,7 @@
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 16px 32px;
+  gap: var(--e-4) var(--e-7);
 }
 
 .rodape__marca {
@@ -26,14 +26,14 @@
 
 .rodape__nota,
 .rodape__creditos {
-  font-size: 0.85rem;
+  font-size: var(--t-sm);
   color: var(--texto-fraco);
 }
 
 .rodape__links {
   display: flex;
-  gap: 20px;
-  font-size: 0.9rem;
+  gap: var(--e-5);
+  font-size: var(--t-sm);
 }
 
 @media (max-width: 640px) {
