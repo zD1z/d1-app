@@ -3,7 +3,7 @@
     <!-- A marca e o mesmo arquivo do favicon: uma fonte da verdade para o
          desenho, e o navegador ja o tem em cache quando chega aqui. -->
     <a class="marca" routerLink="/" (click)="fecharMenu()">
-      <img class="marca__icone" src="favicon.svg" width="36" height="36" alt="d1.app.br">
+      <img class="marca__icone" src="favicon.svg" width="36" height="36" alt="d1.app.br" />
     </a>
 
     <button
@@ -14,10 +14,19 @@
       (click)="alternarMenu()"
     >
       <span class="apenas-leitor">{{ menuAberto() ? 'Fechar menu' : 'Abrir menu' }}</span>
-      <span class="cabecalho__hamburguer" [class.cabecalho__hamburguer--aberto]="menuAberto()" aria-hidden="true"></span>
+      <span
+        class="cabecalho__hamburguer"
+        [class.cabecalho__hamburguer--aberto]="menuAberto()"
+        aria-hidden="true"
+      ></span>
     </button>
 
-    <nav id="menu-principal" class="menu" [class.menu--aberto]="menuAberto()" aria-label="Navegação principal">
+    <nav
+      id="menu-principal"
+      class="menu"
+      [class.menu--aberto]="menuAberto()"
+      aria-label="Navegação principal"
+    >
       <ul class="menu__lista">
         @for (item of itens; track item.rotulo) {
           <li>
@@ -28,11 +37,14 @@
               routerLinkActive="menu__link--ativo"
               [routerLinkActiveOptions]="{ exact: true }"
               (click)="fecharMenu()"
-            >{{ item.rotulo }}</a>
+              >{{ item.rotulo }}</a
+            >
           </li>
         }
         <li>
-          <a class="menu__acao" routerLink="/" fragment="contato" (click)="fecharMenu()">Falar comigo</a>
+          <a class="menu__acao" routerLink="/" fragment="contato" (click)="fecharMenu()"
+            >Falar comigo</a
+          >
         </li>
       </ul>
     </nav>

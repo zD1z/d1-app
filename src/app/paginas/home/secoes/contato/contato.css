@@ -3,8 +3,7 @@
   border: 1px solid var(--acento-borda);
   border-radius: var(--raio);
   background:
-    radial-gradient(ellipse at top left, var(--acento-fundo), transparent 60%),
-    var(--fundo-cartao);
+    radial-gradient(ellipse at top left, var(--acento-fundo), transparent 60%), var(--fundo-cartao);
   text-align: center;
 }
 

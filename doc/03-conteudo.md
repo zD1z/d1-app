@@ -19,12 +19,14 @@ Exceções conhecidas (texto que está no template, não no `perfil.ts`):
 ## O modelo, bloco a bloco
 
 ### `perfil: Perfil`
+
 Identidade. `nome`, `titulo`, `chamada`, `localizacao` e `resumoDeCarreira`
 (uma linha no lugar da linha do tempo). Cinco campos, todos renderizados: os
 antigos `apelido`, `desdeAno` e `disponivel` foram removidos por não aparecerem
 em lugar nenhum.
 
 ### `oferta: Oferta`
+
 A oferta comercial da home. `bordao` vira o `h1`; `bordaoDestaque` é o trecho
 que sai em cor e **precisa existir literalmente dentro de `bordao`** — o
 componente `Hero` fatia a string por `indexOf` e cai para "sem destaque" se não
@@ -32,10 +34,12 @@ encontrar. `subtitulo` explica o bordão para quem não é técnico. `quemFaz` f
 a faixa de credencial e leva para `/sobre`.
 
 ### `numeros: Numero[]`
+
 Três pares `valor` / `rotulo` exibidos na seção "quem faz": 15 anos, 11 anos em
 automação, 4 setores.
 
 ### `tecnologias: GrupoDeTecnologias[]`
+
 O coração da `/sobre`. Seis grupos — Frontend, Backend, Dados, Nuvem e
 infraestrutura, Qualidade, IA aplicada — com 20 tecnologias no total. Cada item
 tem:
@@ -47,6 +51,7 @@ tem:
   esse campo não é opcional na prática.
 
 ### `combinacoes: Combinacao[]`
+
 Três arranjos típicos de stack — SaaS completo, Sistema interno sob medida,
 Integração e automação — cada um com `titulo`, `descricao` e `pecas` (nomes de
 tecnologia como texto livre). Existem para ligar a lista técnica de volta à
@@ -57,6 +62,7 @@ oferta comercial da home.
 > inconsistente em silêncio.
 
 ### `servicos: Servico[]`
+
 Os quatro tipos de trabalho contratáveis: sistema sob medida, automação de
 processo, dados que você já tem, integração entre sistemas. O campo `icone` é do
 tipo `ChaveDeIcone`, derivado das chaves de `ICONES_DE_SERVICO` em
@@ -65,10 +71,12 @@ tipo `ChaveDeIcone`, derivado das chaves de `ICONES_DE_SERVICO` em
 chave sem desenho não compila.
 
 ### `processo: EtapaDoProcesso[]`
+
 As quatro etapas do trabalho: conversa, escopo e proposta, construção com
 entregas visíveis, entrega e continuidade. Ancora o `#como-funciona` do menu.
 
 ### `contato: Contato`
+
 `email` (`danilop.silva.d1@gmail.com`), `linkedin` e `convite`. O componente
 `Contato` monta um `mailto:` com o assunto "Tenho uma ideia" já preenchido.
 
