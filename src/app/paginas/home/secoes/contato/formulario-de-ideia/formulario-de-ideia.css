@@ -178,9 +178,13 @@
   transition: border-color 0.15s ease;
 }
 
+/* Quatro linhas, e não seis. Com seis, a soma dos campos passava da altura
+   máxima da caixa e o desktop ganhava barra de rolagem dentro do modal — o
+   formulário inteiro deixava de caber de uma vez. O `resize: vertical` continua
+   ali para quem escrever muito puxar a caixa para baixo. */
 .campo__entrada--texto {
   resize: vertical;
-  min-height: 120px;
+  min-height: 104px;
   line-height: 1.55;
 }
 
