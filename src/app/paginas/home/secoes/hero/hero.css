@@ -1,32 +1,21 @@
+/* O brilho radial que ficava atrás do texto saiu. Ele usava o acento a 10% de
+   opacidade sobre um fundo quase preto: o pico do gradiente chegava a um delta
+   de ~1,1:1 contra o fundo, ou seja, ninguém enxergava. Custava uma camada de
+   composição para não entregar imagem nenhuma, e ainda era a assinatura visual
+   mais batida que existe. O respiro e a escala do título fazem o trabalho. */
 .hero {
-  position: relative;
-  padding: 128px 0 112px;
-  overflow: hidden;
+  padding: var(--e-12) 0 112px;
 }
 
-/* Brilho discreto atrás do texto. Puramente decorativo. */
-.hero::before {
-  content: '';
-  position: absolute;
-  top: -200px;
-  left: 50%;
-  width: min(820px, 130vw);
-  height: 520px;
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, var(--acento-fundo), transparent 68%);
-  pointer-events: none;
-}
-
-.hero__conteudo {
-  position: relative;
-  max-width: 880px;
-}
-
+/* A medida curta é do texto, e não do contêiner. Com `max-width` aqui, o bloco
+   do hero era centralizado numa caixa de 880px enquanto as outras seções usavam
+   os 1080px do `.container`: a borda esquerda do hero ficava cem pixels adiante
+   da borda de todo o resto da página, e nada alinhava com nada. */
 .hero__bordao {
-  font-size: clamp(2.5rem, 7.5vw, 4.5rem);
+  max-width: 880px;
+  font-size: var(--t-hero);
   line-height: 1.08;
-  margin-bottom: 28px;
-  text-wrap: balance;
+  margin-bottom: var(--e-7);
 }
 
 .hero__marca {
@@ -36,19 +25,29 @@
 
 .hero__subtitulo {
   max-width: 62ch;
-  font-size: clamp(1.05rem, 2.4vw, 1.3rem);
+  font-size: var(--t-destaque);
   color: var(--texto-suave);
-  margin-bottom: 40px;
+  margin-bottom: var(--e-8);
 }
 
 .hero__acoes {
   display: flex;
   flex-wrap: wrap;
-  gap: 12px;
+  gap: var(--e-3);
+}
+
+/* A promessa que derruba a hesitação estava só na quarta seção, a três mil
+   pixels de rolagem daqui. Quem lê o bordão precisa saber, antes de clicar, o
+   que ganha ao clicar. */
+.hero__reasseguranca {
+  margin-top: var(--e-4);
+  max-width: 52ch;
+  font-size: var(--t-sm);
+  color: var(--texto-fraco);
 }
 
 @media (max-width: 640px) {
   .hero {
-    padding: 72px 0 64px;
+    padding: 72px 0 var(--e-10);
   }
 }

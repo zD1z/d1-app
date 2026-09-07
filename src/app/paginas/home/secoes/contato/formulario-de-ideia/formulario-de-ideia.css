@@ -1,61 +1,139 @@
 /* O `<dialog>` nativo cuida do foco preso, do `Esc` e da camada por cima de
-   tudo. Biblioteca de modal aqui só repetiria o que o navegador já faz. */
+   tudo. Biblioteca de modal aqui só repetiria o que o navegador já faz.
+
+   **`position: fixed` é a correção de um defeito de produção, não enfeite.**
+   Este bloco declarava `position: relative`, para a camada de envio ter um
+   ancestral posicionado. Regra de autor vence a folha do navegador, então o
+   `position: fixed` que o UA aplica em `dialog:modal` era sobrescrito e a caixa
+   voltava ao fluxo normal: ela era desenhada onde o elemento mora no DOM, ou
+   seja, dentro da seção de contato. Quem abrisse o formulário no celular com a
+   página rolada via o fundo escurecer e mais nada, porque a caixa tinha ficado
+   fora da tela. Parecia site travado.
+
+   `position: fixed` continua sendo ancestral posicionado para a camada de
+   envio, então a correção não custa nada em troca. */
 .ideia {
-  position: relative;
-  width: min(560px, calc(100vw - 32px));
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: min(560px, calc(100vw - 2 * var(--e-4)));
+  /* A caixa nunca passa da tela: o que não couber rola dentro dela, e não na
+     página atrás. `dvh` porque no celular a barra do navegador entra e sai da
+     conta de `vh` e a caixa ficaria cortada embaixo. */
+  max-height: min(88dvh, 760px);
   padding: 0;
-  border: 1px solid var(--borda-forte);
+  overflow: hidden;
+  border: 1px solid var(--borda);
   border-radius: var(--raio);
-  background: var(--fundo-cartao);
+  background: var(--cartao);
   color: var(--texto);
   box-shadow: var(--sombra);
 }
 
+/* O `display` só é trocado no estado aberto. Declarar `display: flex` no
+   seletor solto sobrescreveria o `display: none` que o navegador dá ao
+   `<dialog>` fechado, e a caixa apareceria na página o tempo todo. */
+.ideia[open] {
+  display: flex;
+  flex-direction: column;
+}
+
 .ideia::backdrop {
-  background: rgba(4, 6, 10, 0.66);
+  background: var(--cortina);
   backdrop-filter: blur(2px);
+}
+
+/* Entrada e saída da caixa. É o momento em que a conversão acontece e era o
+   único da página sem tratamento: a caixa aparecia cortada, sem dizer de onde
+   veio. `allow-discrete` é o que segura o elemento na camada de topo durante a
+   saída; sem ele o navegador tira do DOM antes de a transição rodar.
+   O bloco global de `prefers-reduced-motion` zera a duração, e aí ela volta a
+   aparecer cortada, que é o comportamento pedido. */
+.ideia,
+.ideia::backdrop {
+  transition:
+    opacity 0.18s ease-out,
+    transform 0.18s ease-out,
+    overlay 0.18s allow-discrete,
+    display 0.18s allow-discrete;
+}
+
+.ideia {
+  opacity: 0;
+  transform: translateY(8px) scale(0.98);
+}
+
+.ideia::backdrop {
+  opacity: 0;
+}
+
+.ideia[open] {
+  opacity: 1;
+  transform: none;
+}
+
+.ideia[open]::backdrop {
+  opacity: 1;
+}
+
+@starting-style {
+  .ideia[open] {
+    opacity: 0;
+    transform: translateY(8px) scale(0.98);
+  }
+
+  .ideia[open]::backdrop {
+    opacity: 0;
+  }
 }
 
 .ideia__topo {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 16px;
-  padding: 20px 24px;
+  gap: var(--e-4);
+  padding: var(--e-5) var(--e-6);
   border-bottom: 1px solid var(--borda);
+  /* O topo fica; é o miolo que rola. */
+  flex-shrink: 0;
 }
 
 .ideia__titulo {
-  font-size: 1.25rem;
+  font-size: var(--t-lg);
 }
 
 .ideia__fechar {
   display: grid;
   place-items: center;
-  width: 32px;
-  height: 32px;
+  width: var(--e-7);
+  height: var(--e-7);
   padding: 0;
   border: 1px solid transparent;
   border-radius: var(--raio-pequeno);
   background: none;
   color: var(--texto-suave);
-  font-size: 1.5rem;
+  font-size: var(--t-lg);
   line-height: 1;
   cursor: pointer;
 }
 
 .ideia__fechar:hover {
-  border-color: var(--borda-forte);
+  border-color: var(--contorno);
   color: var(--texto);
 }
 
+/* `min-height: 0` é o que destrava a rolagem: sem ele, um filho de contêiner
+   flex não encolhe abaixo do tamanho do próprio conteúdo e a caixa estouraria
+   a tela em vez de rolar por dentro. */
 .ideia__formulario,
 .ideia__final {
   display: flex;
   flex-direction: column;
-  gap: 18px;
-  padding: 24px;
+  gap: var(--e-5);
+  padding: var(--e-6);
   text-align: left;
+  overflow-y: auto;
+  min-height: 0;
 }
 
 .ideia__intro,
@@ -65,35 +143,38 @@
 }
 
 .ideia__intro {
-  font-size: 0.98rem;
+  font-size: var(--t-base);
 }
 
 .ideia__aviso {
-  font-size: 0.82rem;
+  font-size: var(--t-xs);
   color: var(--texto-fraco);
 }
 
 .campo {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: var(--e-2);
 }
 
 .campo__rotulo {
-  font-size: 0.85rem;
+  font-size: var(--t-sm);
   font-weight: 600;
   color: var(--texto-suave);
 }
 
 .campo__entrada {
   width: 100%;
-  padding: 12px 14px;
-  border: 1px solid var(--borda-forte);
+  padding: var(--e-3) var(--e-4);
+  /* Contorno de controle, e não a borda decorativa: a WCAG pede 3:1 para o
+     limite de um componente de interface, e a borda de cartão fica em 1,5:1 de
+     propósito. Com ela aqui, o campo de texto sumia dentro da caixa. */
+  border: 1px solid var(--contorno);
   border-radius: var(--raio-pequeno);
-  background: var(--fundo-elevado);
+  background: var(--superficie);
   color: var(--texto);
   font-family: inherit;
-  font-size: 1rem;
+  font-size: var(--t-base);
   transition: border-color 0.15s ease;
 }
 
@@ -104,7 +185,7 @@
 }
 
 .campo__entrada:focus {
-  border-color: var(--acento-borda);
+  border-color: var(--acento);
 }
 
 .campo__entrada::placeholder {
@@ -112,14 +193,24 @@
 }
 
 .campo__entrada[aria-invalid='true'] {
-  border-color: #e5484d;
+  border-color: var(--erro);
 }
 
 .campo__erro,
 .ideia__erro {
   margin: 0;
-  color: #e5484d;
-  font-size: 0.85rem;
+  color: var(--erro);
+  font-size: var(--t-sm);
+}
+
+/* Só aparece perto do limite. Antes o texto era cortado em silêncio no
+   caractere 4000 e ninguém ficava sabendo. */
+.campo__contador {
+  align-self: flex-end;
+  font-family: var(--fonte-mono);
+  font-size: var(--t-xs);
+  color: var(--texto-fraco);
+  font-variant-numeric: tabular-nums;
 }
 
 /* Fora da tela, e não `display: none`: campo escondido assim continua no DOM
@@ -140,8 +231,9 @@
   align-self: flex-start;
 }
 
-/* A camada de envio. `position: relative` no dialogo e o que a prende aqui
-   dentro, e o `<dialog>` modal ja bloqueia o resto da pagina. */
+/* A camada de envio. O `position: fixed` do diálogo é o ancestral posicionado
+   que prende esta camada aqui dentro, e o `<dialog>` modal já bloqueia o resto
+   da página. */
 .ideia__bloqueio {
   position: absolute;
   inset: 0;
@@ -149,15 +241,22 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 16px;
+  gap: var(--e-4);
   border-radius: var(--raio);
-  background: color-mix(in srgb, var(--fundo-cartao) 88%, transparent);
+  background: color-mix(in srgb, var(--cartao) 88%, transparent);
   backdrop-filter: blur(1px);
+  animation: aparecer 0.12s ease-out;
+}
+
+@keyframes aparecer {
+  from {
+    opacity: 0;
+  }
 }
 
 .ideia__enviando {
   margin: 0;
-  font-size: 1rem;
+  font-size: var(--t-base);
   font-weight: 600;
   color: var(--texto);
 }
@@ -165,7 +264,7 @@
 .ideia__girador {
   width: 30px;
   height: 30px;
-  border: 2px solid var(--borda-forte);
+  border: 2px solid var(--borda);
   border-top-color: var(--acento);
   border-radius: 50%;
   animation: girar 0.7s linear infinite;
@@ -185,22 +284,30 @@
   }
 }
 
-.ideia__final--limite {
+.ideia__final {
   align-items: center;
   text-align: center;
-  gap: 14px;
+  gap: var(--e-4);
 }
 
-/* Alerta em amarelo, e nao em vermelho: nada quebrou e ninguem errou, so a cota
-   da hora acabou. Vermelho aqui leria como falha da pessoa. */
 .ideia__sinal {
   display: grid;
   place-items: center;
-  width: 48px;
-  height: 48px;
+  width: var(--e-9);
+  height: var(--e-9);
   border-radius: 50%;
-  background: rgba(233, 163, 25, 0.14);
-  color: #e9a319;
+}
+
+/* Alerta em ambar, e nao em vermelho: nada quebrou e ninguem errou, so a cota
+   da hora acabou. Vermelho aqui leria como falha da pessoa. */
+.ideia__sinal--aviso {
+  background: var(--aviso-fundo);
+  color: var(--aviso);
+}
+
+.ideia__sinal--ok {
+  background: var(--ok-fundo);
+  color: var(--ok);
 }
 
 .ideia__sinal svg {
@@ -208,21 +315,23 @@
   height: 26px;
 }
 
-.ideia__final--limite .ideia__recado {
-  max-width: 42ch;
-  color: var(--texto-suave);
-  font-size: 1rem;
-}
-
 .ideia__recado {
   margin: 0;
-  font-size: 1.05rem;
+  max-width: 42ch;
+  font-size: var(--t-md);
+}
+
+.ideia__detalhe {
+  margin: 0;
+  max-width: 42ch;
+  font-size: var(--t-sm);
+  color: var(--texto-suave);
 }
 
 @media (max-width: 640px) {
   .ideia__formulario,
   .ideia__final {
-    padding: 20px;
+    padding: var(--e-5);
   }
 
   .ideia__enviar {

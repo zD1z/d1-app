@@ -22,29 +22,123 @@
   src: url('/fontes/jetbrains-mono-latin.woff2') format('woff2');
 }
 
+/* A fonte de reserva com as métricas da Inter aplicadas por cima da Arial.
+   Com `font-display: swap`, o primeiro quadro é desenhado na fonte do sistema
+   e trocado quando a Inter chega; sem estes ajustes, a troca muda a altura da
+   linha e empurra o layout, e quem paga é justamente o `h1` do hero, que é o
+   elemento de LCP da home. Os quatro números são o par Inter/Arial: eles fazem
+   a reserva ocupar a mesma caixa que a fonte final vai ocupar, então a troca
+   acontece sem deslocamento. */
+@font-face {
+  font-family: 'Inter Reserva';
+  src: local('Arial');
+  size-adjust: 107.12%;
+  ascent-override: 90.2%;
+  descent-override: 22.48%;
+  line-gap-override: 0%;
+}
+
 :root {
   color-scheme: dark light;
 
-  --fundo: #08090c;
-  --fundo-elevado: #0e1116;
-  --fundo-cartao: #11151b;
-  --borda: #1d232c;
-  --borda-forte: #2a323d;
+  /* ---- superfícies ----
+     Os três degraus existem para o cartão se destacar da faixa e a faixa do
+     fundo. A escala anterior tinha 1,03:1 entre cartão e faixa, ou seja,
+     diferença que ninguém enxerga: quem sustentava a leitura era o filete de
+     1px. Agora fundo e cartão estão a 1,25:1 no escuro. */
+  --fundo: #0a0b0f;
+  --superficie: #14171e;
+  --cartao: #1e232e;
 
-  --texto: #e8ecf2;
-  --texto-suave: #99a3b2;
-  --texto-fraco: #6b7484;
+  /* Filete decorativo: divisor de seção, borda de cartão, contorno de chip. */
+  --borda: #2b3240;
 
-  --acento: #56b6ff;
-  --acento-forte: #8ccdff;
-  --acento-fundo: rgba(86, 182, 255, 0.1);
-  --acento-borda: rgba(86, 182, 255, 0.28);
+  /* Contorno de controle: campo de texto, botão secundário, hambúrguer. É um
+     token separado da `--borda` porque a WCAG 1.4.11 pede 3:1 para o limite de
+     um componente de interface, e a borda decorativa fica em 1,5:1 de
+     propósito. Usar um valor só obrigaria a escolher entre campo invisível e
+     grade de cartões gritando. Medido: 3,82:1 no escuro, 3,09:1 no claro. */
+  --contorno: #6b7486;
 
+  /* ---- texto ----
+     `--texto-fraco` foi clareado: no valor antigo (#6b7484) ele reprovava em
+     AA nos dois temas, em sete usos, incluindo o rodapé inteiro e os rótulos
+     dos números de credencial. Agora o pior par é 5,13:1, contra os 4,5:1
+     exigidos para texto normal. */
+  --texto: #eaeef5;
+  --texto-suave: #a8b2c2;
+  --texto-fraco: #8b95a6;
+
+  /* ---- ação ----
+     O acento é a cor da conversão, e só dela. A regra de uso é: chamada
+     principal, o trecho destacado do bordão, e o anel de foco. Rótulo de
+     seção, chip de ícone, número de etapa e borda de hover foram para os
+     neutros justamente para o botão voltar a ser a coisa mais saturada da
+     tela. */
+  --acento: #5ab0f2;
+  --acento-forte: #8ecbff;
+  /* O que escrever em cima do acento. Antes o botão usava `--fundo`, que dava
+     certo por coincidência; com um token, a intenção fica declarada. */
+  --acento-contraste: #0a0b0f;
+  --acento-fundo: color-mix(in srgb, var(--acento) 12%, transparent);
+  --acento-borda: color-mix(in srgb, var(--acento) 34%, transparent);
+
+  /* ---- estado ----
+     Vivem aqui, e não chumbados no CSS do formulário, porque o vermelho antigo
+     (#e5484d) dava 3,91:1 sobre branco e o âmbar (#e9a319) dava 2,16:1, ou
+     seja, sumia no tema claro. Cor de estado precisa de par por tema como
+     qualquer outra. */
+  --erro: #ff6b6f;
+  --erro-fundo: color-mix(in srgb, var(--erro) 14%, transparent);
+  --aviso: #f0b429;
+  --aviso-fundo: color-mix(in srgb, var(--aviso) 16%, transparent);
   --ok: #4ade80;
-  --ok-fundo: rgba(74, 222, 128, 0.12);
+  --ok-fundo: color-mix(in srgb, var(--ok) 14%, transparent);
 
-  --fonte: 'Inter', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+  /* A cortina atrás do `<dialog>`. Escurece nos dois temas: o papel dela é
+     tirar a página de cena, e clarear no tema claro não tira nada de cena. */
+  --cortina: rgba(4, 6, 10, 0.66);
+
+  --fonte:
+    'Inter', 'Inter Reserva', ui-sans-serif, system-ui, -apple-system, 'Segoe UI', Roboto,
+    sans-serif;
   --fonte-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
+
+  /* ---- escala tipográfica ----
+     Nove degraus, e nenhum tamanho solto no CSS de componente. Antes havia 26
+     declarações distintas, quinze delas espremidas entre 0.72rem e 1.08rem:
+     diferenças de 0,16px, que ninguém percebe e que impedem qualquer ritmo. */
+  --t-xs: 0.75rem;
+  --t-sm: 0.875rem;
+  --t-base: 1rem;
+  --t-md: 1.125rem;
+  --t-lg: 1.375rem;
+  /* Texto de apoio que acompanha um título grande: subtítulo do hero e chamada
+     da /sobre. Fluido porque nasce colado num título fluido. */
+  --t-destaque: clamp(1.125rem, 2vw, 1.375rem);
+  --t-xl: clamp(1.75rem, 4vw, 2.5rem);
+  /* O degrau entre o título de seção e o bordão. Serve aos números da
+     credencial, que estavam saindo menores que o rótulo em cima deles, e ao
+     `h1` da /sobre, que precisa ficar acima do `h2` da seção seguinte sem
+     disputar com o bordão da home. */
+  --t-2xl: clamp(2rem, 5vw, 3rem);
+  --t-hero: clamp(2.5rem, 7vw, 4.25rem);
+
+  /* ---- escala de espaço ----
+     Múltiplos de 4. Os valores fora de escala que existiam (18, 22, 26, 52)
+     eram decisões de uma vez só, e o custo delas é que nada alinha com nada. */
+  --e-1: 4px;
+  --e-2: 8px;
+  --e-3: 12px;
+  --e-4: 16px;
+  --e-5: 20px;
+  --e-6: 24px;
+  --e-7: 32px;
+  --e-8: 40px;
+  --e-9: 48px;
+  --e-10: 64px;
+  --e-11: 96px;
+  --e-12: 128px;
 
   --largura: 1080px;
   /* Altura do cabecalho fixo mais um respiro. Fonte unica do valor: o
@@ -59,22 +153,26 @@
 @media (prefers-color-scheme: light) {
   :root {
     --fundo: #ffffff;
-    --fundo-elevado: #f7f8fa;
-    --fundo-cartao: #ffffff;
-    --borda: #e4e7ec;
-    --borda-forte: #cfd4dc;
+    --superficie: #f4f6f9;
+    --cartao: #ffffff;
+    --borda: #e2e6ec;
+    --contorno: #848d9c;
 
-    --texto: #10151d;
-    --texto-suave: #525c6b;
-    --texto-fraco: #7b8494;
+    --texto: #0e131b;
+    --texto-suave: #4a5462;
+    --texto-fraco: #5f6979;
 
-    --acento: #0b62c4;
-    --acento-forte: #084a96;
-    --acento-fundo: rgba(11, 98, 196, 0.07);
-    --acento-borda: rgba(11, 98, 196, 0.22);
+    --acento: #0a5fbf;
+    --acento-forte: #08498f;
+    --acento-contraste: #ffffff;
+    --acento-fundo: color-mix(in srgb, var(--acento) 8%, transparent);
+    --acento-borda: color-mix(in srgb, var(--acento) 28%, transparent);
 
+    --erro: #c92a2f;
+    --aviso: #8a5a00;
     --ok: #157f3d;
-    --ok-fundo: rgba(21, 127, 61, 0.1);
+
+    --cortina: rgba(14, 19, 27, 0.45);
 
     --sombra: 0 1px 2px rgba(16, 21, 29, 0.05), 0 8px 24px rgba(16, 21, 29, 0.06);
   }
@@ -114,7 +212,7 @@ body {
   background: var(--fundo);
   color: var(--texto);
   font-family: var(--fonte);
-  font-size: 16px;
+  font-size: var(--t-base);
   line-height: 1.65;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
@@ -126,12 +224,27 @@ h3,
 h4 {
   margin: 0;
   line-height: 1.2;
-  letter-spacing: -0.02em;
   font-weight: 650;
+  /* Sem órfã: o navegador reparte as linhas do título para a última não sair
+     com uma palavra sozinha. Vale para os quatro, e não só para o hero. */
+  text-wrap: balance;
+}
+
+/* Tracking negativo é ajuste de título grande. Aplicado igual em `h4` de 16px
+   ele fecha o desenho da letra, então só entra a partir do tamanho em que a
+   compensação óptica de fato existe. */
+h1,
+h2 {
+  letter-spacing: -0.025em;
+}
+
+h3 {
+  letter-spacing: -0.01em;
 }
 
 p {
   margin: 0;
+  text-wrap: pretty;
 }
 
 ul,
@@ -144,16 +257,21 @@ ol {
 a {
   color: var(--acento);
   text-decoration: none;
+  transition: color 0.15s ease;
 }
 
 a:hover {
   color: var(--acento-forte);
 }
 
+/* Sem `border-radius` aqui. A propriedade não arredonda o contorno: ela
+   arredonda o próprio elemento, então declará-la neste seletor fazia todo
+   botão, cartão e etiqueta mudarem de forma ao receber foco de teclado, e o
+   número redondo da etapa virava quadrado. O contorno já acompanha o raio de
+   cada elemento sozinho. */
 :focus-visible {
   outline: 2px solid var(--acento);
   outline-offset: 3px;
-  border-radius: 4px;
 }
 
 img,
@@ -167,54 +285,58 @@ svg {
   width: 100%;
   max-width: var(--largura);
   margin: 0 auto;
-  padding: 0 24px;
+  padding: 0 var(--e-6);
 }
 
+/* O fecho da seção pede um pouco mais que a abertura: opticamente, o respiro
+   de baixo é lido junto com a borda da seção seguinte. */
 .secao {
-  padding: 96px 0;
+  padding: var(--e-11) 0 104px;
   border-top: 1px solid var(--borda);
 }
 
+/* Numeração e nome da seção. Saiu do acento: era mais uma superfície azul
+   competindo com a chamada principal, e o papel dele aqui é de legenda. */
 .secao__rotulo {
   display: flex;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 16px;
+  gap: var(--e-3);
+  margin-bottom: var(--e-4);
   font-family: var(--fonte-mono);
-  font-size: 0.75rem;
+  font-size: var(--t-xs);
   font-weight: 500;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: var(--acento);
+  color: var(--texto-fraco);
 }
 
 .secao__rotulo::before {
   content: '';
   width: 28px;
   height: 1px;
-  background: var(--acento-borda);
+  background: var(--borda);
 }
 
 .secao__titulo {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  margin-bottom: 16px;
+  font-size: var(--t-xl);
+  margin-bottom: var(--e-4);
 }
 
 .secao__intro {
   max-width: 62ch;
   color: var(--texto-suave);
-  font-size: 1.05rem;
-  margin-bottom: 48px;
+  font-size: var(--t-md);
+  margin-bottom: var(--e-9);
 }
 
 .etiqueta {
   display: inline-block;
-  padding: 3px 10px;
-  border: 1px solid var(--borda-forte);
+  padding: var(--e-1) var(--e-3);
+  border: 1px solid var(--borda);
   border-radius: 999px;
-  background: var(--fundo-elevado);
+  background: var(--superficie);
   font-family: var(--fonte-mono);
-  font-size: 0.72rem;
+  font-size: var(--t-xs);
   color: var(--texto-suave);
   white-space: nowrap;
 }
@@ -222,47 +344,50 @@ svg {
 /* Botões: usados no hero e no contato, por isso ficam no global. */
 .botao {
   display: inline-block;
-  padding: 12px 22px;
+  padding: var(--e-3) var(--e-6);
   border-radius: var(--raio-pequeno);
-  font-size: 0.95rem;
+  font-size: var(--t-sm);
   font-weight: 600;
   border: 1px solid transparent;
+  cursor: pointer;
+  font-family: inherit;
   transition:
     transform 0.15s ease,
     background-color 0.15s ease,
-    border-color 0.15s ease;
+    border-color 0.15s ease,
+    color 0.15s ease;
 }
 
 .botao:hover {
   transform: translateY(-1px);
 }
 
+/* O botão precisa responder ao dedo, e no toque não existe hover: sem estado
+   de pressão, a interface parece inerte justamente onde a conversão acontece. */
+.botao:active {
+  transform: translateY(0) scale(0.985);
+  transition-duration: 0.08s;
+}
+
 .botao--primario {
   background: var(--acento);
-  color: var(--fundo);
+  color: var(--acento-contraste);
 }
 
 .botao--primario:hover {
   background: var(--acento-forte);
-  color: var(--fundo);
+  color: var(--acento-contraste);
 }
 
 .botao--secundario {
-  border-color: var(--borda-forte);
-  background: var(--fundo-elevado);
+  border-color: var(--contorno);
+  background: var(--superficie);
   color: var(--texto);
 }
 
 .botao--secundario:hover {
   border-color: var(--acento-borda);
   color: var(--texto);
-}
-
-@media (max-width: 640px) {
-  .botao {
-    flex: 1 1 100%;
-    text-align: center;
-  }
 }
 
 /* Texto visível só para leitor de tela. */
@@ -280,10 +405,21 @@ svg {
 
 @media (max-width: 640px) {
   .secao {
-    padding: 64px 0;
+    padding: var(--e-10) 0 72px;
   }
 
   .secao__intro {
-    margin-bottom: 32px;
+    margin-bottom: var(--e-7);
+  }
+
+  /* O `.botao` é `inline-block`, então `flex` só vale quando o pai é um
+     contêiner flex. A regra antiga estava no `.botao` solto e não fazia nada
+     em `quem-faz`, `chamada-final` e `apresentacao`, onde o botão não tem pai
+     flex: o CTA saía largura total em duas telas e automático em três. Aqui o
+     alvo são as duas faixas de ação, que são flex de verdade. */
+  .hero__acoes .botao,
+  .contato__acoes .botao {
+    width: 100%;
+    text-align: center;
   }
 }

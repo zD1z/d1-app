@@ -1,62 +1,43 @@
+/* O brilho radial saiu daqui pelo mesmo motivo do hero: acento a 10% sobre
+   fundo quase preto não chega a um delta perceptível. */
 .apresentacao {
-  position: relative;
-  padding: 88px 0 64px;
-  overflow: hidden;
+  padding: var(--e-11) 0 var(--e-10);
 }
 
-.apresentacao::before {
-  content: '';
-  position: absolute;
-  top: -180px;
-  left: 50%;
-  width: min(720px, 120vw);
-  height: 420px;
-  transform: translateX(-50%);
-  background: radial-gradient(ellipse at center, var(--acento-fundo), transparent 68%);
-  pointer-events: none;
-}
-
-.apresentacao__conteudo {
-  position: relative;
-}
-
+/* Um degrau acima do título de seção e bem abaixo do bordão da home: a /sobre
+   é a página de apoio, mas o `h1` dela não pode empatar com o `h2` logo
+   adiante. */
 .apresentacao__nome {
   display: flex;
   flex-direction: column;
-  gap: 10px;
-  font-size: clamp(2.2rem, 6vw, 3.4rem);
-  margin-bottom: 22px;
+  gap: var(--e-3);
+  font-size: var(--t-2xl);
+  margin-bottom: var(--e-6);
 }
 
 .apresentacao__cargo {
   font-family: var(--fonte-mono);
-  font-size: clamp(0.92rem, 2.2vw, 1.1rem);
+  font-size: var(--t-md);
   font-weight: 500;
-  color: var(--acento);
+  color: var(--texto-suave);
 }
 
 .apresentacao__chamada {
   max-width: 62ch;
-  font-size: clamp(1.02rem, 2.2vw, 1.2rem);
+  font-size: var(--t-destaque);
   color: var(--texto-suave);
-  margin-bottom: 14px;
+  margin-bottom: var(--e-4);
 }
 
 .apresentacao__carreira {
   max-width: 62ch;
-  font-size: 0.95rem;
+  font-size: var(--t-sm);
   color: var(--texto-fraco);
-  margin-bottom: 28px;
-}
-
-/* `.botao` e display:block no mobile por causa do `flex: 1 1 100%` global;
-   aqui ele esta solto, entao volta a ocupar so a propria largura. */
-.apresentacao__linkedin {
-  align-self: flex-start;
+  margin-bottom: var(--e-7);
 }
 
 @media (max-width: 640px) {
   .apresentacao {
-    padding: 56px 0 40px;
+    padding: var(--e-9) 0 var(--e-8);
   }
 }

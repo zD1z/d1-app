@@ -1,15 +1,27 @@
 <section class="hero" id="topo">
   <div class="container hero__conteudo">
     <h1 class="hero__bordao">
-      {{ partesDoBordao().antes }}<span class="hero__marca">{{ partesDoBordao().destaque }}</span
-      >{{ partesDoBordao().depois }}
+      {{ partesDoBordao.antes }}<span class="hero__marca">{{ partesDoBordao.destaque }}</span
+      >{{ partesDoBordao.depois }}
     </h1>
 
     <p class="hero__subtitulo">{{ oferta.subtitulo }}</p>
 
     <div class="hero__acoes">
-      <a class="botao botao--primario" href="#contato">Contar minha ideia</a>
+      <!-- Um clique, e a caixa abre aqui mesmo. A âncora do `@else` é o caminho
+           de quando o envio está desligado: aí a seção de contato volta a ser o
+           `mailto:` e é para lá que a pessoa precisa ir. -->
+      @if (temFormulario) {
+        <button type="button" class="botao botao--primario" (click)="abrirFormulario()">
+          Contar minha ideia
+        </button>
+      } @else {
+        <a class="botao botao--primario" href="#contato">Contar minha ideia</a>
+      }
+
       <a class="botao botao--secundario" href="#solucoes">Ver o que dá para fazer</a>
     </div>
+
+    <p class="hero__reasseguranca">{{ oferta.reasseguranca }}</p>
   </div>
 </section>

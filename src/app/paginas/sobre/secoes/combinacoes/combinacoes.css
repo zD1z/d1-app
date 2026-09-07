@@ -1,41 +1,41 @@
 .combinacoes {
-  background: var(--fundo-elevado);
+  background: var(--superficie);
 }
 
 .combinacao__lista {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 20px;
+  gap: var(--e-5);
 }
 
 .combinacao {
   display: flex;
   flex-direction: column;
-  gap: 12px;
-  padding: 26px;
+  gap: var(--e-3);
+  padding: var(--e-6);
   border: 1px solid var(--borda);
   border-radius: var(--raio);
-  background: var(--fundo-cartao);
+  background: var(--cartao);
   transition: border-color 0.15s ease;
 }
 
 .combinacao:hover {
-  border-color: var(--acento-borda);
+  border-color: var(--contorno);
 }
 
 .combinacao__titulo {
-  font-size: 1.1rem;
+  font-size: var(--t-md);
 }
 
 .combinacao__descricao {
-  font-size: 0.93rem;
+  font-size: var(--t-sm);
   color: var(--texto-suave);
 }
 
 .combinacao__pecas {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--e-2);
   margin-top: auto;
-  padding-top: 6px;
+  padding-top: var(--e-2);
 }

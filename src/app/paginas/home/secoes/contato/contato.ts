@@ -1,6 +1,6 @@
-import { ChangeDetectionStrategy, Component, viewChild } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { CONTEUDO } from '../../../../core/conteudo/perfil';
-import { formularioEstaLigado } from '../../../../core/config/contato';
+import { AberturaDoFormulario, FORMULARIO_LIGADO } from '../../../../core/contato/abertura';
 import { FormularioDeIdeia } from './formulario-de-ideia/formulario-de-ideia';
 
 @Component({
@@ -11,6 +11,8 @@ import { FormularioDeIdeia } from './formulario-de-ideia/formulario-de-ideia';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class Contato {
+  private readonly abertura = inject(AberturaDoFormulario);
+
   protected readonly contato = CONTEUDO.contato;
 
   /**
@@ -18,21 +20,25 @@ export class Contato {
    * volta a ser o `mailto:` de sempre, que é como o site funcionou até a
    * infraestrutura de envio existir.
    */
-  protected readonly temFormulario = formularioEstaLigado();
-
-  private readonly formulario = viewChild(FormularioDeIdeia);
+  protected readonly temFormulario = inject(FORMULARIO_LIGADO);
 
   /**
    * Assunto pré-preenchido no cliente de e-mail. Continua vivo mesmo com o
    * formulário ligado: é a saída de quem não quer preencher caixa, e a rede de
    * segurança se o envio falhar.
+   *
+   * Valor pronto, e não `get`: a montagem não depende de nada que mude, e como
+   * `get` ela rodava a cada ciclo de detecção, duas vezes por passada.
    */
-  protected get enderecoDeEmail(): string {
-    const assunto = encodeURIComponent('Tenho uma ideia');
-    return `mailto:${this.contato.email}?subject=${assunto}`;
-  }
+  protected readonly enderecoDeEmail = `mailto:${CONTEUDO.contato.email}?subject=${encodeURIComponent(
+    'Tenho uma ideia',
+  )}`;
 
+  /**
+   * O mesmo caminho que o botão do hero usa. Os dois pontos de entrada passam
+   * pelo serviço, então existe um jeito só de a caixa abrir.
+   */
   protected abrirFormulario(): void {
-    this.formulario()?.abrir();
+    this.abertura.pedir();
   }
 }

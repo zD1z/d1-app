@@ -1,5 +1,5 @@
 .grupo {
-  margin-bottom: 48px;
+  margin-bottom: var(--e-9);
 }
 
 .grupo:last-child {
@@ -7,11 +7,11 @@
 }
 
 .grupo__titulo {
-  padding-bottom: 12px;
-  margin-bottom: 24px;
+  padding-bottom: var(--e-3);
+  margin-bottom: var(--e-6);
   border-bottom: 1px solid var(--borda);
   font-family: var(--fonte-mono);
-  font-size: 0.78rem;
+  font-size: var(--t-xs);
   font-weight: 500;
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -21,12 +21,12 @@
 .tecnologias {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
-  gap: 24px 32px;
+  gap: var(--e-6) var(--e-7);
 }
 
 .tecnologia {
   display: flex;
-  gap: 16px;
+  gap: var(--e-4);
   align-items: flex-start;
 }
 
@@ -36,9 +36,9 @@
   flex-shrink: 0;
   width: 42px;
   height: 42px;
-  border: 1px solid var(--borda-forte);
+  border: 1px solid var(--borda);
   border-radius: var(--raio-pequeno);
-  background: var(--fundo-elevado);
+  background: var(--superficie);
   color: var(--texto-suave);
   transition:
     color 0.15s ease,
@@ -46,10 +46,12 @@
 }
 
 /* A cor oficial da marca só aparece no hover. Monocromático por padrão mantém
-   a grade coesa e legível nos dois temas, onde logo colorido some num deles. */
+   a grade coesa e legível nos dois temas, onde logo colorido some num deles.
+   A reserva é o contorno neutro, e não o acento: numa grade de vinte itens,
+   vinte hovers em azul disputariam com a única chamada de ação da página. */
 .tecnologia:hover .tecnologia__marca {
-  color: var(--cor-da-marca, var(--acento));
-  border-color: var(--cor-da-marca, var(--acento-borda));
+  color: var(--cor-da-marca, var(--texto));
+  border-color: var(--cor-da-marca, var(--contorno));
 }
 
 .tecnologia__marca svg {
@@ -60,29 +62,29 @@
 /* Sem símbolo disponível, o nome ocupa o mesmo lugar com o mesmo peso. */
 .tecnologia__sigla {
   font-family: var(--fonte-mono);
-  font-size: 0.72rem;
+  font-size: var(--t-xs);
   font-weight: 500;
   letter-spacing: 0.02em;
 }
 
 .tecnologia__nome {
-  font-size: 1rem;
-  margin-bottom: 4px;
+  font-size: var(--t-base);
+  margin-bottom: var(--e-1);
 }
 
 .tecnologia__prova {
-  font-size: 0.92rem;
+  font-size: var(--t-sm);
   color: var(--texto-suave);
   max-width: 46ch;
 }
 
 @media (max-width: 640px) {
   .grupo {
-    margin-bottom: 40px;
+    margin-bottom: var(--e-8);
   }
 
   .tecnologias {
     grid-template-columns: 1fr;
-    gap: 22px;
+    gap: var(--e-6);
   }
 }

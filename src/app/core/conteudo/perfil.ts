@@ -26,11 +26,14 @@ export const CONTEUDO: Conteudo = {
     subtitulo:
       'Você tem o problema e conhece o seu negócio. Eu transformo a sua ideia em software ' +
       'que funciona de verdade, sem você precisar traduzir nada para termo técnico.',
+    reasseguranca:
+      'Sem compromisso. Eu respondo dizendo se dá para fazer, quanto custa mais ou menos, ' +
+      'e se eu sou a pessoa certa.',
     quemFaz:
       'Quinze anos construindo software em quatro áreas diferentes: leilões online, ' +
       'consultoria corporativa, automação de estacionamento e tráfego, e o setor ' +
       'bancário. Cada uma resolve problema de um jeito próprio, e é esse repertório que ' +
-      'entra também num seu projeto. Só muda que ele é seu!',
+      'entra também num seu projeto. Só muda que ele é seu.',
   },
 
   numeros: [

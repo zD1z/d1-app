@@ -2,17 +2,17 @@
 .pular {
   position: absolute;
   top: -60px;
-  left: 16px;
+  left: var(--e-4);
   z-index: 100;
-  padding: 10px 16px;
+  padding: var(--e-3) var(--e-4);
   border-radius: var(--raio-pequeno);
   background: var(--acento);
-  color: var(--fundo);
+  color: var(--acento-contraste);
   font-weight: 600;
   transition: top 0.15s ease;
 }
 
 .pular:focus-visible {
-  top: 12px;
-  color: var(--fundo);
+  top: var(--e-3);
+  color: var(--acento-contraste);
 }

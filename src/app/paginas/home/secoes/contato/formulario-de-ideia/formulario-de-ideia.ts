@@ -6,6 +6,7 @@ import {
   effect,
   inject,
   signal,
+  untracked,
   viewChild,
   type ElementRef,
 } from '@angular/core';
@@ -18,7 +19,9 @@ import {
   type ValidatorFn,
 } from '@angular/forms';
 import { ViewportScroller } from '@angular/common';
+import { RouterLink } from '@angular/router';
 import { CONFIGURACAO_DE_CONTATO } from '../../../../../core/config/contato';
+import { AberturaDoFormulario } from '../../../../../core/contato/abertura';
 import { DesafioDeSeguranca, EnvioDeIdeias } from '../../../../../core/contato/servicos';
 import type { ApiDoTurnstile } from '../../../../../core/contato/turnstile';
 import {
@@ -40,6 +43,16 @@ type EstadoDoEnvio = 'parado' | 'enviando' | 'enviado' | 'limite' | 'erro';
 /** Os três campos que a pessoa preenche. A armadilha fica de fora: ninguém a vê. */
 type CampoDoFormulario = 'nome' | 'ideia' | 'contato';
 
+/** A ordem em que os campos aparecem na tela, e a ordem em que o foco os procura. */
+const CAMPOS: readonly CampoDoFormulario[] = ['nome', 'ideia', 'contato'];
+
+/**
+ * A partir de quantos caracteres restantes o contador aparece. Mostrar "3940
+ * restantes" desde a primeira letra é ruído; o número só interessa quando o
+ * limite vira um risco real.
+ */
+const AVISAR_RESTANTE = 200;
+
 /** Ponte entre as regras puras de `core/contato/validacao` e o formulário. */
 function comoValidador(regra: (valor: string) => string | null): ValidatorFn {
   return (controle: AbstractControl): ValidationErrors | null => {
@@ -50,7 +63,7 @@ function comoValidador(regra: (valor: string) => string | null): ValidatorFn {
 
 @Component({
   selector: 'app-formulario-de-ideia',
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, RouterLink],
   templateUrl: './formulario-de-ideia.html',
   styleUrl: './formulario-de-ideia.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -59,6 +72,7 @@ export class FormularioDeIdeia {
   private readonly envio = inject(EnvioDeIdeias);
   private readonly desafio = inject(DesafioDeSeguranca);
   private readonly rolagem = inject(ViewportScroller);
+  private readonly abertura = inject(AberturaDoFormulario);
 
   private readonly dialogo = viewChild.required<ElementRef<HTMLDialogElement>>('dialogo');
   private readonly alvoDoDesafio = viewChild<ElementRef<HTMLElement>>('desafio');
@@ -75,6 +89,7 @@ export class FormularioDeIdeia {
   protected readonly limiteDaIdeia = IDEIA_MAXIMA;
   protected readonly limiteDoNome = NOME_MAXIMO;
   protected readonly limiteDoContato = CONTATO_MAXIMO;
+  protected readonly avisarRestante = AVISAR_RESTANTE;
   protected readonly estado = signal<EstadoDoEnvio>('parado');
   protected readonly mensagemDeErro = signal('');
   protected readonly tentouEnviar = signal(false);
@@ -122,6 +137,19 @@ export class FormularioDeIdeia {
       void this.desenharDesafio(alvo);
     });
 
+    // Quem pede a caixa é o botão do hero ou o da seção de contato, os dois
+    // pelo mesmo serviço. Zero é o valor de partida, e ignorá-lo é o que
+    // impede a caixa de abrir sozinha assim que a home monta. O `untracked`
+    // deixa explícito que só o contador é dependência daqui: o resto de `abrir`
+    // é escrita, e não leitura reativa.
+    effect(() => {
+      if (this.abertura.pedido() === 0) {
+        return;
+      }
+
+      untracked(() => this.abrir());
+    });
+
     inject(DestroyRef).onDestroy(() => this.removerDesafio());
   }
 
@@ -133,6 +161,15 @@ export class FormularioDeIdeia {
   /** Se o aviso de erro daquele campo já pode aparecer. */
   protected mostrarErro(campo: CampoDoFormulario): boolean {
     return this.tentouEnviar() || this.tocados().has(campo);
+  }
+
+  /**
+   * Quanto ainda cabe na ideia. Lê o controle direto em vez de guardar um
+   * segundo estado: o `(input)` do formulário reativo já avisa a aplicação, e
+   * duplicar o tamanho num sinal só criaria uma cópia para sair de sincronia.
+   */
+  protected restanteDaIdeia(): number {
+    return IDEIA_MAXIMA - this.formulario.controls.ideia.value.length;
   }
 
   abrir(): void {
@@ -183,6 +220,7 @@ export class FormularioDeIdeia {
     this.tentouEnviar.set(true);
 
     if (this.formulario.invalid || this.enviando()) {
+      this.focarPrimeiroInvalido();
       return;
     }
 
@@ -224,6 +262,26 @@ export class FormularioDeIdeia {
     this.mensagemDeErro.set(MENSAGENS_DE_ERRO[resultado]);
   }
 
+  /**
+   * Submeter com campo inválido só acendia os avisos na tela. Quem navega por
+   * teclado ou usa leitor de tela apertava Enter e não percebia nada
+   * acontecer, porque o foco continuava no botão e o aviso ficava acima, fora
+   * do caminho. Levar o foco ao campo faz o leitor anunciar o rótulo e a
+   * mensagem ligada a ele por `aria-describedby`.
+   *
+   * A busca é pelo `id` do campo, e não por `[aria-invalid]`: o atributo só
+   * aparece no DOM depois do próximo desenho, e este código roda antes dele.
+   */
+  private focarPrimeiroInvalido(): void {
+    const primeiro = CAMPOS.find((campo) => this.formulario.controls[campo].invalid);
+
+    if (primeiro === undefined) {
+      return;
+    }
+
+    this.dialogo().nativeElement.querySelector<HTMLElement>(`#campo-${primeiro}`)?.focus();
+  }
+
   private async desenharDesafio(alvo: HTMLElement): Promise<void> {
     try {
       const api = await this.desafio.carregar();
@@ -242,6 +300,10 @@ export class FormularioDeIdeia {
         },
         theme: 'auto',
         language: 'pt-BR',
+        // A caixa do desafio acompanha a largura do contêiner. No tamanho
+        // padrão ela tem 300px fixos, e a 360px de tela sobravam 288px dentro
+        // do diálogo: o widget estourava a caixa na horizontal.
+        size: 'flexible',
       });
     } catch {
       this.estado.set('erro');

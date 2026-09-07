@@ -2,6 +2,8 @@ import { provideZonelessChangeDetection } from '@angular/core';
 import { TestBed, type ComponentFixture } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { ViewportScroller } from '@angular/common';
+import { provideRouter } from '@angular/router';
+import { AberturaDoFormulario } from '../../../../../core/contato/abertura';
 import { DesafioDeSeguranca, EnvioDeIdeias } from '../../../../../core/contato/servicos';
 import type { ResultadoDoEnvio } from '../../../../../core/contato/envio';
 import { FormularioDeIdeia } from './formulario-de-ideia';
@@ -78,6 +80,9 @@ describe('FormularioDeIdeia', () => {
     TestBed.configureTestingModule({
       providers: [
         provideZonelessChangeDetection(),
+        // A tela de "recebido" leva um `routerLink` para a /sobre, e o
+        // `RouterLink` precisa de uma rota ativa para se construir.
+        provideRouter([]),
         { provide: EnvioDeIdeias, useValue: { enviar } },
         { provide: DesafioDeSeguranca, useValue: desafio },
         { provide: ViewportScroller, useValue: { scrollToPosition: rolarPara } },
@@ -155,6 +160,87 @@ describe('FormularioDeIdeia', () => {
 
     expect(raiz.querySelector('.ideia__recado')).not.toBeNull();
     expect(raiz.querySelector('form')).toBeNull();
+  });
+
+  // A mensagem ficava dentro do `<label>`, e por isso entrava no **nome** do
+  // campo: o leitor de tela anunciava "A sua ideia Conte um pouco mais" como se
+  // fosse o rótulo. Fora do label e ligada por `aria-describedby`, ela volta a
+  // ser descrição.
+  it('liga o erro ao campo por aria-describedby, e não pelo rótulo', async () => {
+    await abrir();
+    await submeter();
+
+    const area = raiz.querySelector('textarea') as HTMLTextAreaElement;
+    expect(area.getAttribute('aria-describedby')).toBe('erro-ideia');
+    expect(raiz.querySelector('#erro-ideia')?.closest('label')).toBeNull();
+    expect(raiz.querySelector('label[for="campo-ideia"]')?.textContent?.trim()).toBe('A sua ideia');
+  });
+
+  // Sem isso, quem usa teclado ou leitor de tela apertava Enter e não percebia
+  // nada acontecer: o foco ficava no botão e o aviso aparecia fora do caminho.
+  it('leva o foco ao primeiro campo inválido quando o envio é barrado', async () => {
+    await abrir();
+    await submeter();
+
+    expect(document.activeElement?.id).toBe('campo-nome');
+  });
+
+  it('leva o foco ao campo que falta, e não sempre ao primeiro', async () => {
+    await abrir();
+    preencher(IDEIA_BOA, 'nao-e-contato');
+    await submeter();
+
+    expect(document.activeElement?.id).toBe('campo-contato');
+  });
+
+  // O contador só aparece perto do limite: mostrar "3940 restantes" desde a
+  // primeira letra é ruído.
+  it('mostra o contador só quando a ideia chega perto do limite', async () => {
+    await abrir();
+    expect(raiz.querySelector('.campo__contador')).toBeNull();
+
+    const area = raiz.querySelector('textarea') as HTMLTextAreaElement;
+    area.value = 'x'.repeat(3900);
+    area.dispatchEvent(new Event('input'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    expect(raiz.querySelector('.campo__contador')?.textContent).toContain('100 caracteres');
+  });
+
+  // O botão do hero e o da seção de contato passam os dois por aqui, então a
+  // caixa tem um jeito só de abrir.
+  describe('pedido de abertura', () => {
+    it('abre a caixa quando alguém pede pelo serviço', async () => {
+      const dialogo = raiz.querySelector('dialog') as HTMLDialogElement;
+      expect(dialogo.showModal).not.toHaveBeenCalled();
+
+      TestBed.inject(AberturaDoFormulario).pedir();
+      await fixture.whenStable();
+
+      expect(dialogo.showModal).toHaveBeenCalledTimes(1);
+    });
+
+    // O contador começa em zero, e o efeito precisa ignorar esse valor: senão a
+    // caixa abriria sozinha assim que a home montasse.
+    it('não abre sozinha sem pedido nenhum', async () => {
+      await fixture.whenStable();
+
+      expect((raiz.querySelector('dialog') as HTMLDialogElement).showModal).not.toHaveBeenCalled();
+    });
+
+    it('abre de novo no segundo pedido', async () => {
+      const abertura = TestBed.inject(AberturaDoFormulario);
+      const dialogo = raiz.querySelector('dialog') as HTMLDialogElement;
+
+      abertura.pedir();
+      await fixture.whenStable();
+      dialogo.close();
+      abertura.pedir();
+      await fixture.whenStable();
+
+      expect(dialogo.showModal).toHaveBeenCalledTimes(2);
+    });
   });
 
   it.each([
