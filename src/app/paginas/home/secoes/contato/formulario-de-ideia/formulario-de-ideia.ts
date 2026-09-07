@@ -65,7 +65,19 @@ export class FormularioDeIdeia {
   protected readonly estado = signal<EstadoDoEnvio>('parado');
   protected readonly mensagemDeErro = signal('');
   protected readonly tentouEnviar = signal(false);
+
+  /**
+   * O contato avisa do erro assim que o campo perde o foco, sem esperar o
+   * clique em enviar. É o campo em que o formato importa — e-mail torto ou
+   * celular sem DDD significa resposta que nunca chega — e é onde o aviso tarde
+   * demais custa mais caro. Sinal em vez de `control.touched` porque a aplicação
+   * roda sem zone: aqui a mudança é anunciada na mão, no `(blur)`.
+   */
+  protected readonly contatoTocado = signal(false);
   protected readonly enviando = computed(() => this.estado() === 'enviando');
+  protected readonly mostrarErroDoContato = computed(
+    () => this.tentouEnviar() || this.contatoTocado(),
+  );
 
   private readonly aberto = signal(false);
 
@@ -106,6 +118,7 @@ export class FormularioDeIdeia {
     this.abertoEm = Date.now();
     this.estado.set('parado');
     this.tentouEnviar.set(false);
+    this.contatoTocado.set(false);
     this.aberto.set(true);
     this.dialogo().nativeElement.showModal();
   }

@@ -78,10 +78,11 @@
           formControlName="contato"
           type="text"
           autocomplete="email"
-          [attr.aria-invalid]="tentouEnviar() && formulario.controls.contato.invalid"
+          [attr.aria-invalid]="mostrarErroDoContato() && formulario.controls.contato.invalid"
           placeholder="seu@email.com ou (11) 98888-7777"
+          (blur)="contatoTocado.set(true)"
         />
-        @if (tentouEnviar() && formulario.controls.contato.errors; as erros) {
+        @if (mostrarErroDoContato() && formulario.controls.contato.errors; as erros) {
           <span class="campo__erro">{{ erros['mensagem'] }}</span>
         }
       </label>
