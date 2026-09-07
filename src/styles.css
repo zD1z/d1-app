@@ -186,11 +186,26 @@
 
 html {
   scroll-behavior: smooth;
+  /* Reserva a canaleta da barra de rolagem. Sem ela, trancar o `body` enquanto
+     o diálogo está aberto faria a barra sumir e a página inteira pular para o
+     lado no instante em que a caixa abre. */
+  scrollbar-gutter: stable;
   /* Vale para a rolagem nativa do navegador (# na barra de endereco antes
      de o Angular subir). A ancora do roteador e deslocada pelo setOffset
      do ViewportScroller, em app.config.ts, que ignora esta propriedade mas
      le o mesmo token, entao os dois caminhos usam a mesma altura. */
   scroll-padding-top: var(--altura-do-cabecalho);
+}
+
+/* Com o `<dialog>` modal aberto, o navegador torna o resto da página inerte
+   para clique e para foco, mas **não** para rolagem: a roda do mouse continua
+   movendo o conteúdo por baixo da cortina, e quem está preenchendo o formulário
+   vê a página andar sozinha atrás. Trancar o `body` é o que fecha isso.
+
+   A regra mora aqui, e não no CSS do componente, porque o `body` está fora do
+   escopo dele: com o encapsulamento do Angular, o seletor nunca casaria. */
+body:has(dialog[open]) {
+  overflow: hidden;
 }
 
 @media (prefers-reduced-motion: reduce) {
