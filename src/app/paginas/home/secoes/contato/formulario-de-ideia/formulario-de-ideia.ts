@@ -21,7 +21,14 @@ import { ViewportScroller } from '@angular/common';
 import { CONFIGURACAO_DE_CONTATO } from '../../../../../core/config/contato';
 import { DesafioDeSeguranca, EnvioDeIdeias } from '../../../../../core/contato/servicos';
 import type { ApiDoTurnstile } from '../../../../../core/contato/turnstile';
-import { IDEIA_MAXIMA, erroDaIdeia, erroDoContato } from '../../../../../core/contato/validacao';
+import {
+  CONTATO_MAXIMO,
+  IDEIA_MAXIMA,
+  NOME_MAXIMO,
+  erroDaIdeia,
+  erroDoContato,
+  erroDoNome,
+} from '../../../../../core/contato/validacao';
 
 /**
  * `limite` é estado próprio, e não mais uma mensagem de erro embaixo do
@@ -29,6 +36,9 @@ import { IDEIA_MAXIMA, erroDaIdeia, erroDoContato } from '../../../../../core/co
  * troca de conteúdo e oferece uma saída em vez de convidar a tentar de novo.
  */
 type EstadoDoEnvio = 'parado' | 'enviando' | 'enviado' | 'limite' | 'erro';
+
+/** Os três campos que a pessoa preenche. A armadilha fica de fora: ninguém a vê. */
+type CampoDoFormulario = 'nome' | 'ideia' | 'contato';
 
 /** Ponte entre as regras puras de `core/contato/validacao` e o formulário. */
 function comoValidador(regra: (valor: string) => string | null): ValidatorFn {
@@ -54,6 +64,7 @@ export class FormularioDeIdeia {
   private readonly alvoDoDesafio = viewChild<ElementRef<HTMLElement>>('desafio');
 
   protected readonly formulario = new FormGroup({
+    nome: new FormControl('', { nonNullable: true, validators: [comoValidador(erroDoNome)] }),
     ideia: new FormControl('', { nonNullable: true, validators: [comoValidador(erroDaIdeia)] }),
     contato: new FormControl('', { nonNullable: true, validators: [comoValidador(erroDoContato)] }),
     // Escondida da tela e do leitor de tela. Gente não preenche o que não vê;
@@ -62,22 +73,22 @@ export class FormularioDeIdeia {
   });
 
   protected readonly limiteDaIdeia = IDEIA_MAXIMA;
+  protected readonly limiteDoNome = NOME_MAXIMO;
+  protected readonly limiteDoContato = CONTATO_MAXIMO;
   protected readonly estado = signal<EstadoDoEnvio>('parado');
   protected readonly mensagemDeErro = signal('');
   protected readonly tentouEnviar = signal(false);
+  protected readonly enviando = computed(() => this.estado() === 'enviando');
 
   /**
-   * O contato avisa do erro assim que o campo perde o foco, sem esperar o
-   * clique em enviar. É o campo em que o formato importa — e-mail torto ou
-   * celular sem DDD significa resposta que nunca chega — e é onde o aviso tarde
-   * demais custa mais caro. Sinal em vez de `control.touched` porque a aplicação
-   * roda sem zone: aqui a mudança é anunciada na mão, no `(blur)`.
+   * Quais campos a pessoa já visitou e deixou. Os três são obrigatórios, e o
+   * erro aparece assim que o campo perde o foco, em vez de esperar o clique em
+   * enviar e devolver três avisos de uma vez.
+   *
+   * Sinal em vez do `touched` do próprio controle porque a aplicação roda sem
+   * zone: `touched` muda sem avisar ninguém, e a tela não redesenharia.
    */
-  protected readonly contatoTocado = signal(false);
-  protected readonly enviando = computed(() => this.estado() === 'enviando');
-  protected readonly mostrarErroDoContato = computed(
-    () => this.tentouEnviar() || this.contatoTocado(),
-  );
+  private readonly tocados = signal<ReadonlySet<CampoDoFormulario>>(new Set());
 
   private readonly aberto = signal(false);
 
@@ -114,11 +125,21 @@ export class FormularioDeIdeia {
     inject(DestroyRef).onDestroy(() => this.removerDesafio());
   }
 
+  /** Chamado no `(blur)` de cada campo. */
+  protected marcarTocado(campo: CampoDoFormulario): void {
+    this.tocados.update((tocados) => new Set(tocados).add(campo));
+  }
+
+  /** Se o aviso de erro daquele campo já pode aparecer. */
+  protected mostrarErro(campo: CampoDoFormulario): boolean {
+    return this.tentouEnviar() || this.tocados().has(campo);
+  }
+
   abrir(): void {
     this.abertoEm = Date.now();
     this.estado.set('parado');
     this.tentouEnviar.set(false);
-    this.contatoTocado.set(false);
+    this.tocados.set(new Set());
     this.aberto.set(true);
     this.dialogo().nativeElement.showModal();
   }
@@ -175,8 +196,9 @@ export class FormularioDeIdeia {
 
     this.estado.set('enviando');
 
-    const { ideia, contato, armadilha } = this.formulario.getRawValue();
+    const { nome, ideia, contato, armadilha } = this.formulario.getRawValue();
     const resultado = await this.envio.enviar({
+      nome,
       ideia,
       contato,
       armadilha,

@@ -23,14 +23,20 @@ describe('FormularioDeIdeia', () => {
   let rolarPara: ReturnType<typeof vi.fn>;
   let desafioDevolveToken: boolean;
 
-  function preencher(ideia = IDEIA_BOA, contato = 'pessoa@exemplo.com.br'): void {
+  function preencher(ideia = IDEIA_BOA, contato = 'pessoa@exemplo.com.br', nome = 'Diego'): void {
     const area = raiz.querySelector('textarea') as HTMLTextAreaElement;
-    const entrada = raiz.querySelector('input[type="text"]:not([tabindex])') as HTMLInputElement;
+    // A armadilha também é `input[type="text"]`, e é o `tabindex` que a separa
+    // dos campos de gente. Os visíveis saem na ordem do template: nome, contato.
+    const [campoDoNome, campoDoContato] = Array.from(
+      raiz.querySelectorAll<HTMLInputElement>('input[type="text"]:not([tabindex])'),
+    );
 
+    campoDoNome.value = nome;
+    campoDoNome.dispatchEvent(new Event('input'));
     area.value = ideia;
     area.dispatchEvent(new Event('input'));
-    entrada.value = contato;
-    entrada.dispatchEvent(new Event('input'));
+    campoDoContato.value = contato;
+    campoDoContato.dispatchEvent(new Event('input'));
   }
 
   async function abrir(): Promise<void> {
@@ -103,6 +109,28 @@ describe('FormularioDeIdeia', () => {
     await submeter();
 
     expect(enviar).not.toHaveBeenCalled();
+    // Os três são obrigatórios, e o clique em enviar mostra os três avisos de
+    // uma vez.
+    expect(raiz.querySelectorAll('.campo__erro')).toHaveLength(3);
+  });
+
+  it('não envia sem o nome, mesmo com ideia e contato preenchidos', async () => {
+    await abrir();
+    preencher(IDEIA_BOA, 'pessoa@exemplo.com.br', '   ');
+    await submeter();
+
+    expect(enviar).not.toHaveBeenCalled();
+  });
+
+  // Sem isso a pessoa só descobre o erro depois de escrever tudo e clicar.
+  it('avisa do erro assim que o campo perde o foco', async () => {
+    await abrir();
+
+    const campo = raiz.querySelector('input[type="text"]:not([tabindex])') as HTMLInputElement;
+    campo.dispatchEvent(new Event('blur'));
+    await fixture.whenStable();
+    fixture.detectChanges();
+
     expect(raiz.querySelector('.campo__erro')).not.toBeNull();
   });
 
@@ -112,6 +140,7 @@ describe('FormularioDeIdeia', () => {
     await submeter();
 
     const [pedido] = enviar.mock.calls[0] ?? [];
+    expect(pedido.nome).toBe('Diego');
     expect(pedido.ideia).toBe(IDEIA_BOA);
     expect(pedido.contato).toBe('pessoa@exemplo.com.br');
     expect(pedido.armadilha).toBe('');

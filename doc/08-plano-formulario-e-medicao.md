@@ -87,17 +87,25 @@ seu, e a chamada só acontece quando alguém decide falar com você.
 
 `POST /contato` no HTTP API, `Content-Type: application/json`:
 
-| Campo       | Tipo   | Regra                                    |
-| ----------- | ------ | ---------------------------------------- |
-| `ideia`     | string | 20 a 4000 caracteres                     |
-| `contato`   | string | 5 a 200 caracteres, e-mail ou telefone   |
-| `abertoEm`  | number | epoch em ms de quando o formulário abriu |
-| `armadilha` | string | precisa chegar vazia                     |
-| `turnstile` | string | token do desafio                         |
+| Campo       | Tipo   | Regra                                       |
+| ----------- | ------ | ------------------------------------------- |
+| `nome`      | string | 2 a 80 caracteres, com pelo menos uma letra |
+| `ideia`     | string | 20 a 4000 caracteres                        |
+| `contato`   | string | 5 a 200 caracteres, e-mail ou telefone      |
+| `abertoEm`  | number | epoch em ms de quando o formulário abriu    |
+| `armadilha` | string | precisa chegar vazia                        |
+| `turnstile` | string | token do desafio                            |
+
+O campo `nome` entrou depois do primeiro lote, quando a primeira ideia chegou
+sem jeito de saber como chamar quem escreveu. **A ordem de publicação importa:
+sobe o site primeiro e o endpoint depois.** O validador do endpoint ignora campo
+que não conhece, então o site novo conversa com o endpoint velho sem erro — só
+perde o nome no caminho. O contrário derruba o formulário que está no ar, porque
+o endpoint novo recusa pedido sem `nome`.
 
 Respostas: `202` com `{ "ok": true }` no caminho feliz; `400` para validação,
-armadilha preenchida, tempo curto demais ou token recusado; `429` para limite
-por IP estourado; `502` quando o SES falha.
+armadilha preenchida, nome fora do limite, tempo curto demais ou token recusado;
+`429` para limite por IP estourado; `502` quando o SES falha.
 
 CORS liberado só para `https://d1.app.br`, em `POST` e `OPTIONS`.
 

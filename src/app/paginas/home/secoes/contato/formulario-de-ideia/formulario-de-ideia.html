@@ -57,16 +57,34 @@
       </p>
 
       <label class="campo">
+        <span class="campo__rotulo">Seu nome</span>
+        <input
+          class="campo__entrada"
+          formControlName="nome"
+          type="text"
+          autocomplete="name"
+          [maxlength]="limiteDoNome"
+          [attr.aria-invalid]="mostrarErro('nome') && formulario.controls.nome.invalid"
+          placeholder="Como eu te chamo"
+          (blur)="marcarTocado('nome')"
+        />
+        @if (mostrarErro('nome') && formulario.controls.nome.errors; as erros) {
+          <span class="campo__erro">{{ erros['mensagem'] }}</span>
+        }
+      </label>
+
+      <label class="campo">
         <span class="campo__rotulo">A sua ideia</span>
         <textarea
           class="campo__entrada campo__entrada--texto"
           formControlName="ideia"
           rows="6"
           [maxlength]="limiteDaIdeia"
-          [attr.aria-invalid]="tentouEnviar() && formulario.controls.ideia.invalid"
+          [attr.aria-invalid]="mostrarErro('ideia') && formulario.controls.ideia.invalid"
           placeholder="Hoje eu controlo as entregas numa planilha e sempre some alguma coisa..."
+          (blur)="marcarTocado('ideia')"
         ></textarea>
-        @if (tentouEnviar() && formulario.controls.ideia.errors; as erros) {
+        @if (mostrarErro('ideia') && formulario.controls.ideia.errors; as erros) {
           <span class="campo__erro">{{ erros['mensagem'] }}</span>
         }
       </label>
@@ -78,11 +96,12 @@
           formControlName="contato"
           type="text"
           autocomplete="email"
-          [attr.aria-invalid]="mostrarErroDoContato() && formulario.controls.contato.invalid"
+          [maxlength]="limiteDoContato"
+          [attr.aria-invalid]="mostrarErro('contato') && formulario.controls.contato.invalid"
           placeholder="seu@email.com ou (11) 98888-7777"
-          (blur)="contatoTocado.set(true)"
+          (blur)="marcarTocado('contato')"
         />
-        @if (mostrarErroDoContato() && formulario.controls.contato.errors; as erros) {
+        @if (mostrarErro('contato') && formulario.controls.contato.errors; as erros) {
           <span class="campo__erro">{{ erros['mensagem'] }}</span>
         }
       </label>
