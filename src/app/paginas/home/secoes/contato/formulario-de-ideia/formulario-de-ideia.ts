@@ -17,12 +17,18 @@ import {
   type ValidationErrors,
   type ValidatorFn,
 } from '@angular/forms';
+import { ViewportScroller } from '@angular/common';
 import { CONFIGURACAO_DE_CONTATO } from '../../../../../core/config/contato';
 import { DesafioDeSeguranca, EnvioDeIdeias } from '../../../../../core/contato/servicos';
 import type { ApiDoTurnstile } from '../../../../../core/contato/turnstile';
 import { IDEIA_MAXIMA, erroDaIdeia, erroDoContato } from '../../../../../core/contato/validacao';
 
-type EstadoDoEnvio = 'parado' | 'enviando' | 'enviado' | 'erro';
+/**
+ * `limite` é estado próprio, e não mais uma mensagem de erro embaixo do
+ * formulário: quando a cota da hora acaba, insistir não adianta, então a caixa
+ * troca de conteúdo e oferece uma saída em vez de convidar a tentar de novo.
+ */
+type EstadoDoEnvio = 'parado' | 'enviando' | 'enviado' | 'limite' | 'erro';
 
 /** Ponte entre as regras puras de `core/contato/validacao` e o formulário. */
 function comoValidador(regra: (valor: string) => string | null): ValidatorFn {
@@ -42,6 +48,7 @@ function comoValidador(regra: (valor: string) => string | null): ValidatorFn {
 export class FormularioDeIdeia {
   private readonly envio = inject(EnvioDeIdeias);
   private readonly desafio = inject(DesafioDeSeguranca);
+  private readonly rolagem = inject(ViewportScroller);
 
   private readonly dialogo = viewChild.required<ElementRef<HTMLDialogElement>>('dialogo');
   private readonly alvoDoDesafio = viewChild<ElementRef<HTMLElement>>('desafio');
@@ -120,6 +127,22 @@ export class FormularioDeIdeia {
       this.formulario.reset();
       this.estado.set('parado');
     }
+
+    // No limite o texto fica onde está: a pessoa escreveu, a cota é que acabou,
+    // e daqui a uma hora ela reabre e envia sem digitar tudo de novo.
+    if (this.estado() === 'limite') {
+      this.estado.set('parado');
+    }
+  }
+
+  /**
+   * Fecha e devolve o visitante ao começo da página. Depois do limite não há o
+   * que fazer na caixa, e deixá-la fechada em cima da seção de contato convida a
+   * tentar de novo, que é justamente o que não vai funcionar agora.
+   */
+  protected sairDoLimite(): void {
+    this.fechar();
+    this.rolagem.scrollToPosition([0, 0]);
   }
 
   protected async enviar(): Promise<void> {
@@ -156,6 +179,12 @@ export class FormularioDeIdeia {
     // O token do Turnstile vale uma vez só. Sem o `reset`, uma segunda tentativa
     // seria recusada mesmo com tudo certo.
     this.reiniciarDesafio();
+
+    if (resultado === 'limite') {
+      this.estado.set('limite');
+      return;
+    }
+
     this.estado.set('erro');
     this.mensagemDeErro.set(MENSAGENS_DE_ERRO[resultado]);
   }
@@ -210,8 +239,7 @@ export class FormularioDeIdeia {
  * chega aqui: para quem está enviando, "armadilha" e "corpo inválido" pedem a
  * mesma resposta na tela.
  */
-const MENSAGENS_DE_ERRO: Record<'limite' | 'recusado' | 'falha', string> = {
-  limite: 'Já chegaram várias mensagens daqui hoje. Tente mais tarde, ou me escreva por e-mail.',
+const MENSAGENS_DE_ERRO: Record<'recusado' | 'falha', string> = {
   recusado: 'Alguma coisa no envio não passou na verificação. Tente de novo, ou use o e-mail.',
   falha: 'O envio não completou. Tente de novo em instantes, ou me escreva por e-mail.',
 };
