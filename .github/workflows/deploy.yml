@@ -29,6 +29,11 @@ jobs:
 
       - run: npm ci
 
+      # Antes de construir: a suite roda em jsdom, sem navegador, e cobre o
+      # conteudo alem dos componentes. Quebrou, o deploy para aqui e o site no
+      # ar continua sendo o ultimo que passou.
+      - run: npm test
+
       - run: npm run build
 
       # O GitHub Pages não conhece as rotas do Angular: um acesso direto a

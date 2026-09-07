@@ -31,12 +31,39 @@ Branch: `test/cobertura-minima-e-ci`
 | 1 | `hero.spec.ts`: fatiamento do bordão, incluindo o caso em que `bordaoDestaque` não existe dentro de `bordao` e o componente cai para "sem destaque" |
 | 1 | `contato.spec.ts`: montagem do `mailto:` com assunto codificado |
 | 7 | `conteudo.spec.ts`: toda `peca` de `combinacoes` corresponde ao `nome` de alguma tecnologia; toda tecnologia tem `icone` ou `sigla`; toda chave de `icone` existe em `ICONES` |
-| 10 | `deploy.yml`: rodar `npx prettier --check .` e `npm test` antes do `npm run build`, para o deploy parar quando algo quebrar |
+| 10 | `deploy.yml`: rodar `npm test` antes do `npm run build`, para o deploy parar quando algo quebrar |
+
+Duas coisas apareceram durante a execução e mudaram o lote:
+
+- **`prettier --check` saiu deste lote.** O repositório nunca passou pelo
+  formatador: 66 arquivos falham hoje. Ligar a verificação exigiria reformatar
+  tudo no mesmo commit, enterrando os testes num diff de repositório inteiro.
+  Vira o lote 2b.
+- **O teste de conteúdo achou um defeito em produção.** `xUnit e Vitest`
+  apontava `icone: 'vitest'`, chave que não existia em `ICONES`, e o item não
+  tinha `sigla`. O cartão renderizava sem símbolo e sem monograma. O ícone da
+  Vitest foi acrescentado ao mapa, com traçado e cor vindos do Simple Icons,
+  como os outros doze.
+- **O fatiamento do bordão saiu do componente** para `core/texto/bordao.ts`. O
+  membro era `protected` e o caso de destaque ausente não é alcançável pelo
+  conteúdo real, então testá-lo pela tela seria impossível. A função é pura, o
+  componente ficou com três linhas.
 
 O teste de conteúdo é a resposta ao ponto 7. Amarrar `pecas` a um tipo derivado
 exigiria duplicar a lista de nomes em uma constante `as const`, o que troca uma
 inconsistência silenciosa por outra. Uma asserção no teste pega o erro no CI sem
 custo de modelo.
+
+## Lote 2b — Formatação
+
+Branch: `chore/formatar-com-prettier`
+
+| Ponto | Ajuste |
+| --- | --- |
+| 10 | `npx prettier --write .` em um commit isolado, que não muda comportamento nenhum, e `npx prettier --check .` acrescentado ao `deploy.yml` no mesmo lote |
+
+Fica em branch própria justamente porque toca 66 arquivos. Revisar isso junto de
+qualquer outra coisa não funciona.
 
 ## Lote 3 — Coerência do modelo de conteúdo
 
