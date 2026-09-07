@@ -121,16 +121,18 @@ Repositório novo, privado. Nada aqui toca o repositório do site.
   build, teste, `terraform apply` e publicação da função.
 - **DNS no Registro.br:** três CNAME de DKIM e um TXT para o SES, mais um
   registro DMARC. Sem isso o e-mail sai, mas cai em spam.
-- **Trava de custo:** concorrência reservada de 5 na função, e orçamento de
-  US$ 5 com aviso por e-mail. O uso real custa uns dez centavos de dólar por
-  mês; o cenário que assusta é abuso, porque cada requisição, mesmo recusada,
-  paga uma invocação e uma escrita no DynamoDB. Invocação barrada por
-  concorrência não é cobrada, e é isso que fecha a torneira.
+- **Trava de custo:** concorrência reservada de 5 na função. O uso real custa uns
+  dez centavos de dólar por mês; o cenário que assusta é abuso, porque cada
+  requisição, mesmo recusada, paga uma invocação e uma escrita no DynamoDB.
+  Invocação barrada por concorrência não é cobrada, e é isso que fecha a
+  torneira. **Orçamento não entra neste módulo:** a conta da AWS é compartilhada
+  com outro projeto, e um orçamento mede a conta inteira, então ele dispararia
+  pelo vizinho. Esse alerta pertence ao nível da conta.
 - **Sandbox do SES não atrapalha.** O destino é sempre a sua caixa, que se
   verifica em um clique. Pedir saída do sandbox só faria falta se o Lambda
   precisasse escrever para terceiros.
 
-## Lote 7 — Formulário no site
+## Lote 7 — Formulário no site — **feito**
 
 - Componente novo em `paginas/home/secoes/contato/`, com `<dialog>` nativo: foco
   preso, `Esc` fecha, sem biblioteca.
@@ -144,6 +146,21 @@ Repositório novo, privado. Nada aqui toca o repositório do site.
 - A URL do endpoint entra como constante em `core/config`. Não é segredo:
   qualquer pessoa vê o endereço no tráfego da página.
 - Testes: validação, armadilha, montagem do corpo do POST, e os estados de erro.
+
+Três coisas mudaram na execução:
+
+- **Os colaboradores entram por injeção.** O sistema de teste do Angular recusa
+  `vi.mock` em import relativo e manda usar o TestBed, então o envio e o desafio
+  ganharam duas cascas injetáveis em `core/contato/servicos.ts`. As funções por
+  baixo continuam puras e testadas direto. É concessão ao teste, e está
+  comentada como tal no código.
+- **Entrou um `.gitattributes` com `eol=lf`.** Sem ele o Git entrega CRLF no
+  Windows, e o `prettier --check` que o lote 2b pôs no CI reprovava na máquina
+  de quem desenvolve, mesmo passando no CI, que roda em Linux.
+- **A configuração nasce vazia.** Com `endpoint` e `chaveDoTurnstile` em branco,
+  o formulário não aparece e a seção volta a ser o `mailto:`. Meio configurado
+  seria pior que desligado: a caixa apareceria e o envio morreria no desafio ou
+  no CORS, com a pessoa achando que mandou.
 
 ## Lote 8 — Medição e consentimento
 

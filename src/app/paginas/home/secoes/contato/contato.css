@@ -25,9 +25,17 @@
   gap: 12px;
 }
 
-/* O e-mail é um endereço: monoespaçado lê melhor. */
-.contato__acoes .botao--primario {
+/* O e-mail é um endereço: monoespaçado lê melhor. Vale para o botão que é o
+   próprio endereço, e não para o que abre o formulário. */
+.contato__email,
+.contato__alternativa a {
   font-family: var(--fonte-mono);
+}
+
+.contato__alternativa {
+  margin-top: 16px;
+  font-size: 0.9rem;
+  color: var(--texto-fraco);
 }
 
 @media (max-width: 640px) {

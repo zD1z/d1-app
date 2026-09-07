@@ -34,6 +34,8 @@ src/
       icones/icones-de-servico.ts  desenhos próprios da seção Soluções
       texto/bordao.ts           quebra do bordão em antes / destaque / depois
       layout/folga-do-cabecalho.ts  altura do cabeçalho, lida do token do CSS
+      config/contato.ts         endpoint e chave do Turnstile
+      contato/                  validação, envio, desafio e os serviços injetáveis
     layout/
       cabecalho/                barra fixa, menu mobile por signal
       rodape/
@@ -125,6 +127,26 @@ latino foi baixado: o conteúdo é português e nenhum caractere dele cai fora
 dele, o que foi verificado antes de descartar o `latin-ext`. São 79 kB no total,
 com `font-display: swap`, e a Inter entra em `preload` por desenhar a primeira
 tela. Licença OFL em `public/fontes/LICENCA.txt`.
+
+### Formulário de contato: `<dialog>` nativo e colaboradores por injeção
+
+O formulário vive em `paginas/home/secoes/contato/formulario-de-ideia/`, dentro
+de um `<dialog>` nativo. O navegador já prende o foco, fecha no `Esc` e desenha
+a camada por cima de tudo; biblioteca de modal aqui só repetiria isso.
+
+As regras de validação são funções puras em `core/contato/validacao.ts`, ligadas
+ao formulário reativo por um adaptador de uma linha. As mesmas regras existem no
+`d1-app-api`, e a repetição é proposital: validar no navegador avisa antes de
+enviar, validar no servidor existe porque ninguém confia no navegador.
+
+O envio e o desafio da Cloudflare passam por dois serviços em
+`core/contato/servicos.ts`, embora sejam funções puras por baixo. **O motivo é
+de teste, não de arquitetura:** o sistema de teste do Angular recusa `vi.mock`
+em import relativo e manda usar o TestBed, então o componente precisa receber os
+dois por injeção para o teste conseguir trocá-los.
+
+O script do Turnstile só é injetado quando alguém abre o formulário. Numa visita
+que não chega ao contato, o site continua sem nenhuma requisição externa.
 
 ### CSS: tokens globais, resto escopado
 
