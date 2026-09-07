@@ -18,8 +18,8 @@ export interface ConfiguracaoDeContato {
 }
 
 export const CONFIGURACAO_DE_CONTATO: ConfiguracaoDeContato = {
-  endpoint: '',
-  chaveDoTurnstile: '',
+  endpoint: 'https://qonscs6uyed77nqmi2uby7p5y40abeti.lambda-url.sa-east-1.on.aws/',
+  chaveDoTurnstile: '0x4AAAAAAEq266D4jcHhczJT',
 };
 
 /** O formulário só aparece quando os dois endereços existem. */
