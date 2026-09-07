@@ -11,14 +11,14 @@
  * infraestrutura subir, e também a rede de segurança se um dia ela cair.
  */
 export interface ConfiguracaoDeContato {
-  /** A Function URL do Lambda. Sai do `terraform output url_do_endpoint`. */
+  /** O endpoint do HTTP API. Sai do `terraform output url_do_endpoint`. */
   readonly endpoint: string;
   /** A site key do Turnstile, do painel da Cloudflare. */
   readonly chaveDoTurnstile: string;
 }
 
 export const CONFIGURACAO_DE_CONTATO: ConfiguracaoDeContato = {
-  endpoint: 'https://qonscs6uyed77nqmi2uby7p5y40abeti.lambda-url.sa-east-1.on.aws/',
+  endpoint: 'https://1k63v9hd31.execute-api.sa-east-1.amazonaws.com/contato',
   chaveDoTurnstile: '0x4AAAAAAEq266D4jcHhczJT',
 };
 
