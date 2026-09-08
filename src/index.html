@@ -24,10 +24,6 @@
       content="Transformo sua ideia em software sob medida. Você traz o problema, eu trago a parte técnica."
     />
 
-    <!-- A previa do link. URL absoluta porque quem le isto e um robo de fora, sem
-       base href. O arquivo nao leva hash no nome: os robos guardam a imagem em
-       cache pela URL, e trocar o nome a cada build faria a previa sumir das
-       conversas antigas. Fonte da arte em public/og.svg. -->
     <meta property="og:image" content="https://d1.app.br/og.png" />
     <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content="1200" />
@@ -38,14 +34,9 @@
     <link rel="icon" type="image/svg+xml" href="favicon.svg" />
     <link rel="icon" type="image/x-icon" href="favicon.ico" />
 
-    <!-- As fontes vivem em public/fontes e sao declaradas em styles.css. O texto
-       da primeira tela e Inter, entao ela vem no preload; a monoespacada
-       aparece so em rotulo pequeno e pode esperar. -->
     <link rel="preload" as="font" type="font/woff2" href="fontes/inter-latin.woff2" crossorigin />
   </head>
   <body>
-    <app-root>
-      <!-- Substituído pelo Angular no bootstrap. -->
-    </app-root>
+    <app-root></app-root>
   </body>
 </html>

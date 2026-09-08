@@ -182,6 +182,13 @@ Três coisas mudaram na execução:
 
 ## Lote 8 — Medição e consentimento
 
+> **Status: não executado, e sem decisão.** O `doc/01` declara que nada é
+> rastreado, e este lote propõe o contrário. A contradição existia registrada
+> como se as duas coisas estivessem decididas. Enquanto não houver decisão
+> explícita, vale o `doc/01`: nada é rastreado. A alternativa levantada na
+> revisão de design foi Search Console, que não usa cookie e portanto não pede
+> banner.
+
 - Banner de consentimento próprio, sem biblioteca, guardando a escolha no
   `localStorage`.
 - Consent Mode v2 com tudo negado por padrão. O `gtag.js` só é carregado depois

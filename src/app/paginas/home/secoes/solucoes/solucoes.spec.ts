@@ -22,8 +22,6 @@ describe('Solucoes', () => {
     expect(raiz.querySelectorAll('.servico').length).toBe(CONTEUDO.servicos.length);
   });
 
-  // O ícone vem de um mapa: chave sem desenho passaria pelo compilador como
-  // lista vazia e o cartão sairia com um `svg` em branco.
   it('desenha todo ícone com pelo menos um traçado', () => {
     for (const icone of raiz.querySelectorAll('.servico__icone svg')) {
       const caminhos = icone.querySelectorAll('path');

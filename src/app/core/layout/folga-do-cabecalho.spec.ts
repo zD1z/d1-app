@@ -18,8 +18,6 @@ describe('folgaDoCabecalho', () => {
     expect(folgaDoCabecalho()).toBe(120);
   });
 
-  // Sem o token não existe segundo lugar de onde tirar o número, e a âncora
-  // volta ao comportamento de antes do offset: alvo em y=0, sob o cabeçalho.
   it('devolve zero quando o token não existe', () => {
     expect(folgaDoCabecalho()).toBe(0);
   });

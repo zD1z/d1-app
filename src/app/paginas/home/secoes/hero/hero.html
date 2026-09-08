@@ -8,9 +8,6 @@
     <p class="hero__subtitulo">{{ oferta.subtitulo }}</p>
 
     <div class="hero__acoes">
-      <!-- Um clique, e a caixa abre aqui mesmo. A âncora do `@else` é o caminho
-           de quando o envio está desligado: aí a seção de contato volta a ser o
-           `mailto:` e é para lá que a pessoa precisa ir. -->
       @if (temFormulario) {
         <button type="button" class="botao botao--primario" (click)="abrirFormulario()">
           Contar minha ideia

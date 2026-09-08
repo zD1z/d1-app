@@ -1,16 +1,7 @@
-/* O brilho radial que ficava atrás do texto saiu. Ele usava o acento a 10% de
-   opacidade sobre um fundo quase preto: o pico do gradiente chegava a um delta
-   de ~1,1:1 contra o fundo, ou seja, ninguém enxergava. Custava uma camada de
-   composição para não entregar imagem nenhuma, e ainda era a assinatura visual
-   mais batida que existe. O respiro e a escala do título fazem o trabalho. */
 .hero {
   padding: var(--e-12) 0 112px;
 }
 
-/* A medida curta é do texto, e não do contêiner. Com `max-width` aqui, o bloco
-   do hero era centralizado numa caixa de 880px enquanto as outras seções usavam
-   os 1080px do `.container`: a borda esquerda do hero ficava cem pixels adiante
-   da borda de todo o resto da página, e nada alinhava com nada. */
 .hero__bordao {
   max-width: 880px;
   font-size: var(--t-hero);
@@ -36,9 +27,6 @@
   gap: var(--e-3);
 }
 
-/* A promessa que derruba a hesitação estava só na quarta seção, a três mil
-   pixels de rolagem daqui. Quem lê o bordão precisa saber, antes de clicar, o
-   que ganha ao clicar. */
 .hero__reasseguranca {
   margin-top: var(--e-4);
   max-width: 52ch;

@@ -18,8 +18,6 @@ describe('partirBordao', () => {
     });
   });
 
-  // A rede de segurança do arquivo de conteúdo: `bordaoDestaque` precisa
-  // existir dentro de `bordao`, e quando não existe o texto não pode sumir.
   it('devolve o bordão inteiro quando o destaque não está nele', () => {
     expect(partirBordao('D1 App para sua ideia', 'Outra coisa')).toEqual({
       antes: 'D1 App para sua ideia',

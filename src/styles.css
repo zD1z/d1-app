@@ -1,11 +1,3 @@
-/* Tokens e base. Nada de componente aqui, cada seção tem seu próprio arquivo. */
-
-/* As fontes são servidas do próprio domínio, e não do Google Fonts: o site
-   deixa de depender de terceiro para desenhar o texto e economiza duas
-   conexões no carregamento. Os dois arquivos são variáveis, então um único
-   woff2 por família cobre todos os pesos usados. Só o subset latino veio: o
-   conteúdo é português e nenhum caractere dele cai fora. Licença em
-   `public/fontes/LICENCA.txt`. */
 @font-face {
   font-family: 'Inter';
   font-style: normal;
@@ -22,13 +14,6 @@
   src: url('/fontes/jetbrains-mono-latin.woff2') format('woff2');
 }
 
-/* A fonte de reserva com as métricas da Inter aplicadas por cima da Arial.
-   Com `font-display: swap`, o primeiro quadro é desenhado na fonte do sistema
-   e trocado quando a Inter chega; sem estes ajustes, a troca muda a altura da
-   linha e empurra o layout, e quem paga é justamente o `h1` do hero, que é o
-   elemento de LCP da home. Os quatro números são o par Inter/Arial: eles fazem
-   a reserva ocupar a mesma caixa que a fonte final vai ocupar, então a troca
-   acontece sem deslocamento. */
 @font-face {
   font-family: 'Inter Reserva';
   src: local('Arial');
@@ -41,53 +26,25 @@
 :root {
   color-scheme: dark light;
 
-  /* ---- superfícies ----
-     Os três degraus existem para o cartão se destacar da faixa e a faixa do
-     fundo. A escala anterior tinha 1,03:1 entre cartão e faixa, ou seja,
-     diferença que ninguém enxerga: quem sustentava a leitura era o filete de
-     1px. Agora fundo e cartão estão a 1,25:1 no escuro. */
   --fundo: #0a0b0f;
   --superficie: #14171e;
   --cartao: #1e232e;
 
-  /* Filete decorativo: divisor de seção, borda de cartão, contorno de chip. */
   --borda: #2b3240;
 
-  /* Contorno de controle: campo de texto, botão secundário, hambúrguer. É um
-     token separado da `--borda` porque a WCAG 1.4.11 pede 3:1 para o limite de
-     um componente de interface, e a borda decorativa fica em 1,5:1 de
-     propósito. Usar um valor só obrigaria a escolher entre campo invisível e
-     grade de cartões gritando. Medido: 3,82:1 no escuro, 3,09:1 no claro. */
   --contorno: #6b7486;
 
-  /* ---- texto ----
-     `--texto-fraco` foi clareado: no valor antigo (#6b7484) ele reprovava em
-     AA nos dois temas, em sete usos, incluindo o rodapé inteiro e os rótulos
-     dos números de credencial. Agora o pior par é 5,13:1, contra os 4,5:1
-     exigidos para texto normal. */
   --texto: #eaeef5;
   --texto-suave: #a8b2c2;
   --texto-fraco: #8b95a6;
 
-  /* ---- ação ----
-     O acento é a cor da conversão, e só dela. A regra de uso é: chamada
-     principal, o trecho destacado do bordão, e o anel de foco. Rótulo de
-     seção, chip de ícone, número de etapa e borda de hover foram para os
-     neutros justamente para o botão voltar a ser a coisa mais saturada da
-     tela. */
   --acento: #5ab0f2;
   --acento-forte: #8ecbff;
-  /* O que escrever em cima do acento. Antes o botão usava `--fundo`, que dava
-     certo por coincidência; com um token, a intenção fica declarada. */
+
   --acento-contraste: #0a0b0f;
   --acento-fundo: color-mix(in srgb, var(--acento) 12%, transparent);
   --acento-borda: color-mix(in srgb, var(--acento) 34%, transparent);
 
-  /* ---- estado ----
-     Vivem aqui, e não chumbados no CSS do formulário, porque o vermelho antigo
-     (#e5484d) dava 3,91:1 sobre branco e o âmbar (#e9a319) dava 2,16:1, ou
-     seja, sumia no tema claro. Cor de estado precisa de par por tema como
-     qualquer outra. */
   --erro: #ff6b6f;
   --erro-fundo: color-mix(in srgb, var(--erro) 14%, transparent);
   --aviso: #f0b429;
@@ -95,8 +52,6 @@
   --ok: #4ade80;
   --ok-fundo: color-mix(in srgb, var(--ok) 14%, transparent);
 
-  /* A cortina atrás do `<dialog>`. Escurece nos dois temas: o papel dela é
-     tirar a página de cena, e clarear no tema claro não tira nada de cena. */
   --cortina: rgba(4, 6, 10, 0.66);
 
   --fonte:
@@ -104,29 +59,18 @@
     sans-serif;
   --fonte-mono: 'JetBrains Mono', ui-monospace, 'SF Mono', 'Cascadia Code', Menlo, monospace;
 
-  /* ---- escala tipográfica ----
-     Nove degraus, e nenhum tamanho solto no CSS de componente. Antes havia 26
-     declarações distintas, quinze delas espremidas entre 0.72rem e 1.08rem:
-     diferenças de 0,16px, que ninguém percebe e que impedem qualquer ritmo. */
   --t-xs: 0.75rem;
   --t-sm: 0.875rem;
   --t-base: 1rem;
   --t-md: 1.125rem;
   --t-lg: 1.375rem;
-  /* Texto de apoio que acompanha um título grande: subtítulo do hero e chamada
-     da /sobre. Fluido porque nasce colado num título fluido. */
+
   --t-destaque: clamp(1.125rem, 2vw, 1.375rem);
   --t-xl: clamp(1.75rem, 4vw, 2.5rem);
-  /* O degrau entre o título de seção e o bordão. Serve aos números da
-     credencial, que estavam saindo menores que o rótulo em cima deles, e ao
-     `h1` da /sobre, que precisa ficar acima do `h2` da seção seguinte sem
-     disputar com o bordão da home. */
+
   --t-2xl: clamp(2rem, 5vw, 3rem);
   --t-hero: clamp(2.5rem, 7vw, 4.25rem);
 
-  /* ---- escala de espaço ----
-     Múltiplos de 4. Os valores fora de escala que existiam (18, 22, 26, 52)
-     eram decisões de uma vez só, e o custo delas é que nada alinha com nada. */
   --e-1: 4px;
   --e-2: 8px;
   --e-3: 12px;
@@ -141,8 +85,7 @@
   --e-12: 128px;
 
   --largura: 1080px;
-  /* Altura do cabecalho fixo mais um respiro. Fonte unica do valor: o
-     app.config.ts le este token para deslocar a ancora do roteador. */
+
   --altura-do-cabecalho: 96px;
   --raio: 14px;
   --raio-pequeno: 8px;
@@ -186,24 +129,12 @@
 
 html {
   scroll-behavior: smooth;
-  /* Reserva a canaleta da barra de rolagem. Sem ela, trancar o `body` enquanto
-     o diálogo está aberto faria a barra sumir e a página inteira pular para o
-     lado no instante em que a caixa abre. */
+
   scrollbar-gutter: stable;
-  /* Vale para a rolagem nativa do navegador (# na barra de endereco antes
-     de o Angular subir). A ancora do roteador e deslocada pelo setOffset
-     do ViewportScroller, em app.config.ts, que ignora esta propriedade mas
-     le o mesmo token, entao os dois caminhos usam a mesma altura. */
+
   scroll-padding-top: var(--altura-do-cabecalho);
 }
 
-/* Com o `<dialog>` modal aberto, o navegador torna o resto da página inerte
-   para clique e para foco, mas **não** para rolagem: a roda do mouse continua
-   movendo o conteúdo por baixo da cortina, e quem está preenchendo o formulário
-   vê a página andar sozinha atrás. Trancar o `body` é o que fecha isso.
-
-   A regra mora aqui, e não no CSS do componente, porque o `body` está fora do
-   escopo dele: com o encapsulamento do Angular, o seletor nunca casaria. */
 body:has(dialog[open]) {
   overflow: hidden;
 }
@@ -240,14 +171,10 @@ h4 {
   margin: 0;
   line-height: 1.2;
   font-weight: 650;
-  /* Sem órfã: o navegador reparte as linhas do título para a última não sair
-     com uma palavra sozinha. Vale para os quatro, e não só para o hero. */
+
   text-wrap: balance;
 }
 
-/* Tracking negativo é ajuste de título grande. Aplicado igual em `h4` de 16px
-   ele fecha o desenho da letra, então só entra a partir do tamanho em que a
-   compensação óptica de fato existe. */
 h1,
 h2 {
   letter-spacing: -0.025em;
@@ -279,11 +206,6 @@ a:hover {
   color: var(--acento-forte);
 }
 
-/* Sem `border-radius` aqui. A propriedade não arredonda o contorno: ela
-   arredonda o próprio elemento, então declará-la neste seletor fazia todo
-   botão, cartão e etiqueta mudarem de forma ao receber foco de teclado, e o
-   número redondo da etapa virava quadrado. O contorno já acompanha o raio de
-   cada elemento sozinho. */
 :focus-visible {
   outline: 2px solid var(--acento);
   outline-offset: 3px;
@@ -294,8 +216,6 @@ svg {
   max-width: 100%;
 }
 
-/* ---- utilitários compartilhados entre as seções ---- */
-
 .container {
   width: 100%;
   max-width: var(--largura);
@@ -303,15 +223,11 @@ svg {
   padding: 0 var(--e-6);
 }
 
-/* O fecho da seção pede um pouco mais que a abertura: opticamente, o respiro
-   de baixo é lido junto com a borda da seção seguinte. */
 .secao {
   padding: var(--e-11) 0 104px;
   border-top: 1px solid var(--borda);
 }
 
-/* Numeração e nome da seção. Saiu do acento: era mais uma superfície azul
-   competindo com a chamada principal, e o papel dele aqui é de legenda. */
 .secao__rotulo {
   display: flex;
   align-items: center;
@@ -356,7 +272,6 @@ svg {
   white-space: nowrap;
 }
 
-/* Botões: usados no hero e no contato, por isso ficam no global. */
 .botao {
   display: inline-block;
   padding: var(--e-3) var(--e-6);
@@ -377,8 +292,6 @@ svg {
   transform: translateY(-1px);
 }
 
-/* O botão precisa responder ao dedo, e no toque não existe hover: sem estado
-   de pressão, a interface parece inerte justamente onde a conversão acontece. */
 .botao:active {
   transform: translateY(0) scale(0.985);
   transition-duration: 0.08s;
@@ -405,7 +318,6 @@ svg {
   color: var(--texto);
 }
 
-/* Texto visível só para leitor de tela. */
 .apenas-leitor {
   position: absolute;
   width: 1px;
@@ -427,11 +339,6 @@ svg {
     margin-bottom: var(--e-7);
   }
 
-  /* O `.botao` é `inline-block`, então `flex` só vale quando o pai é um
-     contêiner flex. A regra antiga estava no `.botao` solto e não fazia nada
-     em `quem-faz`, `chamada-final` e `apresentacao`, onde o botão não tem pai
-     flex: o CTA saía largura total em duas telas e automático em três. Aqui o
-     alvo são as duas faixas de ação, que são flex de verdade. */
   .hero__acoes .botao,
   .contato__acoes .botao {
     width: 100%;

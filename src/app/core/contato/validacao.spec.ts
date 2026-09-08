@@ -30,8 +30,6 @@ describe('erroDoNome', () => {
     expect(erroDoNome('a'.repeat(NOME_MAXIMO + 1))).toContain(String(NOME_MAXIMO));
   });
 
-  // Nome sem letra nenhuma é teclado batido ou robô. Sobrenome, acento e
-  // maiúscula continuam livres: gente se apresenta como quer.
   it('recusa nome sem letra', () => {
     expect(erroDoNome('12345')).toContain('letras');
   });
@@ -54,8 +52,6 @@ describe('erroDaIdeia', () => {
     expect(erroDaIdeia('a'.repeat(IDEIA_MAXIMA + 1))).toContain(String(IDEIA_MAXIMA));
   });
 
-  // O mesmo aparo que o endpoint faz. Se divergisse, o site aprovaria texto que
-  // o servidor recusa, e a pessoa levaria erro sem entender por quê.
   it('conta o tamanho já sem o espaço das pontas', () => {
     expect(erroDaIdeia(`   ${IDEIA_BOA}   `)).toBeNull();
   });
@@ -84,8 +80,6 @@ describe('erroDoContato', () => {
     );
   });
 
-  // Cada erro tem a sua frase. Quem digitou e-mail torto não precisa ouvir
-  // falar de DDD, e quem esqueceu o DDD não precisa ouvir falar de arroba.
   it('fala de e-mail quando tem arroba', () => {
     expect(erroDoContato('pessoa@empresa')).toContain('e-mail');
   });
@@ -128,11 +122,11 @@ describe('pareceCelularComDdd', () => {
   );
 
   it.each([
-    '988887777', // sem DDD
-    '1138887777', // fixo de oito dígitos
-    '11388887777', // onze dígitos, mas sem o nove
-    '(20) 98888-7777', // DDD que não existe
-    '551198888777', // doze dígitos, nem com país nem sem
+    '988887777',
+    '1138887777',
+    '11388887777',
+    '(20) 98888-7777',
+    '551198888777',
     'sem digito',
   ])('%s não parece celular com DDD', (valor) => {
     expect(pareceCelularComDdd(valor)).toBe(false);

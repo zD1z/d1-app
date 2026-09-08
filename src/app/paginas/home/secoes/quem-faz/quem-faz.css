@@ -15,10 +15,6 @@
   border-top: 1px solid var(--borda);
 }
 
-/* Os três números são a única prova quantitativa do site, e estavam saindo a
-   27px: menores que o título da seção e do mesmo peso visual que um subtítulo
-   de cartão. A credencial perdia para o rótulo administrativo em cima dela.
-   `tabular-nums` alinha os dígitos entre as três colunas. */
 .quem-faz__valor {
   font-size: var(--t-2xl);
   font-weight: 700;

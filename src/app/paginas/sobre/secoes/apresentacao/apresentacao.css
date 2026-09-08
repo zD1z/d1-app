@@ -1,12 +1,7 @@
-/* O brilho radial saiu daqui pelo mesmo motivo do hero: acento a 10% sobre
-   fundo quase preto não chega a um delta perceptível. */
 .apresentacao {
   padding: var(--e-11) 0 var(--e-10);
 }
 
-/* Um degrau acima do título de seção e bem abaixo do bordão da home: a /sobre
-   é a página de apoio, mas o `h1` dela não pode empatar com o `h2` logo
-   adiante. */
 .apresentacao__nome {
   display: flex;
   flex-direction: column;

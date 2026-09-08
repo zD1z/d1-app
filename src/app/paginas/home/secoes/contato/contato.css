@@ -1,7 +1,3 @@
-/* O gradiente radial de acento que ficava no topo da caixa saiu pelo mesmo
-   motivo do brilho do hero: a 10% de opacidade sobre o fundo do cartão ele não
-   chegava a 1,1:1 de diferença. A borda em acento continua, e agora é ela
-   sozinha que marca esta caixa como a área de ação da página. */
 .contato__caixa {
   padding: var(--e-9);
   border: 1px solid var(--acento-borda);
@@ -28,8 +24,6 @@
   gap: var(--e-3);
 }
 
-/* O e-mail é um endereço: monoespaçado lê melhor. Vale para o botão que é o
-   próprio endereço, e não para o que abre o formulário. */
 .contato__email,
 .contato__alternativa a {
   font-family: var(--fonte-mono);

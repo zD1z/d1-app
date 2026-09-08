@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CONTEUDO } from '../../../../core/conteudo/perfil';
 
-/** Fecha a página /sobre devolvendo o visitante para a oferta da home. */
 @Component({
   selector: 'app-chamada-final',
   imports: [RouterLink],

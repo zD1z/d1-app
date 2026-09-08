@@ -2,25 +2,34 @@
 
 ## Stack
 
-| Camada     | Escolha                                | Versão     |
-| ---------- | -------------------------------------- | ---------- |
-| Framework  | Angular (standalone, zoneless)         | `^21.2.0`  |
-| Linguagem  | TypeScript em modo estrito             | `~5.9.2`   |
-| Build      | `@angular/build:application` (esbuild) | `^21.2.22` |
-| Testes     | Vitest via `@angular/build:unit-test`  | `^4.0.8`   |
-| Estilo     | CSS puro com custom properties         | —          |
-| Formatação | Prettier                               | `^3.8.1`   |
-| Hospedagem | GitHub Pages (estático)                | —          |
+| Camada     | Escolha                                     | Versão     |
+| ---------- | ------------------------------------------- | ---------- |
+| Framework  | Angular (standalone, zoneless)              | `^21.2.0`  |
+| Linguagem  | TypeScript em modo estrito                  | `~5.9.2`   |
+| Build      | `@angular/build:application` (esbuild)      | `^21.2.22` |
+| Testes     | Vitest via `@angular/build:unit-test`       | `^4.0.8`   |
+| Estilo     | CSS puro com custom properties              | —          |
+| Formatação | Prettier                                    | `^3.8.1`   |
+| Hospedagem | GitHub Pages (estático)                     | —          |
+| Prerender  | `@angular/ssr` + `@angular/platform-server` | `^21.2.0`  |
 
 Sem Tailwind, sem biblioteca de componentes, sem gerenciador de estado, sem
-cliente HTTP. As únicas dependências de runtime são o próprio Angular, `rxjs` e
+cliente HTTP. As dependências de runtime são o próprio Angular, `rxjs` e
 `tslib`. RxJS entra apenas como dependência transitiva do router.
+
+`@angular/ssr` e `@angular/platform-server` entraram para o prerender e são a
+única exceção à regra de não acrescentar pacote. Eles rodam **na hora do
+build**, não em produção: desenham as duas rotas em HTML (`outputMode: static`)
+e não vão para o navegador. O que se ganha em troca é o conteúdo existir na
+página antes de o JavaScript carregar, que é o que decide o LCP e o que os
+robôs de busca leem.
 
 ## Estrutura de pastas
 
 ```
 src/
-  index.html                    meta tags, Open Graph, fontes do Google
+  index.html                    meta tags e Open Graph padrão, fontes locais
+  main.server.ts                entrada do prerender
   main.ts                       bootstrapApplication
   styles.css                    tokens + utilitários compartilhados (260 linhas)
   app/
@@ -55,7 +64,7 @@ public/
 Convenções que valem em todo o projeto:
 
 - **Nomes de arquivo, classe e identificador em português.** `Cabecalho`,
-  `perfil.ts`, `secoes/`, `partesDoBordao`. Inclusive os comentários.
+  `perfil.ts`, `secoes/`, `partesDoBordao`.
 - **Uma pasta por seção**, com `.ts`, `.html` e `.css` juntos. Nenhum arquivo de
   seção passa de algumas dezenas de linhas.
 - **Sem sufixo `.component`** nos nomes — é o padrão do Angular moderno.
@@ -78,13 +87,13 @@ constante importada, não fluxo de dados.
 `CONTEUDO` é um objeto `readonly` importado direto pelos componentes. Não há
 `ContentService`, nem injeção, nem `HttpClient` buscando JSON. Para um site em
 que o texto muda por commit, um serviço só adicionaria indireção. O modelo em
-`core/models/conteudo.ts` documenta cada campo com um comentário dizendo onde
+`core/models/conteudo.ts` declara o formato, e o `09-decisoes-no-codigo.md` diz onde
 ele aparece e que tamanho de texto cabe.
 
 ### Offset de âncora feito na mão
 
 `app.config.ts` chama `ViewportScroller.setOffset([0, 96])` num
-`provideAppInitializer`. O comentário no arquivo explica: o `scroll-padding-top`
+`provideAppInitializer`. O `09-decisoes-no-codigo.md` explica: o `scroll-padding-top`
 do CSS **não** resolve a âncora do router, porque o `ViewportScroller` do
 Angular lê a posição do elemento e chama `window.scrollTo`, caminho em que nem
 `scroll-padding` nem `scroll-margin` entram na conta. Sem o offset, o alvo pousa
@@ -112,7 +121,7 @@ redireciona para a home, e funciona em produção porque o workflow duplica o
 ### Ícones de marca embutidos
 
 `core/icones/icones.ts` carrega os _paths_ SVG extraídos do Simple Icons
-(CC0 1.0), como constantes. Duas razões, ambas no comentário do arquivo: o site
+(CC0 1.0), como constantes. Duas razões, ambas no `09-decisoes-no-codigo.md`: o site
 não faz nenhuma requisição externa por ícone, e o pacote não vira dependência
 para desenhar doze símbolos. Marcas que foram removidas do Simple Icons a pedido
 dos donos (AWS, Azure, SQL Server, Oracle, DynamoDB, Playwright) aparecem como

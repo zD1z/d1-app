@@ -2,8 +2,6 @@
   background: var(--superficie);
 }
 
-/* 228px é o maior mínimo que ainda deixa os quatro cartões numa linha só
-   dentro do container de 1080px. Acima disso sobra um cartão órfão. */
 .servicos {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(228px, 1fr));
@@ -19,14 +17,10 @@
   transition: border-color 0.15s ease;
 }
 
-/* Hover em neutro forte, e não em acento: são quatro cartões, e acender quatro
-   bordas azuis competia com o único botão que interessa nesta página. */
 .servico:hover {
   border-color: var(--contorno);
 }
 
-/* Chip monocromático. Antes era fundo, borda e traço em acento, quatro vezes
-   por tela, o que diluía a cor de ação até ela não significar mais nada. */
 .servico__icone {
   display: grid;
   place-items: center;
@@ -44,10 +38,6 @@
   height: 21px;
 }
 
-/* Duas linhas reservadas. Três dos quatro títulos quebram na largura do cartão
-   e um não, e sem a reserva as quatro descrições começavam em alturas
-   diferentes: numa fileira de cartões, é o desalinhamento que faz a grade
-   parecer quebrada. `2.4em` são as duas linhas na entrelinha 1.2 dos títulos. */
 .servico__titulo {
   min-height: 2.4em;
   font-size: var(--t-md);
