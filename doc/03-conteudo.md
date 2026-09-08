@@ -4,7 +4,8 @@
 
 **Todo o texto do site vive em `src/app/core/conteudo/perfil.ts`.** Não há texto
 solto em template; os componentes só desenham. O formato está descrito em
-`src/app/core/models/conteudo.ts`, com um comentário por campo dizendo onde ele
+`src/app/core/models/conteudo.ts`, e a tabela de onde cada campo aparece está no
+`09-decisoes-no-codigo.md`. O modelo diz o formato; o documento 09 diz onde ele
 aparece e que tamanho de texto cabe.
 
 Exceções conhecidas (texto que está no template, não no `perfil.ts`):

@@ -27,8 +27,6 @@ describe('enviarIdeia', () => {
     await expect(enviarIdeia(PEDIDO, ENDPOINT, respondendo(status))).resolves.toBe(esperado);
   });
 
-  // Rede fora, CORS recusado, aba fechando: nada disso é culpa de quem escreveu,
-  // e a tela precisa de uma resposta em vez de uma exceção solta.
   it('trata falha de rede como falha, sem estourar', async () => {
     const buscar = vi.fn().mockRejectedValue(new TypeError('Failed to fetch'));
     await expect(enviarIdeia(PEDIDO, ENDPOINT, buscar as unknown as typeof fetch)).resolves.toBe(

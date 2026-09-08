@@ -1,23 +1,11 @@
-/**
- * Tracados dos icones de marca, extraidos do pacote Simple Icons (CC0 1.0).
- * Ficam embutidos aqui de proposito: o site nao faz requisicao externa, e o
- * pacote nao precisa virar dependencia so para desenhar treze simbolos.
- *
- * As marcas seguem sendo dos seus donos. O uso aqui e descritivo, para dizer
- * que ferramentas foram usadas, e nao sugere parceria nem endosso.
- *
- * AWS, Azure, SQL Server, Oracle, DynamoDB e Playwright nao estao aqui porque
- * foram removidos do pacote a pedido dos donos das marcas. Essas tecnologias
- * aparecem com monograma no lugar do simbolo.
- */
 export interface IconeDeMarca {
   readonly titulo: string;
-  /** Cor oficial da marca. So aparece no hover. */
+
   readonly cor: string;
   readonly caminho: string;
 }
 
-export const ICONES: Record<string, IconeDeMarca> = {
+export const ICONES = {
   angular: {
     titulo: 'Angular',
     cor: '#0F0F11',
@@ -96,4 +84,6 @@ export const ICONES: Record<string, IconeDeMarca> = {
     caminho:
       'M11.545 23.3a.613.613 0 0 1-.895.197L.252 15.936A.61.61 0 0 1 0 15.439V6.325c0-.502.569-.792.975-.497l6.358 4.624c.594.433 1.432.25 1.793-.39L14.393.7a.62.62 0 0 1 .535-.314h8.455a.613.613 0 0 1 .537.916z',
   },
-};
+} satisfies Record<string, IconeDeMarca>;
+
+export type ChaveDeIconeDeMarca = keyof typeof ICONES;

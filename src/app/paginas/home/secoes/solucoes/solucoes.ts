@@ -12,7 +12,6 @@ export class Solucoes {
   protected readonly servicos = CONTEUDO.servicos;
   protected readonly processo = CONTEUDO.processo;
 
-  /** Os traçados do ícone, desenhados como uma lista de `<path>`. */
   protected desenhoDoIcone(chave: ChaveDeIcone): readonly string[] {
     return ICONES_DE_SERVICO[chave];
   }

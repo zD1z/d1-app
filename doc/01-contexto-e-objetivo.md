@@ -42,9 +42,11 @@ Dois públicos, com pesos diferentes:
 
 Estas são decisões tomadas, não pendências:
 
-- **Não tem backend.** Nenhum formulário de contato com envio, nenhuma API. O
-  contato é `mailto:`. Isso mantém o custo de operação em zero e o site sem
-  superfície de ataque.
+- **Não tem backend próprio no site.** O site continua sendo arquivo estático,
+  sem servidor. O que existe é um endpoint de envio isolado, em outro
+  repositório (`d1-app-api`), acionado só quando alguém abre o formulário de
+  ideia. O `mailto:` segue vivo como alternativa e como rede de segurança se o
+  endpoint cair.
 - **Não tem linha do tempo de carreira.** O currículo detalhado vive no
   LinkedIn, que atualiza sozinho. No site há apenas uma linha de resumo
   (`resumoDeCarreira`), justamente para não envelhecer sem ninguém notar.
@@ -53,12 +55,17 @@ Estas são decisões tomadas, não pendências:
   não de estudos de caso.
 - **Não tem botão de tema.** Claro e escuro saem de `prefers-color-scheme`, sem
   estado guardado.
-- **Não tem analytics, cookies nem banner de consentimento.** Nada é rastreado.
+- **Não tem analytics, cookies nem banner de consentimento.** Nada é
+  rastreado. O `doc/08` previa um lote de medição com GA4 e banner; ele **não
+  foi executado e continua sem decisão**. Enquanto não houver decisão explícita
+  registrada aqui, o estado é este: nada é rastreado.
 
 ## Por que Angular para um site estático
 
 É uma escolha consciente, e o `README.md` da raiz a declara: o build gera HTML,
-CSS e JS estáticos, e nada roda no servidor. O framework está ali pelo que vem
+CSS e JS estáticos, e nada roda no servidor. Desde o lote de prerender, o HTML
+de cada rota sai pronto do build, então o conteúdo existe na página antes de
+qualquer JavaScript rodar. O framework está ali pelo que vem
 depois — integração com API, área logada, formulário de contato de verdade — sem
 precisar reescrever a base. Como efeito colateral, o próprio site é uma
 demonstração da stack que a `/sobre` afirma dominar.

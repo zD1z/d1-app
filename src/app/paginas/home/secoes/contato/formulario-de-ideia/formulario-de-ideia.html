@@ -24,8 +24,6 @@
 
       <p class="ideia__recado">Recebido. Respondo no contato que você deixou.</p>
 
-      <!-- Quem acabou de mandar a ideia é a pessoa mais interessada do site, e
-           até aqui a única coisa oferecida a ela era fechar a caixa. -->
       <p class="ideia__detalhe">
         Enquanto isso, dá para ver
         <a routerLink="/sobre">com o que eu construo</a>.
@@ -34,9 +32,6 @@
       <button type="button" class="botao botao--primario" (click)="fechar()">Fechar</button>
     </div>
   } @else if (estado() === 'limite') {
-    <!-- Tela inteira, e nao aviso embaixo do formulario: quando a cota da hora
-         acaba, insistir nao adianta, e deixar os campos ali convidaria a tentar
-         de novo. O texto e o e-mail continuam a saida possivel. -->
     <div class="ideia__final ideia__final--limite" role="alert">
       <span class="ideia__sinal ideia__sinal--aviso" aria-hidden="true">
         <svg
@@ -63,9 +58,6 @@
       <button type="button" class="botao botao--primario" (click)="sairDoLimite()">Ok</button>
     </div>
   } @else {
-    <!-- `inert` durante o envio tira a caixa inteira do alcance do mouse, do
-         teclado e do leitor de tela. O botao desabilitado sozinho nao bastaria:
-         o Enter dentro do campo de texto continuaria submetendo. -->
     <form
       class="ideia__formulario"
       [formGroup]="formulario"
@@ -76,10 +68,6 @@
         Não precisa de termo técnico nem de requisito pronto. Descreva o problema e sua ideia.
       </p>
 
-      <!-- O rótulo é `<label for>` e a mensagem de erro fica fora dele, ligada
-           por `aria-describedby`. Com o erro dentro do `<label>`, como estava, o
-           texto virava parte do **nome** do campo, e o leitor de tela anunciava
-           "A sua ideia Conte um pouco mais" como se fosse o rótulo. -->
       <div class="campo">
         <label class="campo__rotulo" for="campo-nome">Seu nome</label>
         <input
@@ -148,8 +136,6 @@
         }
       </div>
 
-      <!-- A armadilha. Fora da tela, fora da ordem de tabulação e fora do leitor
-           de tela: só robô que preenche tudo cai nela. -->
       <div class="ideia__armadilha" aria-hidden="true">
         <label>
           Deixe este campo em branco
@@ -171,9 +157,6 @@
       </p>
     </form>
 
-    <!-- Cobre a caixa inteira enquanto o envio acontece. O `<dialog>` ja e
-         modal, entao a pagina atras ja esta bloqueada, e esta camada fecha o que
-         faltava: nada na tela aceita clique ate a resposta chegar. -->
     @if (enviando()) {
       <div class="ideia__bloqueio" role="status" aria-live="polite">
         <span class="ideia__girador" aria-hidden="true"></span>

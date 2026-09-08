@@ -1,11 +1,12 @@
 import type { Conteudo } from '../models/conteudo';
 
-/**
- * CONTEÚDO DO SITE. Este é o único arquivo a editar para mudar a página.
- *
- * O formato está descrito em `../models/conteudo.ts`, com um comentário por
- * campo dizendo onde ele aparece e que tamanho de texto cabe.
- */
+export const INICIO_DA_CARREIRA = 2011;
+export const INICIO_NA_AUTOMACAO = 2015;
+
+export function anosDesde(ano: number, hoje: Date = new Date()): number {
+  return hoje.getFullYear() - ano;
+}
+
 export const CONTEUDO: Conteudo = {
   perfil: {
     nome: 'Danilo Pereira da Silva',
@@ -37,8 +38,14 @@ export const CONTEUDO: Conteudo = {
   },
 
   numeros: [
-    { valor: '15 anos', rotulo: 'em tecnologia, desde 2011' },
-    { valor: '11 anos', rotulo: 'em automação de estacionamento e tráfego' },
+    {
+      valor: `${anosDesde(INICIO_DA_CARREIRA)} anos`,
+      rotulo: `em tecnologia, desde ${INICIO_DA_CARREIRA}`,
+    },
+    {
+      valor: `${anosDesde(INICIO_NA_AUTOMACAO)} anos`,
+      rotulo: 'em automação de estacionamento e tráfego',
+    },
     { valor: '4 setores', rotulo: 'leilões, consultoria, automação e banco' },
   ],
 

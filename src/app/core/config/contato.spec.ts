@@ -8,8 +8,6 @@ describe('formularioEstaLigado', () => {
     ).toBe(true);
   });
 
-  // Meio configurado é pior que desligado: o formulário apareceria e o envio
-  // morreria no desafio ou no CORS, com a pessoa achando que mandou.
   it.each([
     ['sem endpoint', { endpoint: '', chaveDoTurnstile: '0x4A' }],
     ['sem chave', { endpoint: 'https://exemplo.on.aws/', chaveDoTurnstile: '' }],

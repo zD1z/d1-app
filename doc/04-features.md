@@ -68,5 +68,10 @@ infraestrutura de envio subir, e a rede de segurança se ela cair.
   destino.
 - **`prefers-reduced-motion`** zera animações e transições.
 - **Rota curinga** devolve qualquer caminho desconhecido para a home.
-- **Zero requisição externa em runtime**, com uma exceção: as fontes Inter e
-  JetBrains Mono vêm do Google Fonts, com `preconnect`.
+- **Zero requisição externa até alguém decidir falar com você.** As fontes
+  Inter e JetBrains Mono são auto-hospedadas em `public/fontes` desde o lote 4,
+  então o Google Fonts saiu de cena. Restam duas chamadas para fora, e as duas
+  só acontecem quando o formulário de ideia abre: o desafio do Turnstile, em
+  `core/contato/turnstile.ts`, e o endpoint de envio, em
+  `core/config/contato.ts`. Navegar pelo site sem abrir o formulário não fala
+  com ninguém.

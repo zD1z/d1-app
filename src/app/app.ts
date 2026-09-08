@@ -1,5 +1,6 @@
-import { ChangeDetectionStrategy, Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { MetaDaRota } from './core/seo/meta-da-rota';
 import { Cabecalho } from './layout/cabecalho/cabecalho';
 import { Rodape } from './layout/rodape/rodape';
 
@@ -10,4 +11,8 @@ import { Rodape } from './layout/rodape/rodape';
   styleUrl: './app.css',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class App {}
+export class App {
+  constructor() {
+    inject(MetaDaRota).observar();
+  }
+}

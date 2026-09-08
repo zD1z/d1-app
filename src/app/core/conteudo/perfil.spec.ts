@@ -1,13 +1,8 @@
 import { describe, expect, it } from 'vitest';
 import { ICONES } from '../icones/icones';
 import { partirBordao } from '../texto/bordao';
-import { CONTEUDO } from './perfil';
+import { CONTEUDO, INICIO_DA_CARREIRA, anosDesde } from './perfil';
 
-/**
- * O conteúdo é escrito à mão e nada nele é validado pelo compilador além do
- * formato. Estes testes cobrem os acordos que o tipo não expressa: referências
- * entre blocos, e campos que só fazem sentido em par.
- */
 describe('CONTEUDO', () => {
   const tecnologias = CONTEUDO.tecnologias.flatMap((grupo) => grupo.itens);
 
@@ -30,8 +25,6 @@ describe('CONTEUDO', () => {
       expect(new Set(nomes).size).toBe(nomes.length);
     });
 
-    // Sem ícone o cartão desenha um monograma, e sem sigla o monograma sai
-    // vazio. Um dos dois campos é obrigatório na prática.
     it('tem ícone ou sigla em cada item', () => {
       for (const tecnologia of tecnologias) {
         expect(tecnologia.icone ?? tecnologia.sigla, tecnologia.nome).toBeTruthy();
@@ -46,7 +39,6 @@ describe('CONTEUDO', () => {
       }
     });
 
-    // O que separa lista de prova. Sem a frase, o cartão vira só um logotipo.
     it('tem uma prova em cada item', () => {
       for (const tecnologia of tecnologias) {
         expect(tecnologia.prova.trim().length, tecnologia.nome).toBeGreaterThan(0);
@@ -55,12 +47,6 @@ describe('CONTEUDO', () => {
   });
 
   describe('combinações', () => {
-    /**
-     * As peças são texto livre, e é aqui que a inconsistência apareceria em
-     * silêncio. Uma peça vale quando bate com o nome da tecnologia, com a sua
-     * sigla, ou com um dos lados de um nome composto por " e " (".NET e C#"
-     * cobre ".NET").
-     */
     const existe = (peca: string): boolean =>
       tecnologias.some(
         (tecnologia) =>
@@ -92,5 +78,19 @@ describe('CONTEUDO', () => {
     it('tem LinkedIn em https', () => {
       expect(CONTEUDO.contato.linkedin).toMatch(/^https:\/\//);
     });
+  });
+});
+
+describe('números que envelhecem', () => {
+  it('conta os anos a partir do ano de início, e não de um texto escrito à mão', () => {
+    expect(anosDesde(2011, new Date(2026, 0, 1))).toBe(15);
+    expect(anosDesde(2011, new Date(2027, 0, 1))).toBe(16);
+  });
+
+  it('publica o número derivado, junto do ano de partida', () => {
+    const anos = CONTEUDO.numeros[0];
+
+    expect(anos.valor).toBe(`${anosDesde(INICIO_DA_CARREIRA)} anos`);
+    expect(anos.rotulo).toContain(String(INICIO_DA_CARREIRA));
   });
 });

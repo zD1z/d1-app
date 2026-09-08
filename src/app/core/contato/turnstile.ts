@@ -1,11 +1,3 @@
-/**
- * O desafio da Cloudflare, carregado sob demanda.
- *
- * O script só entra na página quando alguém abre o formulário. Numa visita que
- * não chega ao contato, o site continua sem fazer requisição externa nenhuma,
- * que é como ele foi construído.
- */
-
 const ENDERECO_DO_SCRIPT = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit';
 
 export interface OpcoesDoDesafio {
@@ -15,11 +7,7 @@ export interface OpcoesDoDesafio {
   readonly 'expired-callback': () => void;
   readonly theme: 'auto' | 'light' | 'dark';
   readonly language: string;
-  /**
-   * `flexible` faz a caixa do desafio acompanhar a largura do contêiner. No
-   * tamanho padrão ela tem 300px fixos, e dentro do diálogo a 360px de tela
-   * sobram 288px: o widget estourava para fora da caixa.
-   */
+
   readonly size: 'normal' | 'flexible' | 'compact';
 }
 
@@ -37,11 +25,6 @@ declare global {
 
 let carregamento: Promise<ApiDoTurnstile> | null = null;
 
-/**
- * Injeta o script uma vez por página e devolve a API. Chamadas seguintes
- * reaproveitam a mesma promessa, então abrir e fechar o formulário várias vezes
- * não baixa nada de novo.
- */
 export function carregarTurnstile(documento: Document = document): Promise<ApiDoTurnstile> {
   if (window.turnstile) {
     return Promise.resolve(window.turnstile);
@@ -62,8 +45,6 @@ export function carregarTurnstile(documento: Document = document): Promise<ApiDo
     });
 
     script.addEventListener('error', () => {
-      // A promessa guardada é descartada para uma tentativa seguinte poder
-      // baixar de novo, em vez de herdar a falha para sempre.
       carregamento = null;
       rejeitar(new Error('Não foi possível carregar o Turnstile'));
     });
@@ -74,7 +55,6 @@ export function carregarTurnstile(documento: Document = document): Promise<ApiDo
   return carregamento;
 }
 
-/** Só para o teste: derruba a promessa guardada entre um caso e outro. */
 export function esquecerTurnstile(): void {
   carregamento = null;
 }

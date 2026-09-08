@@ -10,11 +10,6 @@ import { FormularioDeIdeia } from './formulario-de-ideia';
 
 const IDEIA_BOA = 'Preciso de um sistema para controlar as entregas da minha loja.';
 
-/**
- * O desafio e a rede saem de cena por injeção, e não por dublê de módulo: o
- * sistema de teste do Angular não deixa trocar import relativo, e é por isso que
- * os dois colaboradores existem como serviço.
- */
 describe('FormularioDeIdeia', () => {
   let fixture: ComponentFixture<FormularioDeIdeia>;
   let raiz: HTMLElement;
@@ -27,8 +22,7 @@ describe('FormularioDeIdeia', () => {
 
   function preencher(ideia = IDEIA_BOA, contato = 'pessoa@exemplo.com.br', nome = 'Diego'): void {
     const area = raiz.querySelector('textarea') as HTMLTextAreaElement;
-    // A armadilha também é `input[type="text"]`, e é o `tabindex` que a separa
-    // dos campos de gente. Os visíveis saem na ordem do template: nome, contato.
+
     const [campoDoNome, campoDoContato] = Array.from(
       raiz.querySelectorAll<HTMLInputElement>('input[type="text"]:not([tabindex])'),
     );
@@ -80,8 +74,7 @@ describe('FormularioDeIdeia', () => {
     TestBed.configureTestingModule({
       providers: [
         provideZonelessChangeDetection(),
-        // A tela de "recebido" leva um `routerLink` para a /sobre, e o
-        // `RouterLink` precisa de uma rota ativa para se construir.
+
         provideRouter([]),
         { provide: EnvioDeIdeias, useValue: { enviar } },
         { provide: DesafioDeSeguranca, useValue: desafio },
@@ -92,11 +85,9 @@ describe('FormularioDeIdeia', () => {
     fixture = TestBed.createComponent(FormularioDeIdeia);
     raiz = fixture.nativeElement;
 
-    // O jsdom conhece o elemento, mas não abre janela de verdade.
     const dialogo = raiz.querySelector('dialog') as HTMLDialogElement;
     dialogo.showModal = vi.fn();
-    // O `close` real dispara o evento; o dublê precisa disparar também, porque é
-    // o `(close)` do template que descarta o desafio para a próxima abertura.
+
     dialogo.close = vi.fn(() => dialogo.dispatchEvent(new Event('close')));
 
     await fixture.whenStable();
@@ -114,8 +105,7 @@ describe('FormularioDeIdeia', () => {
     await submeter();
 
     expect(enviar).not.toHaveBeenCalled();
-    // Os três são obrigatórios, e o clique em enviar mostra os três avisos de
-    // uma vez.
+
     expect(raiz.querySelectorAll('.campo__erro')).toHaveLength(3);
   });
 
@@ -127,7 +117,6 @@ describe('FormularioDeIdeia', () => {
     expect(enviar).not.toHaveBeenCalled();
   });
 
-  // Sem isso a pessoa só descobre o erro depois de escrever tudo e clicar.
   it('avisa do erro assim que o campo perde o foco', async () => {
     await abrir();
 
@@ -162,10 +151,6 @@ describe('FormularioDeIdeia', () => {
     expect(raiz.querySelector('form')).toBeNull();
   });
 
-  // A mensagem ficava dentro do `<label>`, e por isso entrava no **nome** do
-  // campo: o leitor de tela anunciava "A sua ideia Conte um pouco mais" como se
-  // fosse o rótulo. Fora do label e ligada por `aria-describedby`, ela volta a
-  // ser descrição.
   it('liga o erro ao campo por aria-describedby, e não pelo rótulo', async () => {
     await abrir();
     await submeter();
@@ -176,8 +161,6 @@ describe('FormularioDeIdeia', () => {
     expect(raiz.querySelector('label[for="campo-ideia"]')?.textContent?.trim()).toBe('A sua ideia');
   });
 
-  // Sem isso, quem usa teclado ou leitor de tela apertava Enter e não percebia
-  // nada acontecer: o foco ficava no botão e o aviso aparecia fora do caminho.
   it('leva o foco ao primeiro campo inválido quando o envio é barrado', async () => {
     await abrir();
     await submeter();
@@ -193,8 +176,6 @@ describe('FormularioDeIdeia', () => {
     expect(document.activeElement?.id).toBe('campo-contato');
   });
 
-  // O contador só aparece perto do limite: mostrar "3940 restantes" desde a
-  // primeira letra é ruído.
   it('mostra o contador só quando a ideia chega perto do limite', async () => {
     await abrir();
     expect(raiz.querySelector('.campo__contador')).toBeNull();
@@ -208,8 +189,6 @@ describe('FormularioDeIdeia', () => {
     expect(raiz.querySelector('.campo__contador')?.textContent).toContain('100 caracteres');
   });
 
-  // O botão do hero e o da seção de contato passam os dois por aqui, então a
-  // caixa tem um jeito só de abrir.
   describe('pedido de abertura', () => {
     it('abre a caixa quando alguém pede pelo serviço', async () => {
       const dialogo = raiz.querySelector('dialog') as HTMLDialogElement;
@@ -221,8 +200,6 @@ describe('FormularioDeIdeia', () => {
       expect(dialogo.showModal).toHaveBeenCalledTimes(1);
     });
 
-    // O contador começa em zero, e o efeito precisa ignorar esse valor: senão a
-    // caixa abriria sozinha assim que a home montasse.
     it('não abre sozinha sem pedido nenhum', async () => {
       await fixture.whenStable();
 
@@ -258,8 +235,6 @@ describe('FormularioDeIdeia', () => {
     expect(erro?.textContent).toContain(trecho);
   });
 
-  // O token vale uma vez só. Sem o `reset`, a segunda tentativa seria recusada
-  // pelo endpoint mesmo com tudo certo na tela.
   it('reinicia o desafio depois de um envio que falhou', async () => {
     enviar.mockResolvedValue('falha');
 
@@ -271,7 +246,6 @@ describe('FormularioDeIdeia', () => {
   });
 
   describe('enquanto envia', () => {
-    /** Segura a resposta do envio para a tela ficar no estado "enviando". */
     function envioPendurado(): () => void {
       let liberar = () => {};
       enviar.mockReturnValue(
@@ -295,9 +269,6 @@ describe('FormularioDeIdeia', () => {
       expect(bloqueio?.textContent).toContain('Enviando minha ideia...');
     });
 
-    // O botão desabilitado sozinho não impede o Enter dentro do campo de texto.
-    // O `inert` tira o formulário inteiro do alcance de mouse, teclado e leitor
-    // de tela, que é o que de fato barra o clique duplo.
     it('deixa o formulário inerte e o fechar desabilitado', async () => {
       envioPendurado();
 
@@ -345,8 +316,6 @@ describe('FormularioDeIdeia', () => {
       enviar.mockResolvedValue('limite');
     });
 
-    // Tela inteira, e não aviso embaixo do formulário: insistir não adianta, e
-    // deixar os campos ali convidaria a tentar de novo.
     it('troca o formulário por um alerta com saída', async () => {
       await abrir();
       preencher();
@@ -371,8 +340,6 @@ describe('FormularioDeIdeia', () => {
       expect((raiz.querySelector('dialog') as HTMLDialogElement).close).toHaveBeenCalled();
     });
 
-    // A cota é que acabou, não o texto. Reabrir e ter que digitar tudo de novo
-    // seria castigo dobrado.
     it('preserva o que foi escrito para a próxima tentativa', async () => {
       await abrir();
       preencher();
@@ -390,10 +357,6 @@ describe('FormularioDeIdeia', () => {
   });
 
   describe('ao reabrir', () => {
-    // Depois de um envio que deu certo, o template troca o formulário pelo
-    // recado e destrói o `div` do desafio. Reabrir cria um `div` novo, e sem
-    // desenhar de novo a caixa da Cloudflare fica vazia até alguém recarregar a
-    // página, que era o defeito relatado.
     it('desenha o desafio de novo, no elemento novo', async () => {
       await abrir();
       preencher();
@@ -430,8 +393,6 @@ describe('FormularioDeIdeia', () => {
     });
   });
 
-  // Sem token não adianta postar: o endpoint recusaria, e a pessoa levaria um
-  // erro genérico em vez de saber que é só esperar o desafio.
   it('não posta quando o desafio ainda não devolveu token', async () => {
     desafioDevolveToken = false;
 

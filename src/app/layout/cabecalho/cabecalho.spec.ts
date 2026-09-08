@@ -4,7 +4,6 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { Router, provideRouter } from '@angular/router';
 import { Cabecalho } from './cabecalho';
 
-/** Só para o roteador ter o que montar nas duas rotas do site. */
 @Component({
   template: '',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -56,11 +55,6 @@ describe('Cabecalho', () => {
     expect(botaoDoMenu().getAttribute('aria-expanded')).toBe('false');
   });
 
-  /**
-   * Os dois primeiros itens apontam para a mesma rota `/`, mudando só o
-   * fragmento. Marcar por rota acendia os dois ao mesmo tempo em qualquer ponto
-   * da home, e dois itens acesos nunca disseram onde a pessoa está.
-   */
   describe('realce do item atual', () => {
     async function irPara(url: string): Promise<void> {
       await TestBed.inject(Router).navigateByUrl(url);
@@ -88,7 +82,6 @@ describe('Cabecalho', () => {
       await assentar();
     });
 
-    // Painel que abre precisa fechar do jeito que todo mundo já tenta.
     it('fecha no Esc e devolve o foco ao botão', async () => {
       document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
       await assentar();
@@ -104,8 +97,6 @@ describe('Cabecalho', () => {
       expect(botaoDoMenu().getAttribute('aria-expanded')).toBe('false');
     });
 
-    // O clique no próprio botão chega ao documento depois de `alternarMenu`.
-    // Sem a saída antecipada, ele reabriria e fecharia na mesma ação.
     it('não se fecha sozinho quando o clique é no próprio botão', async () => {
       expect(botaoDoMenu().getAttribute('aria-expanded')).toBe('true');
     });

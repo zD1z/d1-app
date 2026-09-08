@@ -1,28 +1,9 @@
-/* O `<dialog>` nativo cuida do foco preso, do `Esc` e da camada por cima de
-   tudo. Biblioteca de modal aqui só repetiria o que o navegador já faz.
-
-   **`position: fixed` é a correção de um defeito de produção, não enfeite.**
-   Este bloco declarava `position: relative`, para a camada de envio ter um
-   ancestral posicionado. Regra de autor vence a folha do navegador, então o
-   `position: fixed` que o UA aplica em `dialog:modal` era sobrescrito e a caixa
-   voltava ao fluxo normal: ela era desenhada onde o elemento mora no DOM, ou
-   seja, dentro da seção de contato. Quem abrisse o formulário no celular com a
-   página rolada via o fundo escurecer e mais nada, porque a caixa tinha ficado
-   fora da tela. Parecia site travado.
-
-   `position: fixed` continua sendo ancestral posicionado para a camada de
-   envio, então a correção não custa nada em troca. */
 .ideia {
   position: fixed;
   inset: 0;
   margin: auto;
   width: min(560px, calc(100vw - 2 * var(--e-4)));
-  /* A caixa nunca passa da tela: o que não couber rola dentro dela, e não na
-     página atrás. `dvh` porque no celular a barra do navegador entra e sai da
-     conta de `vh` e a caixa ficaria cortada embaixo.
-     Os 88dvh anteriores deixavam 12% da tela sem uso enquanto o formulário
-     rolava por dentro, que é o pior dos dois mundos: sobrava tela e faltava
-     caixa. O teto de 760px vinha junto e mordia justamente o 1440x900. */
+
   max-height: min(92dvh, 900px);
   padding: 0;
   overflow: hidden;
@@ -33,9 +14,6 @@
   box-shadow: var(--sombra);
 }
 
-/* O `display` só é trocado no estado aberto. Declarar `display: flex` no
-   seletor solto sobrescreveria o `display: none` que o navegador dá ao
-   `<dialog>` fechado, e a caixa apareceria na página o tempo todo. */
 .ideia[open] {
   display: flex;
   flex-direction: column;
@@ -46,12 +24,6 @@
   backdrop-filter: blur(2px);
 }
 
-/* Entrada e saída da caixa. É o momento em que a conversão acontece e era o
-   único da página sem tratamento: a caixa aparecia cortada, sem dizer de onde
-   veio. `allow-discrete` é o que segura o elemento na camada de topo durante a
-   saída; sem ele o navegador tira do DOM antes de a transição rodar.
-   O bloco global de `prefers-reduced-motion` zera a duração, e aí ela volta a
-   aparecer cortada, que é o comportamento pedido. */
 .ideia,
 .ideia::backdrop {
   transition:
@@ -61,9 +33,6 @@
     display 0.18s allow-discrete;
 }
 
-/* A pose de entrada mora numa variável porque ela aparece em dois lugares que
-   precisam concordar: o estado fechado e o `@starting-style`. Sobrescrever a
-   variável num media query move os dois de uma vez. */
 .ideia {
   --pose-de-entrada: translateY(8px) scale(0.98);
   opacity: 0;
@@ -101,7 +70,7 @@
   gap: var(--e-4);
   padding: var(--e-4) var(--e-6);
   border-bottom: 1px solid var(--borda);
-  /* O topo fica; é o miolo que rola. */
+
   flex-shrink: 0;
 }
 
@@ -129,9 +98,6 @@
   color: var(--texto);
 }
 
-/* `min-height: 0` é o que destrava a rolagem: sem ele, um filho de contêiner
-   flex não encolhe abaixo do tamanho do próprio conteúdo e a caixa estouraria
-   a tela em vez de rolar por dentro. */
 .ideia__formulario,
 .ideia__final {
   display: flex;
@@ -143,9 +109,6 @@
   min-height: 0;
 }
 
-/* O aviso pertence ao botão, não é mais um bloco da pilha: colado nele, some um
-   gap inteiro e a leitura melhora, porque a frase explica o que acontece quando
-   se aperta o botão logo acima. */
 .ideia__aviso {
   margin-top: calc(var(--e-2) - var(--e-4));
 }
@@ -156,9 +119,6 @@
   color: var(--texto-suave);
 }
 
-/* Contexto, e não corpo de texto: no tamanho de leitura ela ocupava cinco
-   linhas num celular de 360px, quase um sexto da caixa, para dizer o que os
-   rótulos e os exemplos dos campos já dizem. */
 .ideia__intro {
   font-size: var(--t-sm);
   line-height: 1.5;
@@ -185,9 +145,7 @@
 .campo__entrada {
   width: 100%;
   padding: var(--e-3) var(--e-4);
-  /* Contorno de controle, e não a borda decorativa: a WCAG pede 3:1 para o
-     limite de um componente de interface, e a borda de cartão fica em 1,5:1 de
-     propósito. Com ela aqui, o campo de texto sumia dentro da caixa. */
+
   border: 1px solid var(--contorno);
   border-radius: var(--raio-pequeno);
   background: var(--superficie);
@@ -197,13 +155,6 @@
   transition: border-color 0.15s ease;
 }
 
-/* Nasce em três linhas e cresce conforme a pessoa escreve, em vez de nascer
-   alto e empurrar o resto do formulário para fora da tela.
-   `field-sizing: content` faz isso sem uma linha de JavaScript; onde ele ainda
-   não existe, o `min-height` segura o piso e o campo se comporta como antes,
-   só que mais compacto. O `max-height` é o que impede o crescimento de comer a
-   caixa inteira num texto longo, e o `resize: vertical` continua valendo para
-   quem quiser puxar o campo na mão. */
 .campo__entrada--texto {
   resize: vertical;
   field-sizing: content;
@@ -229,13 +180,10 @@
   margin: 0;
   color: var(--erro);
   font-size: var(--t-sm);
-  /* Entrelinha de aviso de uma ou duas linhas, e não de parágrafo. Com os três
-     campos errados de uma vez, a diferença decide se a caixa rola ou não. */
+
   line-height: 1.35;
 }
 
-/* Só aparece perto do limite. Antes o texto era cortado em silêncio no
-   caractere 4000 e ninguém ficava sabendo. */
 .campo__contador {
   align-self: flex-end;
   font-family: var(--fonte-mono);
@@ -244,8 +192,6 @@
   font-variant-numeric: tabular-nums;
 }
 
-/* Fora da tela, e não `display: none`: campo escondido assim continua no DOM
-   para o robô achar, que é o ponto da armadilha. */
 .ideia__armadilha {
   position: absolute;
   left: -9999px;
@@ -262,9 +208,6 @@
   align-self: flex-start;
 }
 
-/* A camada de envio. O `position: fixed` do diálogo é o ancestral posicionado
-   que prende esta camada aqui dentro, e o `<dialog>` modal já bloqueia o resto
-   da página. */
 .ideia__bloqueio {
   position: absolute;
   inset: 0;
@@ -307,8 +250,6 @@
   }
 }
 
-/* Sem movimento, o girador congelaria numa posicao qualquer e viraria enfeite
-   sem significado. A frase sozinha ja diz o que esta acontecendo. */
 @media (prefers-reduced-motion: reduce) {
   .ideia__girador {
     display: none;
@@ -329,8 +270,6 @@
   border-radius: 50%;
 }
 
-/* Alerta em ambar, e nao em vermelho: nada quebrou e ninguem errou, so a cota
-   da hora acabou. Vermelho aqui leria como falha da pessoa. */
 .ideia__sinal--aviso {
   background: var(--aviso-fundo);
   color: var(--aviso);
@@ -392,12 +331,6 @@
   }
 }
 
-/* Telefone pequeno: a caixa deixa de flutuar e vira a tela inteira.
-   Num aparelho de 640px de altura, o cartão com margem gastava trinta e dois
-   pixels de tela para desenhar uma borda que ninguém precisa ver enquanto
-   preenche, e ainda assim rolava por dentro. Ocupando tudo, some a moldura e
-   sobra formulário. Continua sendo o mesmo `<dialog>` modal: a página atrás
-   segue bloqueada e nada é cortado. */
 @media (max-width: 480px) and (max-height: 720px) {
   .ideia {
     width: 100vw;
@@ -408,21 +341,11 @@
     border-radius: 0;
   }
 
-  /* Sem cantos arredondados, a camada de envio também perde os dela. */
   .ideia__bloqueio {
     border-radius: 0;
   }
 
-  /* Escala em tela cheia lê como falha de renderização, não como origem do
-     movimento. Sobe e aparece, só isso. */
   .ideia {
     --pose-de-entrada: translateY(12px);
   }
 }
-
-/* Tela baixa, e não tela estreita: quem manda na rolagem interna é a altura
-   disponível. Um celular deitado e um monitor curto sofrem do mesmo problema, e
-   um tablet estreito e alto não sofre de nenhum.
-   O corte em 860px é medido, não escolhido: abaixo dele o formulário com os
-   três erros na tela não cabe na densidade folgada, e um notebook de 1280x800
-   cai justamente aqui. */

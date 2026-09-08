@@ -4,16 +4,6 @@ import { beforeEach, describe, expect, it } from 'vitest';
 import { CONTEUDO } from '../../../../core/conteudo/perfil';
 import { Contato } from './contato';
 
-/**
- * A seção tem dois estados, decididos por `core/config/contato.ts`: com o
- * endpoint configurado, a ação principal é o botão que abre o formulário e o
- * `mailto:` fica como alternativa; sem ele, o `mailto:` volta a ser a ação
- * principal.
- *
- * Os testes daqui valem nos dois, de propósito. Amarrar a um deles faria a
- * suíte quebrar quando o formulário fosse ligado ou desligado, que é
- * configuração e não defeito.
- */
 describe('Contato', () => {
   let raiz: HTMLElement;
 
@@ -33,8 +23,6 @@ describe('Contato', () => {
     expect(email?.getAttribute('href')).toContain(`mailto:${CONTEUDO.contato.email}`);
   });
 
-  // O site é estático: o `mailto:` não tem backend nenhum por trás, e o assunto
-  // pré-preenchido é o que dá alguma forma à mensagem que chega.
   it('leva o assunto codificado na URL do e-mail', () => {
     const email = raiz.querySelector('a[href^="mailto:"]');
     expect(email?.getAttribute('href')).toBe(

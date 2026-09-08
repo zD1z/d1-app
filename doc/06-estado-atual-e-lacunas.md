@@ -17,21 +17,18 @@ Fotografia em 2026-09-06, no commit `dcc7ace`.
 Lista descritiva. Nada aqui foi decidido como próximo passo; é insumo para o
 planejamento.
 
-### 1. Nenhum teste existe
+### 1. Nenhum teste existe — **resolvido**
 
-`tsconfig.spec.json`, Vitest e `jsdom` estão configurados, e `npm test` roda,
-mas **não há um único arquivo `.spec.ts` no projeto**. A lógica que valeria
-testar hoje é pequena e bem delimitada: o fatiamento do bordão em `Hero`
-(inclusive o caso em que `bordaoDestaque` não existe dentro de `bordao`) e a
-montagem do `mailto:` em `Contato`.
+Era verdade quando este documento foi escrito. Hoje são doze arquivos
+`.spec.ts` e 125 testes, rodados no CI antes de qualquer publicação: conteúdo,
+validação do formulário, envio, componentes da home e da `/sobre`, meta por
+rota e a folga do cabeçalho.
 
-### 2. O `README.md` da raiz está desatualizado
+### 2. O `README.md` da raiz está desatualizado — **resolvido**
 
-A seção "Estrutura" ainda lista `secoes/sobre`, `secoes/trajetoria` e
-`secoes/projetos` dentro da home. Essas seções não existem mais: a home tem
-`hero`, `solucoes`, `quem-faz` e `contato`, e a página `/sobre` não é sequer
-mencionada na árvore. O texto sobre `[PREENCHER]` também não corresponde mais ao
-estado do conteúdo.
+Ele listava seções que não existem mais e chamava o site de portfólio, o que
+contradiz o `doc/01`. O texto foi reescrito para descrever a estrutura de hoje
+e a finalidade comercial.
 
 ### 3. Campos de conteúdo que não são renderizados — **resolvido**
 

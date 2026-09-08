@@ -56,10 +56,6 @@
   background: var(--superficie);
 }
 
-/* So marca a pagina atual. Os itens com ancora apontam todos para a home, e
-   marcar por rota acendia "Soluções" e "Como funciona" ao mesmo tempo, o tempo
-   todo, em qualquer ponto da home: dois itens ativos nunca disseram onde a
-   pessoa está. Agora o realce só existe em item sem fragmento. */
 .menu__link--ativo {
   color: var(--texto);
 }
@@ -164,8 +160,6 @@
     gap: var(--e-1);
   }
 
-  /* Alvo confortável de toque. Com o padding de desktop os itens ficavam em
-     40px de altura, abaixo dos 44 que a mão espera. */
   .menu__link,
   .menu__acao {
     margin-left: 0;

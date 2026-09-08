@@ -14,6 +14,11 @@ técnicas e de conteúdo sem precisar reler o código inteiro.
 | [06-estado-atual-e-lacunas.md](06-estado-atual-e-lacunas.md)         | O que está pronto, o que está faltando, dívidas conhecidas              |
 | [07-plano.md](07-plano.md)                                           | O plano dos onze pontos do documento 06, e o que foi feito em cada lote |
 | [08-plano-formulario-e-medicao.md](08-plano-formulario-e-medicao.md) | A segunda leva: formulário de contato com envio de e-mail, e medição    |
+| [09-decisoes-no-codigo.md](09-decisoes-no-codigo.md)                 | O porquê de cada decisão do fonte, arquivo por arquivo                  |
 
 O `README.md` da raiz continua sendo o ponto de entrada rápido (como rodar,
 onde fica o conteúdo). Esta pasta é a versão longa.
+
+**O código não tem comentários.** Toda justificativa de escolha técnica mora no
+[09-decisoes-no-codigo.md](09-decisoes-no-codigo.md), organizado por arquivo. Ao
+mexer no fonte, a explicação vai para lá, e não para dentro do código.
