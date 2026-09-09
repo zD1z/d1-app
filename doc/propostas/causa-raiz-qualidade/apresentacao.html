@@ -1,0 +1,1101 @@
+<title>Simulação de Causa Raiz</title>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+  rel="stylesheet"
+  href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Serif:wght@500;600&display=swap"
+/>
+<style>
+  :root {
+    --papel: #eef2f5;
+    --superficie: #ffffff;
+    --tinta: #101a24;
+    --suave: #4f6274;
+    --fraco: #78889a;
+    --linha: #d7e0e8;
+    --linha-forte: #b5c3d0;
+    --acento: #0d6a83;
+    --acento-fundo: #dfeef2;
+    --processo: #9c5a00;
+    --processo-fundo: #f6ead7;
+    --treino: #454f9c;
+    --treino-fundo: #e6e8f7;
+    --execucao: #4f6274;
+    --execucao-fundo: #e3e9ee;
+    --ok: #1f6a49;
+    --ok-fundo: #dcefe4;
+
+    --serif: 'IBM Plex Serif', Georgia, 'Times New Roman', serif;
+    --sans: 'IBM Plex Sans', system-ui, -apple-system, 'Segoe UI', Roboto, sans-serif;
+    --mono: 'IBM Plex Mono', ui-monospace, Menlo, Consolas, monospace;
+
+    --largura: 780px;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme='light']) {
+      --papel: #0c131a;
+      --superficie: #141e28;
+      --tinta: #e7edf3;
+      --suave: #a2b1bf;
+      --fraco: #7d8c9c;
+      --linha: #25323e;
+      --linha-forte: #3a4a58;
+      --acento: #63c6dd;
+      --acento-fundo: #112f39;
+      --processo: #e8b061;
+      --processo-fundo: #34260f;
+      --treino: #9aa3ee;
+      --treino-fundo: #1d2044;
+      --execucao: #a2b1bf;
+      --execucao-fundo: #212d38;
+      --ok: #6cc79a;
+      --ok-fundo: #122c21;
+    }
+  }
+
+  :root[data-theme='dark'] {
+    --papel: #0c131a;
+    --superficie: #141e28;
+    --tinta: #e7edf3;
+    --suave: #a2b1bf;
+    --fraco: #7d8c9c;
+    --linha: #25323e;
+    --linha-forte: #3a4a58;
+    --acento: #63c6dd;
+    --acento-fundo: #112f39;
+    --processo: #e8b061;
+    --processo-fundo: #34260f;
+    --treino: #9aa3ee;
+    --treino-fundo: #1d2044;
+    --execucao: #a2b1bf;
+    --execucao-fundo: #212d38;
+    --ok: #6cc79a;
+    --ok-fundo: #122c21;
+  }
+
+  body {
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--sans);
+    font-size: 17px;
+    line-height: 1.62;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .folha {
+    max-width: var(--largura);
+    margin: 0 auto;
+    padding: 0 24px 96px;
+  }
+
+  /* ---------- cabeçalho ---------- */
+
+  .capa {
+    padding: 72px 0 44px;
+    border-bottom: 2px solid var(--tinta);
+  }
+
+  .selo {
+    font-family: var(--mono);
+    font-size: 12px;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--acento);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    align-items: center;
+    margin-bottom: 26px;
+  }
+
+  .selo span::after {
+    content: ' ·';
+    color: var(--linha-forte);
+  }
+
+  .selo span:last-child::after {
+    content: '';
+  }
+
+  h1 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(2.1rem, 5.6vw, 3.1rem);
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+    text-wrap: balance;
+    margin: 0 0 18px;
+  }
+
+  .linha-fina {
+    font-size: clamp(1.05rem, 2.4vw, 1.2rem);
+    color: var(--suave);
+    max-width: 60ch;
+    margin: 0;
+  }
+
+  /* ---------- seções ---------- */
+
+  section {
+    padding-top: 52px;
+  }
+
+  .rotulo {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--fraco);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 18px;
+  }
+
+  .rotulo::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--linha);
+  }
+
+  h2 {
+    font-family: var(--serif);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3.4vw, 1.95rem);
+    line-height: 1.22;
+    letter-spacing: -0.01em;
+    text-wrap: balance;
+    margin: 0 0 16px;
+  }
+
+  h3 {
+    font-family: var(--sans);
+    font-weight: 600;
+    font-size: 1.05rem;
+    margin: 32px 0 10px;
+  }
+
+  p {
+    margin: 0 0 16px;
+    max-width: 66ch;
+  }
+
+  strong {
+    font-weight: 600;
+  }
+
+  .destaque {
+    font-family: var(--serif);
+    font-size: clamp(1.2rem, 3vw, 1.45rem);
+    line-height: 1.4;
+    color: var(--tinta);
+    border-left: 3px solid var(--acento);
+    padding: 4px 0 4px 22px;
+    margin: 26px 0;
+    max-width: 58ch;
+  }
+
+  ul {
+    margin: 0 0 18px;
+    padding-left: 0;
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-width: 66ch;
+  }
+
+  ul li {
+    padding-left: 20px;
+    position: relative;
+  }
+
+  ul li::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0.62em;
+    width: 7px;
+    height: 1px;
+    background: var(--linha-forte);
+  }
+
+  /* ---------- o relatório de hoje ---------- */
+
+  .contraste {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 2px;
+    background: var(--linha);
+    border: 1px solid var(--linha);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 26px 0 8px;
+  }
+
+  @media (min-width: 640px) {
+    .contraste {
+      grid-template-columns: 1fr 1fr;
+    }
+  }
+
+  .contraste > div {
+    background: var(--superficie);
+    padding: 22px 22px 24px;
+  }
+
+  .contraste h4 {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--fraco);
+    margin: 0 0 14px;
+    font-weight: 500;
+  }
+
+  .contraste p {
+    margin: 0;
+    font-size: 0.97rem;
+  }
+
+  .campo {
+    font-family: var(--mono);
+    font-size: 0.86rem;
+    color: var(--suave);
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .valor-fraco {
+    color: var(--suave);
+  }
+
+  /* ---------- etapas ---------- */
+
+  .etapas {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+    background: var(--linha);
+    border: 1px solid var(--linha);
+    border-radius: 3px;
+    overflow: hidden;
+    margin: 24px 0;
+  }
+
+  .etapa {
+    background: var(--superficie);
+    display: grid;
+    grid-template-columns: 44px 1fr;
+    gap: 18px;
+    padding: 22px 22px 24px;
+    align-items: start;
+  }
+
+  .etapa .n {
+    font-family: var(--mono);
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--acento);
+    line-height: 1;
+    padding-top: 2px;
+  }
+
+  .etapa h4 {
+    margin: 0 0 6px;
+    font-size: 1.05rem;
+    font-weight: 600;
+  }
+
+  .etapa p {
+    margin: 0;
+    font-size: 0.97rem;
+    color: var(--suave);
+  }
+
+  .etapa .quem {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fraco);
+    display: block;
+    margin-bottom: 8px;
+  }
+
+  /* ---------- causas ---------- */
+
+  .causas {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 14px;
+    margin: 24px 0;
+  }
+
+  @media (min-width: 700px) {
+    .causas {
+      grid-template-columns: repeat(3, 1fr);
+    }
+  }
+
+  .causa {
+    border: 1px solid var(--linha);
+    border-top: 3px solid var(--cor);
+    border-radius: 3px;
+    background: var(--superficie);
+    padding: 18px 18px 20px;
+  }
+
+  .causa h4 {
+    margin: 0 0 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    color: var(--cor);
+  }
+
+  .causa p {
+    margin: 0;
+    font-size: 0.92rem;
+    color: var(--suave);
+  }
+
+  .causa .acao {
+    display: block;
+    margin-top: 12px;
+    padding-top: 12px;
+    border-top: 1px dashed var(--linha);
+    font-family: var(--mono);
+    font-size: 0.8rem;
+    color: var(--tinta);
+  }
+
+  .p1 {
+    --cor: var(--processo);
+  }
+  .p2 {
+    --cor: var(--treino);
+  }
+  .p3 {
+    --cor: var(--execucao);
+  }
+
+  .extras {
+    border: 1px solid var(--linha);
+    border-radius: 3px;
+    background: var(--superficie);
+    padding: 18px 20px;
+    margin-bottom: 8px;
+  }
+
+  .extras p {
+    margin: 0 0 10px;
+    font-size: 0.94rem;
+    color: var(--suave);
+  }
+
+  .extras p:last-child {
+    margin-bottom: 0;
+  }
+
+  .extras b {
+    color: var(--tinta);
+  }
+
+  /* ---------- laudo de exemplo ---------- */
+
+  .laudo {
+    border: 1px solid var(--linha-forte);
+    border-radius: 3px;
+    background: var(--superficie);
+    padding: 22px;
+    margin: 24px 0 10px;
+    overflow-x: auto;
+  }
+
+  .laudo-topo {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 16px;
+    justify-content: space-between;
+    align-items: baseline;
+    border-bottom: 1px solid var(--linha);
+    padding-bottom: 14px;
+    margin-bottom: 18px;
+  }
+
+  .laudo-topo strong {
+    font-family: var(--sans);
+    font-size: 1rem;
+  }
+
+  .laudo-topo span {
+    font-family: var(--mono);
+    font-size: 11.5px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--fraco);
+  }
+
+  .grade {
+    display: grid;
+    grid-template-columns: 52px minmax(190px, 1fr) 120px 150px;
+    gap: 10px 14px;
+    align-items: center;
+    min-width: 520px;
+    font-size: 0.9rem;
+  }
+
+  .grade .cabeca {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fraco);
+    padding-bottom: 6px;
+    border-bottom: 1px solid var(--linha);
+  }
+
+  .grade .t {
+    font-family: var(--mono);
+    font-weight: 500;
+    color: var(--tinta);
+  }
+
+  .barra {
+    height: 8px;
+    background: var(--execucao-fundo);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .barra i {
+    position: absolute;
+    inset: 0 auto 0 0;
+    background: var(--cor, var(--linha-forte));
+    display: block;
+  }
+
+  .medida {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    font-size: 0.82rem;
+    color: var(--suave);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .marca {
+    display: inline-block;
+    font-family: var(--mono);
+    font-size: 0.72rem;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 2px;
+    white-space: nowrap;
+    background: var(--fundo-marca);
+    color: var(--cor-marca);
+  }
+
+  .m-processo {
+    --fundo-marca: var(--processo-fundo);
+    --cor-marca: var(--processo);
+  }
+  .m-treino {
+    --fundo-marca: var(--treino-fundo);
+    --cor-marca: var(--treino);
+  }
+  .m-execucao {
+    --fundo-marca: var(--execucao-fundo);
+    --cor-marca: var(--execucao);
+  }
+  .m-ok {
+    --fundo-marca: var(--ok-fundo);
+    --cor-marca: var(--ok);
+  }
+
+  .legenda {
+    font-size: 0.85rem;
+    color: var(--fraco);
+    margin: 0;
+    max-width: 66ch;
+  }
+
+  /* ---------- tabelas ---------- */
+
+  .rolagem {
+    overflow-x: auto;
+    margin: 22px 0 10px;
+    border: 1px solid var(--linha);
+    border-radius: 3px;
+    background: var(--superficie);
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    min-width: 480px;
+    font-size: 0.94rem;
+  }
+
+  th,
+  td {
+    text-align: left;
+    padding: 13px 18px;
+    border-bottom: 1px solid var(--linha);
+    vertical-align: top;
+  }
+
+  th {
+    font-family: var(--mono);
+    font-size: 10.5px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fraco);
+    font-weight: 500;
+    white-space: nowrap;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: 0;
+  }
+
+  td.semana {
+    font-family: var(--mono);
+    color: var(--acento);
+    white-space: nowrap;
+  }
+
+  td.alvo {
+    font-family: var(--mono);
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+    color: var(--tinta);
+  }
+
+  /* ---------- proteção ---------- */
+
+  .protecao {
+    background: var(--acento-fundo);
+    border-radius: 3px;
+    padding: 24px 24px 26px;
+    margin: 24px 0 10px;
+  }
+
+  .protecao h3 {
+    margin-top: 0;
+  }
+
+  .protecao ul {
+    margin-bottom: 0;
+  }
+
+  .protecao li::before {
+    background: var(--acento);
+    width: 9px;
+  }
+
+  /* ---------- fases ---------- */
+
+  .fases {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
+    margin: 22px 0 10px;
+    border-left: 2px solid var(--linha-forte);
+  }
+
+  .fase {
+    padding: 0 0 26px 22px;
+    position: relative;
+  }
+
+  .fase:last-child {
+    padding-bottom: 0;
+  }
+
+  .fase::before {
+    content: '';
+    position: absolute;
+    left: -7px;
+    top: 7px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: var(--papel);
+    border: 2px solid var(--linha-forte);
+  }
+
+  .fase.agora::before {
+    background: var(--acento);
+    border-color: var(--acento);
+  }
+
+  .fase h4 {
+    margin: 0 0 4px;
+    font-size: 1rem;
+    font-weight: 600;
+  }
+
+  .fase .prazo {
+    font-family: var(--mono);
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--fraco);
+    display: block;
+    margin-bottom: 6px;
+  }
+
+  .fase p {
+    margin: 0;
+    font-size: 0.94rem;
+    color: var(--suave);
+  }
+
+  /* ---------- fecho ---------- */
+
+  .fecho {
+    margin-top: 56px;
+    border-top: 2px solid var(--tinta);
+    padding-top: 28px;
+  }
+
+  .fecho p {
+    max-width: 60ch;
+  }
+
+  .assinatura {
+    font-family: var(--mono);
+    font-size: 0.85rem;
+    color: var(--fraco);
+    letter-spacing: 0.04em;
+    margin-top: 28px;
+  }
+
+  .assinatura b {
+    color: var(--tinta);
+    font-weight: 500;
+  }
+
+  a {
+    color: var(--acento);
+    text-underline-offset: 3px;
+  }
+
+  a:focus-visible {
+    outline: 2px solid var(--acento);
+    outline-offset: 3px;
+  }
+</style>
+
+<main class="folha">
+  <header class="capa">
+    <p class="selo">
+      <span>Proposta</span><span>[NOME DO CLIENTE]</span><span>Setembro de 2026</span
+      ><span>D1 App</span>
+    </p>
+    <h1>Descobrir a causa da falha simulando o dia em que ela aconteceu</h1>
+    <p class="linha-fina">
+      Uma plataforma onde a equipe revive o incidente, decide de novo com a informação que tinha na
+      hora, e mostra — com evidência — se o problema foi o processo, o treinamento ou a execução.
+    </p>
+  </header>
+
+  <section>
+    <p class="rotulo">O problema</p>
+    <h2>O relatório de hoje registra a falha. Ele quase nunca explica a falha.</h2>
+    <p>
+      Acontece um desvio, abre-se uma Não Conformidade, alguém preenche o formulário. Na linha da
+      causa raiz aparece quase sempre a mesma coisa, e a ação corretiva vem no mesmo tom:
+    </p>
+
+    <div class="contraste">
+      <div>
+        <h4>O que a NC costuma dizer</h4>
+        <p>
+          <span class="campo">Causa raiz</span>
+          <span class="valor-fraco">Falha humana — colaborador não seguiu o procedimento.</span>
+        </p>
+        <p style="margin-top: 14px">
+          <span class="campo">Ação corretiva</span>
+          <span class="valor-fraco">Orientar o colaborador e reforçar o treinamento.</span>
+        </p>
+      </div>
+      <div>
+        <h4>O que fica sem resposta</h4>
+        <p>
+          Dava tempo de seguir o procedimento naquele turno? O sistema estava no ar? O insumo estava
+          lá? Alguém mandou fazer diferente? E, sobretudo:
+          <strong>quantas outras pessoas, no lugar dela, teriam feito igual?</strong>
+        </p>
+      </div>
+    </div>
+
+    <p>
+      Não é má vontade de quem preenche. É que a pergunta chega tarde: depois do desfecho conhecido,
+      na frente de quem avalia, e olhando uma pessoa só. Com o final da história à vista, o erro
+      sempre parece óbvio — e ninguém escreve num formulário que a meta do turno não permitia fazer
+      diferente.
+    </p>
+    <p>
+      Seis meses depois, a mesma falha volta, com outra pessoa. O ciclo produz evidência para a
+      auditoria e quase nenhuma melhoria.
+    </p>
+  </section>
+
+  <section>
+    <p class="rotulo">A proposta</p>
+    <h2>Em vez de perguntar por que errou, colocar a pessoa de volta na situação</h2>
+    <p class="destaque">
+      O envolvido revive o incidente etapa por etapa, com a informação que tinha naquele instante e
+      sem saber como termina. Depois, os colegas que fazem o mesmo trabalho percorrem o mesmo caso.
+    </p>
+    <p>
+      O que sai disso não é uma nota para ninguém. É a resposta que o formulário nunca dá:
+      <strong>onde exatamente a decisão vira</strong>,
+      <strong>quantas pessoas viram no mesmo ponto</strong> e
+      <strong>o que as levou a isso</strong>. Quando seis de oito pessoas tomam a mesma decisão
+      divergente no mesmo lugar, pelo mesmo motivo, a conclusão deixa de ser opinião: o problema
+      está no sistema, não na pessoa.
+    </p>
+  </section>
+
+  <section>
+    <p class="rotulo">Como funciona</p>
+    <h2>Quatro etapas, do incidente ao plano de ação</h2>
+
+    <div class="etapas">
+      <div class="etapa">
+        <div class="n">1</div>
+        <div>
+          <span class="quem">Qualidade</span>
+          <h4>Montar o caso</h4>
+          <p>
+            A qualidade registra o incidente e desenha a linha do tempo: T1, T2, T3… Em cada
+            instante, o que a pessoa sabia, as opções que ela tinha, o que o POP mandava fazer e o
+            que de fato aconteceu.
+          </p>
+        </div>
+      </div>
+      <div class="etapa">
+        <div class="n">2</div>
+        <div>
+          <span class="quem">Equipe envolvida</span>
+          <h4>Reviver o cenário</h4>
+          <p>
+            Cada participante entra sozinho na sala do caso e decide etapa por etapa. Não vê a
+            resposta certa, não vê o que os colegas responderam, não sabe o desfecho. Leva cerca de
+            quinze minutos.
+          </p>
+        </div>
+      </div>
+      <div class="etapa">
+        <div class="n">3</div>
+        <div>
+          <span class="quem">Equipe envolvida</span>
+          <h4>Explicar a decisão</h4>
+          <p>
+            Quando a escolha difere do procedimento, o sistema pergunta o motivo — de uma lista
+            objetiva: não sabia, não deu tempo, o sistema estava fora, faltava insumo, o
+            procedimento é ambíguo, recebi outra orientação. E confere, com uma pergunta direta, se
+            a norma era mesmo conhecida.
+          </p>
+        </div>
+      </div>
+      <div class="etapa">
+        <div class="n">4</div>
+        <div>
+          <span class="quem">Plataforma</span>
+          <h4>Diagnosticar e propor ação</h4>
+          <p>
+            Fechada a rodada, o sistema cruza as decisões de todos, ponto a ponto, classifica a
+            origem do problema e propõe o próximo passo: revisar o POP, reciclar o treino, corrigir
+            a ferramenta ou rever a carga.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <p class="rotulo">O diagnóstico</p>
+    <h2>Três origens, separadas por evidência e não por impressão</h2>
+
+    <div class="causas">
+      <div class="causa p1">
+        <h4>Processo</h4>
+        <p>
+          O procedimento oficial é inviável no tempo real, depende de algo que não está lá, ou é
+          ambíguo. A maioria diverge no mesmo ponto.
+        </p>
+        <span class="acao">→ revisar o POP</span>
+      </div>
+      <div class="causa p2">
+        <h4>Treinamento</h4>
+        <p>
+          A norma é viável e as pessoas não a conhecem. Aparece quando a pergunta de conhecimento
+          erra, não quando alguém diz que não sabia.
+        </p>
+        <span class="acao">→ reciclagem dirigida</span>
+      </div>
+      <div class="causa p3">
+        <h4>Execução</h4>
+        <p>
+          Desvio isolado de quem conhecia a norma e tinha condição de segui-la. Um caso entre oito,
+          não seis entre oito.
+        </p>
+        <span class="acao">→ conversa individual</span>
+      </div>
+    </div>
+
+    <div class="extras">
+      <p>
+        E duas conclusões que o modelo tradicional não tem onde colocar, e que costumam ser as mais
+        valiosas:
+      </p>
+      <p>
+        <b>O gabarito está errado.</b> A maioria diverge porque o POP não cobre aquela situação.
+        Quem precisa mudar é o documento.
+      </p>
+      <p>
+        <b>Existe um jeito melhor.</b> O desvio chegou ao mesmo resultado por um caminho mais curto
+        e sem risco. Candidato a virar o novo procedimento.
+      </p>
+    </div>
+  </section>
+
+  <section>
+    <p class="rotulo">O que a diretoria recebe</p>
+    <h2>Um laudo que aponta o ponto exato da linha do tempo</h2>
+
+    <div class="laudo">
+      <div class="laudo-topo">
+        <strong>Caso: liberação de lote fora de especificação</strong>
+        <span>8 participantes · rodada fechada</span>
+      </div>
+      <div class="grade">
+        <div class="cabeca">Etapa</div>
+        <div class="cabeca">Divergiram do POP</div>
+        <div class="cabeca">Tempo × previsto</div>
+        <div class="cabeca">Origem</div>
+
+        <div class="t">T1</div>
+        <div class="barra"><i style="width: 12%; --cor: var(--ok)"></i></div>
+        <div class="medida">1 de 8 · 1,0×</div>
+        <div><span class="marca m-ok">Conforme</span></div>
+
+        <div class="t">T2</div>
+        <div class="barra"><i style="width: 88%; --cor: var(--processo)"></i></div>
+        <div class="medida">7 de 8 · 2,3×</div>
+        <div><span class="marca m-processo">Processo</span></div>
+
+        <div class="t">T3</div>
+        <div class="barra"><i style="width: 50%; --cor: var(--treino)"></i></div>
+        <div class="medida">4 de 8 · 1,1×</div>
+        <div><span class="marca m-treino">Treinamento</span></div>
+
+        <div class="t">T4</div>
+        <div class="barra"><i style="width: 12%; --cor: var(--execucao)"></i></div>
+        <div class="medida">1 de 8 · 0,9×</div>
+        <div><span class="marca m-execucao">Execução</span></div>
+      </div>
+    </div>
+    <p class="legenda">
+      Exemplo ilustrativo, com números fictícios. Leitura de T2: sete de oito pessoas divergiram no
+      mesmo ponto e levaram mais que o dobro do tempo previsto — cinco delas apontando que o sistema
+      de liberação estava fora do ar. Isso não é oito pessoas desatentas; é um procedimento que
+      depende de algo que não funciona.
+    </p>
+  </section>
+
+  <section>
+    <p class="rotulo">A condição para funcionar</p>
+    <h2>Se virar ferramenta de punição, o dado vira ficção</h2>
+    <p>
+      Ninguém marca "recebi orientação para pular a etapa" sabendo que aquilo vai parar na mão do
+      chefe. Por isso a proteção não é uma promessa de contrato: está construída dentro do software.
+    </p>
+
+    <div class="protecao">
+      <h3>O que a plataforma não deixa acontecer</h3>
+      <ul>
+        <li>
+          O resultado individual é visível apenas para a própria pessoa. Nem qualidade, nem chefia,
+          nem diretoria.
+        </li>
+        <li>
+          Os painéis de gestão só mostram números agregados, e apenas com três ou mais participantes
+          no recorte.
+        </li>
+        <li>Os comentários escritos chegam à qualidade sem identificação.</li>
+        <li>Nenhuma exportação — relatório, planilha ou PDF — inclui nome de participante.</li>
+        <li>A qualidade vê quem foi convidado e quem concluiu, nunca o que cada um respondeu.</li>
+        <li>Não existe ranking, nota pública nem comparação entre colegas.</li>
+      </ul>
+    </div>
+    <p class="legenda">
+      A pessoa lê exatamente isso na tela, antes de começar. É o que compra a resposta sincera — que
+      é o insumo do diagnóstico.
+    </p>
+  </section>
+
+  <section>
+    <p class="rotulo">Primeiro passo</p>
+    <h2>Uma prova de conceito de seis semanas, com um caso real de vocês</h2>
+    <p>
+      Não uma demonstração com dado inventado: o sistema rodando de verdade, com uma falha que já
+      aconteceu aí, percorrida pelas pessoas que fazem aquele trabalho. É o que responde à única
+      pergunta que importa agora —
+      <strong>isso revela algo que o relatório de vocês não revelou?</strong>
+    </p>
+
+    <div class="rolagem">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Semana</th>
+            <th scope="col">O que acontece</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td class="semana">1</td>
+            <td>Ambiente no ar e acesso por link no e-mail, sem senha</td>
+          </tr>
+          <tr>
+            <td class="semana">2</td>
+            <td>Oficina de duas horas com a qualidade para montar o caso real</td>
+          </tr>
+          <tr>
+            <td class="semana">3</td>
+            <td>Sala de simulação pronta, testada com duas pessoas</td>
+          </tr>
+          <tr>
+            <td class="semana">4</td>
+            <td>Diagnóstico automático e laudo em PDF</td>
+          </tr>
+          <tr>
+            <td class="semana">5</td>
+            <td>A rodada de verdade: 6 a 10 participantes percorrem o caso</td>
+          </tr>
+          <tr>
+            <td class="semana">6</td>
+            <td>Leitura dos resultados e decisão sobre continuar</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="rotulo">O que precisamos de vocês</p>
+    <h2>Cinco coisas, e a quinta é a que decide</h2>
+    <ul>
+      <li>Uma Não Conformidade real, já encerrada, com o relato do que aconteceu.</li>
+      <li>O POP relacionado, na versão que valia na data do incidente.</li>
+      <li>De 6 a 10 pessoas que fazem esse trabalho, por quinze minutos cada.</li>
+      <li>Duas horas da qualidade, na semana 2, para montar o caso.</li>
+      <li>
+        Uma comunicação da liderança dizendo, com todas as letras, que aquilo não gera punição. Sem
+        isso, as respostas vêm educadas — e inúteis.
+      </li>
+    </ul>
+  </section>
+
+  <section>
+    <p class="rotulo">Como saberemos que funcionou</p>
+    <h2>Critérios combinados antes de começar</h2>
+    <p>
+      A POC pode dar errado, e isso está previsto. Melhor descobrir em seis semanas do que em seis
+      meses.
+    </p>
+
+    <div class="rolagem">
+      <table>
+        <thead>
+          <tr>
+            <th scope="col">Critério</th>
+            <th scope="col">Alvo</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Apareceu ao menos uma barreira real que não constava na NC</td>
+            <td class="alvo">≥ 1</td>
+          </tr>
+          <tr>
+            <td>
+              O diagnóstico do sistema bate com a leitura do especialista da qualidade, comparados
+              às cegas
+            </td>
+            <td class="alvo">≥ 70%</td>
+          </tr>
+          <tr>
+            <td>Pelo menos uma ação corretiva concreta, aceita pelo dono do processo</td>
+            <td class="alvo">≥ 1</td>
+          </tr>
+          <tr>
+            <td>Participantes que concluem sozinhos, sem ajuda</td>
+            <td class="alvo">≥ 70%</td>
+          </tr>
+          <tr>
+            <td>Participantes que dizem ter respondido com sinceridade e repetiriam</td>
+            <td class="alvo">≥ 80%</td>
+          </tr>
+          <tr>
+            <td>Tempo da qualidade para montar um caso</td>
+            <td class="alvo">≤ 2 h</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <p class="rotulo">Depois da validação</p>
+    <h2>O que vem, se a prova de conceito se sustentar</h2>
+
+    <div class="fases">
+      <div class="fase agora">
+        <h4>Prova de conceito</h4>
+        <span class="prazo">6 semanas · agora</span>
+        <p>Um caso real, ponta a ponta, com laudo e decisão ao fim.</p>
+      </div>
+      <div class="fase">
+        <h4>Piloto em um setor</h4>
+        <span class="prazo">6 a 8 semanas</span>
+        <p>
+          Vários casos, modelos prontos para montar mais rápido, painel histórico para a diretoria e
+          o ciclo da ação corretiva fechado, com checagem de reincidência.
+        </p>
+      </div>
+      <div class="fase">
+        <h4>Uso permanente</h4>
+        <span class="prazo">3 a 4 meses</span>
+        <p>
+          O mesmo caso vira treinamento de quem ainda não errou; cenários que se ramificam conforme
+          a decisão; integração com o sistema da qualidade e login corporativo; acesso pelo celular
+          no posto de trabalho.
+        </p>
+      </div>
+    </div>
+    <p class="legenda">
+      A virada de valor está na terceira fase: a mesma simulação que investiga uma falha passada
+      treina quem ainda não a cometeu. Aí o aprendizado deixa de custar um incidente.
+    </p>
+  </section>
+
+  <div class="fecho">
+    <h2>Próximo passo</h2>
+    <p>
+      Uma conversa de uma hora com a qualidade para escolher a Não Conformidade que vira o primeiro
+      caso. É ela que define se o cronograma acima começa.
+    </p>
+    <p class="assinatura"><b>D1 App</b> · Danilo Pereira da Silva · d1.app.br</p>
+  </div>
+</main>
