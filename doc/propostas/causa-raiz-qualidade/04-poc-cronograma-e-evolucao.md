@@ -45,6 +45,13 @@ Uma entrega demonstrável por semana. Nada de "aparece no fim".
 As semanas 2 e 5 dependem de agenda do cliente. São elas que fazem o cronograma
 escorregar, e é por isso que aparecem marcadas.
 
+**O calendário é apertado, e o número está em
+[05-estimativa-de-custo-e-esforco.md](05-estimativa-de-custo-e-esforco.md):** a
+estimativa por bloco dá 256 horas, e seis semanas de dedicação integral são 240.
+Ou se vendem sete semanas, ou a POC vai para a variante enxuta — sem painel
+agregado e sem o registro de ações dentro do sistema, que descem para a fase 1.
+O laudo do caso, que é o que valida a tese, fica nas duas.
+
 ## Critérios de validação
 
 Medidos na semana 6. São eles, e não a opinião de ninguém sobre as telas, que
@@ -153,7 +160,11 @@ qualquer migração de histórico de NC antigas.
 
 ## Comercial
 
-Deliberadamente em aberto até a conversa com o cliente. As variáveis a fechar:
+Deliberadamente em aberto até a conversa com o cliente. O esforço estimado, os
+adicionais tabelados e o esqueleto do orçamento estão em
+[05-estimativa-de-custo-e-esforco.md](05-estimativa-de-custo-e-esforco.md).
+
+As variáveis a fechar:
 
 - **Modelo**: preço fechado pela POC, ou horas com teto? `[PREENCHER]`
 - **Valor da POC**: `[PREENCHER]`

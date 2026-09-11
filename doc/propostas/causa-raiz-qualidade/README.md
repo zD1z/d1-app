@@ -9,13 +9,14 @@ Não é documentação do `d1.app.br`. Mora aqui porque este repositório é ond
 contexto do trabalho vive; a proposta descreve um projeto separado, com
 repositório próprio.
 
-| Documento                                                          | O que responde                                                               |
-| ------------------------------------------------------------------ | ---------------------------------------------------------------------------- |
-| [01-visao-e-escopo.md](01-visao-e-escopo.md)                       | O problema, a tese a validar, quem usa, o que entra e o que fica de fora     |
-| [02-regras-de-negocio.md](02-regras-de-negocio.md)                 | Como o caso é montado, como a simulação corre, e como o diagnóstico é gerado |
-| [03-tecnologias-e-arquitetura.md](03-tecnologias-e-arquitetura.md) | Stack, camadas, modelo de dados, API, deploy, custo e caminho de saída       |
-| [04-poc-cronograma-e-evolucao.md](04-poc-cronograma-e-evolucao.md) | Cronograma da POC, critérios de validação, riscos e roadmap por fases        |
-| [apresentacao.html](apresentacao.html)                             | A versão para o cliente, sem jargão. Fonte da página publicada               |
+| Documento                                                                  | O que responde                                                               |
+| -------------------------------------------------------------------------- | ---------------------------------------------------------------------------- |
+| [01-visao-e-escopo.md](01-visao-e-escopo.md)                               | O problema, a tese a validar, quem usa, o que entra e o que fica de fora     |
+| [02-regras-de-negocio.md](02-regras-de-negocio.md)                         | Como o caso é montado, como a simulação corre, e como o diagnóstico é gerado |
+| [03-tecnologias-e-arquitetura.md](03-tecnologias-e-arquitetura.md)         | Stack, camadas, modelo de dados, API, deploy, custo e caminho de saída       |
+| [04-poc-cronograma-e-evolucao.md](04-poc-cronograma-e-evolucao.md)         | Cronograma da POC, critérios de validação, riscos e roadmap por fases        |
+| [05-estimativa-de-custo-e-esforco.md](05-estimativa-de-custo-e-esforco.md) | Esforço por bloco, custo de operação, grade de preço e modelo de cobrança    |
+| [apresentacao.html](apresentacao.html)                                     | A versão para o cliente, sem jargão. Fonte da página publicada               |
 
 A apresentação está publicada, como página privada, em
 https://claude.ai/code/artifact/1988f911-4360-4367-8d0b-fb21baff4d46 — o link só
@@ -42,9 +43,9 @@ derivado delas.
 
 ## O que ainda não está decidido
 
-- **Preço e forma de cobrança.** Marcado como `[PREENCHER]` no documento 04. Não
-  invento número: depende de quanto do seu tempo o projeto ocupa e de que
-  compromisso o cliente aceita assumir antes da validação.
+- **Preço e forma de cobrança.** O documento 05 traz o esforço estimado, a grade
+  de cálculo e o modelo de parcelas; falta a sua taxa-hora e a decisão sobre
+  desconto de piloto. Os campos ficam como `[PREENCHER]` até lá.
 - **Nome do produto.** "Plataforma de simulação" é descrição, não nome.
 - **Quem hospeda depois da POC.** Se a conta AWS/Neon é sua ou do cliente muda o
   contrato e a operação. Tratado no documento 03, na seção de ambientes.
