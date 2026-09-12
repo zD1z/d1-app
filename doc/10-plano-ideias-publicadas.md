@@ -51,6 +51,77 @@ lendo a lista de propostas no build. Ela foi descartada por três razões:
 O preço é não reaproveitar os tokens do `src/styles.css`. É aceitável: são páginas
 de vida curta, uma por cliente.
 
+## Por que não o repositório da API
+
+Aproveitar o `d1-app-api`, que já é privado, parece economia de um repositório. É
+o contrário, e o argumento está escrito no
+[08-plano-formulario-e-medicao.md](08-plano-formulario-e-medicao.md): a role que a
+esteira daquele repositório assume pode criar Lambda, IAM, SES e DynamoDB. Guardar
+texto comercial ali daria a um commit de proposta um caminho indireto até a
+infraestrutura da conta AWS.
+
+A cadência também briga. Infraestrutura muda quase nunca; proposta muda três vezes
+antes de ir ao cliente. Misturar as duas faz cada ajuste de vírgula disparar
+`terraform plan`, ou obriga a filtrar caminho no workflow para contornar um
+problema que só existe porque as coisas foram juntadas.
+
+`d1-app-ideias` é um repositório de conteúdo: sem esteira, sem credencial, sem
+nada além de HTML e um `proposta.json`.
+
+## O DynamoDB, e quando ele passa a valer
+
+Guardar o HTML no DynamoDB, com o hash na chave, e servir pela Lambda é viável e
+não tem nada de errado. Só não é o primeiro passo. O que ele compra, e que o
+arquivo estático não dá:
+
+| Ganho                                         | Por que importa                                                   |
+| --------------------------------------------- | ----------------------------------------------------------------- |
+| Revogar na hora                               | Apagar o item tira a página do ar em segundos, sem deploy         |
+| Validade que se cumpre sozinha                | O item guarda `expira_em`, e o endereço para de responder na data |
+| Saber que o cliente abriu                     | Data, hora e quantas vezes. É informação comercial de verdade     |
+| Publicar sem publicar o site                  | Editar e salvar, sem esperar build do Pages                       |
+| Caminho para autenticação, se um dia precisar | Token verificado no servidor deixa de ser impossível              |
+
+E o que ele custa:
+
+| Custo                                                                                                                                                                                              |
+| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **O endereço muda.** O Pages não reescreve caminho, então `/ideias/<hash>` no apex não pode ir para a Lambda. Vira `ideias.d1.app.br/<hash>`, com domínio próprio no gateway                       |
+| **Limite de 400 KB por item.** O HTML de hoje tem 28 KB e cabe com folga, mas uma página com imagem embutida em data URI estoura. Acima disso, o item guarda o endereço e o conteúdo vai para o S3 |
+| **A página passa a depender da Lambda estar de pé**, com partida a frio, em vez de um arquivo no CDN do Pages                                                                                      |
+| **Mais peças para uma página lida três vezes**: rota, domínio, certificado, handler, publicador, testes                                                                                            |
+
+**A regra que não pode ser quebrada se isso for feito:** o git continua sendo a
+fonte da verdade, e o DynamoDB é destino de publicação, nunca editor. HTML
+digitado direto na tabela é conteúdo sem histórico, sem diff e sem como provar o
+que o cliente recebeu. O fluxo é `git → comando publica → tabela`.
+
+Um detalhe de implementação que engana: **o TTL do DynamoDB não é pontual.** A
+AWS apaga o item em até 48 horas depois do vencimento. Ele serve para faxina, não
+para regra de negócio. A validade tem que ser conferida no handler, comparando
+`expira_em` com o agora.
+
+**O gatilho para migrar** é qualquer um destes doer de verdade: precisar revogar
+um endereço com urgência, ter proposta vencida no ar sem perceber, ou querer saber
+se o cliente abriu. Enquanto for uma proposta por mês, o arquivo estático ganha em
+simplicidade. O esforço da migração é de 6 a 10 horas, e nada do que está nos
+lotes abaixo é jogado fora: o repositório privado vira a fonte, e o publicador lê
+dele.
+
+## O aviso de leitura, sem sair do estático
+
+Saber que o cliente abriu é o ganho mais concreto da lista acima, e dá para tê-lo
+sem migrar nada: uma chamada de uma linha, no fim da página, para um endpoint no
+`d1-app-api` que grava hash e momento. Meia hora de trabalho, e some com a maior
+razão para trocar de arquitetura agora.
+
+**Com uma ressalva que não é técnica.** O
+[01-contexto-e-objetivo.md](01-contexto-e-objetivo.md) declara que o site não
+rastreia nada, e essa decisão continua valendo para as duas páginas públicas.
+Registrar leitura de proposta é outra coisa: é uma página privada, mandada a uma
+pessoa que sabe que a mandou você. Ainda assim, se for feito, o documento 01 passa
+a dizer isso com todas as letras, em vez de deixar a contradição implícita.
+
 ## Por que não tem senha
 
 Senha em site estático é uma de duas coisas, e nenhuma vale aqui:
