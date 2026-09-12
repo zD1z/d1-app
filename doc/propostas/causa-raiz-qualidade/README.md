@@ -20,8 +20,11 @@ repositório próprio.
 
 A apresentação está publicada, como página privada, em
 https://claude.ai/code/artifact/1988f911-4360-4367-8d0b-fb21baff4d46 — o link só
-abre para quem receber. O nome do cliente aparece como `[NOME DO CLIENTE]` no
-cabeçalho, para ser trocado antes de enviar.
+abre para quem receber. O cabeçalho traz o nome do cliente, Diego.
+
+O texto da apresentação não usa travessão: onde havia um, entrou vírgula,
+preposição ou ponto final. É só na apresentação, e a razão é de leitura, já que o
+travessão pede um tempo de respiro que o leitor não técnico nem sempre dá.
 
 ## Decisões travadas
 
