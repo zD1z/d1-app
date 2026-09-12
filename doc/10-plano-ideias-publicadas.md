@@ -9,144 +9,165 @@ conta e sem login, e a própria página é prova da stack que a `/sobre` afirma
 dominar. Hoje isso é feito em plataforma de terceiro, e o link de lá tem menos
 peso comercial do que um endereço seu.
 
+A primeira versão deste plano servia as propostas como arquivo estático no
+GitHub Pages. Ela foi substituída em 2026-09-12, antes de qualquer linha de
+código, pela versão servida por Lambda com DynamoDB. O porquê da troca está na
+seção "Por que não o arquivo estático".
+
 ## Decisões travadas
 
-| Assunto              | Decisão                                                                       |
-| -------------------- | ----------------------------------------------------------------------------- |
-| Endereço             | `d1.app.br/ideias/<hash>/`, sem link a partir de nenhuma página do site       |
-| Formato da página    | HTML autocontido, um arquivo, com estilo próprio. Não é componente do Angular |
-| Onde o conteúdo mora | Repositório **privado** `d1-app-ideias`, uma pasta por proposta               |
-| Como chega ao site   | O workflow do Pages clona o privado para `public/ideias/` antes do build      |
-| Acesso do workflow   | Chave de implantação somente-leitura, não token de conta                      |
-| Hash                 | 16 bytes de `crypto.randomBytes`, em base64url: 22 caracteres                 |
-| Proteção adicional   | Nenhuma. Sem senha, sem cifra. O motivo está adiante                          |
-| Revogação            | Trocar o hash. Sem servidor, não existe outra                                 |
+| Assunto            | Decisão                                                                           |
+| ------------------ | --------------------------------------------------------------------------------- |
+| Endereço           | `ideias.d1.app.br/<hash>`, sem link a partir de nenhuma página do site            |
+| Onde o HTML mora   | DynamoDB, um item por proposta, servido por Lambda                                |
+| Fonte da verdade   | O repositório privado `d1-app-ideias`. O banco é destino de publicação            |
+| Onde a infra mora  | `d1-app-api`, que já tem Terraform, OIDC e a role. O conteúdo **não** vai para lá |
+| Formato da página  | HTML autocontido, um arquivo, com estilo próprio. Não é componente do Angular     |
+| Hash               | 16 bytes de `crypto.randomBytes` em base64url: 22 caracteres                      |
+| Proteção adicional | Nenhuma senha, nenhuma cifra. O motivo está adiante                               |
+| Validade           | Conferida no handler, com `expira_em`. O TTL do DynamoDB só faz faxina            |
+| Revogação          | Trocar o estado do item. Vale em segundos, sem deploy                             |
+| Leituras           | Registradas como itens próprios, não como contador no item da proposta            |
 
-## Por que o conteúdo não pode morar neste repositório
+## Por que o endereço é um subdomínio
 
-Este repositório é **público**. Uma proposta comprometida aqui fica legível em
-`github.com/zD1z/d1-app`, indexada pela busca do GitHub, e permanente: fork e
-cache sobrevivem a qualquer remoção posterior. O hash no endereço não protegeria
-nada, porque ninguém precisaria do endereço.
+Porque o GitHub Pages não reescreve caminho. Com o site no apex, não existe
+maneira de `d1.app.br/ideias/<hash>` chegar a uma Lambda: o Pages responderia
+antes, com o `404.html`. As duas saídas seriam colocar um proxy na frente do
+apex, o que significa mover o DNS e acrescentar uma camada inteira, ou aceitar o
+subdomínio.
 
-A separação é a mesma do `d1-app-api`, e pelo mesmo tipo de razão: não é o
-segredo em si, é o alcance. Um repositório de site, mexido toda semana para
-trocar uma frase, não é lugar para o texto comercial de terceiros.
+`ideias.d1.app.br` é o mesmo domínio aos olhos do cliente, e é uma linha de CNAME
+no Registro.br.
 
-## Por que arquivo estático, e não rota do Angular
+## Por que não o arquivo estático
 
-A alternativa seria uma rota `/ideias/:hash` com componente e `getPrerenderParams`
-lendo a lista de propostas no build. Ela foi descartada por três razões:
+O estático era mais simples e continua sendo uma boa solução. Perdeu por três
+coisas que ele não faz, e que passam a valer agora que existe proposta de verdade
+na rua:
 
-1. **Acopla a proposta ao site.** Cada proposta passaria a depender do bundle, do
-   roteador e dos testes do `d1-app`. Uma página de venda não deve poder quebrar
-   por causa de uma refatoração do cabeçalho.
-2. **O desenho é do caso, não do site.** A apresentação da causa raiz tem paleta,
-   tipografia e um diagrama que existem para aquele assunto. Encaixar isso nos
-   componentes do site tiraria justamente o que faz a página funcionar.
-3. **Custo zero contra custo real.** `public/**/*` já é copiado inteiro para o
-   artefato do Pages. Um arquivo em `public/ideias/<hash>/index.html` é publicado
-   sem uma linha de configuração nova.
+| Ganho do dinâmico              | O que ele resolve                                                  |
+| ------------------------------ | ------------------------------------------------------------------ |
+| Revogar em segundos            | Encerrar um endereço sem esperar build, deploy e propagação        |
+| Validade que se cumpre sozinha | Proposta vencida para de abrir, em vez de circular com preço velho |
+| Saber que o cliente abriu      | Data, hora e quantas vezes. É informação comercial, não vaidade    |
+| Publicar sem publicar o site   | Corrigir uma frase na proposta sem mexer no deploy do `d1-app`     |
+| `X-Robots-Tag` de verdade      | No Pages só dava meta tag; agora o cabeçalho vai junto da resposta |
 
-O preço é não reaproveitar os tokens do `src/styles.css`. É aceitável: são páginas
-de vida curta, uma por cliente.
+O preço é honesto e está anotado na seção de riscos: mais peças de pé, partida a
+frio de meio segundo, e o dobro de horas.
 
-## Por que não o repositório da API
+## Por que não o repositório da API para o conteúdo
 
 Aproveitar o `d1-app-api`, que já é privado, parece economia de um repositório. É
 o contrário, e o argumento está escrito no
 [08-plano-formulario-e-medicao.md](08-plano-formulario-e-medicao.md): a role que a
 esteira daquele repositório assume pode criar Lambda, IAM, SES e DynamoDB. Guardar
 texto comercial ali daria a um commit de proposta um caminho indireto até a
-infraestrutura da conta AWS.
+infraestrutura da conta AWS. A cadência também briga: infraestrutura muda quase
+nunca, proposta muda três vezes antes de ir ao cliente.
 
-A cadência também briga. Infraestrutura muda quase nunca; proposta muda três vezes
-antes de ir ao cliente. Misturar as duas faz cada ajuste de vírgula disparar
-`terraform plan`, ou obriga a filtrar caminho no workflow para contornar um
-problema que só existe porque as coisas foram juntadas.
+A divisão fica assim, e cada repositório tem exatamente a permissão do seu papel:
 
-`d1-app-ideias` é um repositório de conteúdo: sem esteira, sem credencial, sem
-nada além de HTML e um `proposta.json`.
+| Repositório     | O que tem                                                  | Permissão na AWS                           |
+| --------------- | ---------------------------------------------------------- | ------------------------------------------ |
+| `d1-app`        | O site. Nada de proposta                                   | Nenhuma                                    |
+| `d1-app-api`    | A tabela, a Lambda leitora, a rota, o domínio, o Terraform | A role de infraestrutura, que já existe    |
+| `d1-app-ideias` | As propostas em HTML, o `proposta.json` e o publicador     | Só `PutItem` e `UpdateItem` naquela tabela |
 
-## O DynamoDB, e quando ele passa a valer
+## Arquitetura
 
-Guardar o HTML no DynamoDB, com o hash na chave, e servir pela Lambda é viável e
-não tem nada de errado. Só não é o primeiro passo. O que ele compra, e que o
-arquivo estático não dá:
+```
+navegador                                AWS
+---------                                ---
+ideias.d1.app.br/<hash>  -------------->  API Gateway HTTP
+                                          domínio próprio, limite de rajada
+                                            |
+                                            v
+                                          Lambda leitora (Node 22)
+                                            confere o formato do hash
+                                            GetItem na tabela
+                                            confere estado e validade
+                                            grava a leitura
+                                            devolve text/html
+                                            |
+                                            v
+                                          DynamoDB: ideias
 
-| Ganho                                         | Por que importa                                                   |
-| --------------------------------------------- | ----------------------------------------------------------------- |
-| Revogar na hora                               | Apagar o item tira a página do ar em segundos, sem deploy         |
-| Validade que se cumpre sozinha                | O item guarda `expira_em`, e o endereço para de responder na data |
-| Saber que o cliente abriu                     | Data, hora e quantas vezes. É informação comercial de verdade     |
-| Publicar sem publicar o site                  | Editar e salvar, sem esperar build do Pages                       |
-| Caminho para autenticação, se um dia precisar | Token verificado no servidor deixa de ser impossível              |
+seu terminal
+------------
+npm run publicar -- causa-raiz  ------->  PutItem, com role estreita por OIDC
+```
 
-E o que ele custa:
+## A tabela
 
-| Custo                                                                                                                                                                                              |
-| -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| **O endereço muda.** O Pages não reescreve caminho, então `/ideias/<hash>` no apex não pode ir para a Lambda. Vira `ideias.d1.app.br/<hash>`, com domínio próprio no gateway                       |
-| **Limite de 400 KB por item.** O HTML de hoje tem 28 KB e cabe com folga, mas uma página com imagem embutida em data URI estoura. Acima disso, o item guarda o endereço e o conteúdo vai para o S3 |
-| **A página passa a depender da Lambda estar de pé**, com partida a frio, em vez de um arquivo no CDN do Pages                                                                                      |
-| **Mais peças para uma página lida três vezes**: rota, domínio, certificado, handler, publicador, testes                                                                                            |
+Uma tabela, `ideias`, com chave composta:
 
-**A regra que não pode ser quebrada se isso for feito:** o git continua sendo a
-fonte da verdade, e o DynamoDB é destino de publicação, nunca editor. HTML
-digitado direto na tabela é conteúdo sem histórico, sem diff e sem como provar o
-que o cliente recebeu. O fluxo é `git → comando publica → tabela`.
+| Campo | Papel                               |
+| ----- | ----------------------------------- |
+| `pk`  | O hash da proposta                  |
+| `sk`  | `proposta`, ou `leitura#<ISO-8601>` |
 
-Um detalhe de implementação que engana: **o TTL do DynamoDB não é pontual.** A
-AWS apaga o item em até 48 horas depois do vencimento. Ele serve para faxina, não
-para regra de negócio. A validade tem que ser conferida no handler, comparando
-`expira_em` com o agora.
+O item `proposta` guarda:
 
-**O gatilho para migrar** é qualquer um destes doer de verdade: precisar revogar
-um endereço com urgência, ter proposta vencida no ar sem perceber, ou querer saber
-se o cliente abriu. Enquanto for uma proposta por mês, o arquivo estático ganha em
-simplicidade. O esforço da migração é de 6 a 10 horas, e nada do que está nos
-lotes abaixo é jogado fora: o repositório privado vira a fonte, e o publicador lê
-dele.
+| Atributo    | Conteúdo                                       |
+| ----------- | ---------------------------------------------- |
+| `html`      | A página inteira, autocontida                  |
+| `cliente`   | Para você saber de quem é o hash, meses depois |
+| `titulo`    | Usado no log e no relatório, nunca na resposta |
+| `criada_em` | ISO-8601                                       |
+| `expira_em` | Época em segundos. Serve à regra **e** ao TTL  |
+| `estado`    | `ativa` ou `encerrada`                         |
+| `versao`    | Incrementa a cada publicação                   |
 
-## O aviso de leitura, sem sair do estático
+Cada item `leitura#<momento>` guarda apenas o momento, o agente e o endereço de
+origem reduzido.
 
-Saber que o cliente abriu é o ganho mais concreto da lista acima, e dá para tê-lo
-sem migrar nada: uma chamada de uma linha, no fim da página, para um endpoint no
-`d1-app-api` que grava hash e momento. Meia hora de trabalho, e some com a maior
-razão para trocar de arquitetura agora.
+**Por que leitura em item separado, e não um contador no item da proposta.** No
+DynamoDB, escrita custa por quilobyte do item inteiro: somar 1 a um contador
+dentro de um item de 28 KB consome 28 unidades de escrita, contra 1 de um item
+pequeno. O custo em dinheiro é irrelevante nos dois casos, mas o desenho com
+contador é errado por outra razão: ele guarda um número, e o que interessa é
+**quando** e **quantas vezes**. Item por leitura dá histórico pelo mesmo preço.
 
-**Com uma ressalva que não é técnica.** O
-[01-contexto-e-objetivo.md](01-contexto-e-objetivo.md) declara que o site não
-rastreia nada, e essa decisão continua valendo para as duas páginas públicas.
-Registrar leitura de proposta é outra coisa: é uma página privada, mandada a uma
-pessoa que sabe que a mandou você. Ainda assim, se for feito, o documento 01 passa
-a dizer isso com todas as letras, em vez de deixar a contradição implícita.
+**Por que o TTL não decide nada.** A AWS apaga itens expirados em até 48 horas
+depois do vencimento. Isso serve para faxina, não para regra de negócio: quem
+decide se a proposta ainda abre é o handler, comparando `expira_em` com o agora.
 
-## Por que não tem senha
+## A Lambda leitora
 
-Senha em site estático é uma de duas coisas, e nenhuma vale aqui:
+Ordem das operações, e cada passo existe por uma razão:
 
-- **Esconder com JavaScript é teatro.** O conteúdo chega ao navegador e aparece no
-  `DevTools`. Pior que não ter, porque promete proteção que não existe.
-- **Cifrar no cliente funciona de verdade**, com chave derivada da senha no
-  navegador. Mas custa um canal separado para a senha, quebra se o cliente perder
-  a senha, e um segredo fraco cai em ataque offline, já que o arquivo cifrado está
-  público.
+1. **Confere o formato do hash** com expressão regular: 22 caracteres de
+   base64url. Endereço fora do formato devolve 404 sem tocar no banco, o que
+   torna varredura barata para você e cara para quem varre.
+2. **`GetItem`** com `pk = hash` e `sk = proposta`.
+3. **Confere `estado` e `expira_em`.**
+4. **Grava a leitura**, sem esperar a escrita terminar para responder.
+5. **Devolve `text/html`**, com os cabeçalhos abaixo.
 
-Para o que a página carrega hoje — seu texto, sua metodologia, seu preço — o
-endereço aleatório é o padrão do mercado e é suficiente. **A linha que muda isso
-está adiante**, e é dado do cliente.
+| Situação                            | Resposta                                                           |
+| ----------------------------------- | ------------------------------------------------------------------ |
+| Hash fora do formato, ou não existe | 404, página curta e genérica, sem confirmar nada                   |
+| Proposta encerrada ou vencida       | 410, com um aviso curto e educado e um caminho para falar com você |
+| Tudo certo                          | 200, com o HTML                                                    |
 
-## A fronteira que precisa ficar escrita
+O 410 é deliberado: quem recebeu aquele endereço merece saber que ele existiu e
+venceu, em vez de achar que errou o link.
 
-Enquanto a página for **a sua proposta**, hash basta. No dia em que ela carregar
-**dado do cliente** — a Não Conformidade real, nome de pessoa, resultado de
-rodada, laudo — a resposta deixa de ser hash e não passa a ser senha: é
-autenticação de verdade, e aí o lugar é a plataforma, não o site.
+**Cabeçalhos**, que são a vantagem concreta sobre o Pages:
 
-Isto é uma decisão, não uma opinião: `/ideias` **não recebe dado de terceiro**.
-Quando alguém pedir "põe o resultado da rodada na página também", a resposta já
-está escrita aqui.
+```
+Content-Type: text/html; charset=utf-8
+Cache-Control: private, no-store
+X-Robots-Tag: noindex, nofollow, noarchive
+Referrer-Policy: no-referrer
+X-Content-Type-Options: nosniff
+Content-Security-Policy: default-src 'none'; style-src 'unsafe-inline'; img-src data:; font-src https://fonts.gstatic.com; style-src-elem 'unsafe-inline' https://fonts.googleapis.com
+```
+
+`no-store` existe para a proposta não ficar em cache de proxy corporativo depois
+de encerrada.
 
 ## O hash
 
@@ -154,109 +175,169 @@ está escrita aqui.
 crypto.randomBytes(16).toString('base64url')   // 22 caracteres, 128 bits
 ```
 
-Três regras:
-
-- **Nada de nome.** `/ideias/diego-qualidade` é adivinhável e vaza o cliente no
+- **Nada de nome.** `/diego-qualidade` é adivinhável e entrega o cliente no
   próprio endereço, inclusive para quem vê a tela por cima do ombro.
-- **`randomBytes`, não `Math.random`.** O segundo é previsível e não serve para
-  isso.
-- **Base64url, não hexadecimal.** 22 caracteres contra 32, para o mesmo tamanho de
-  segredo, e sem caractere que quebre ao colar em e-mail ou WhatsApp.
+- **`randomBytes`, não `Math.random`.** O segundo é previsível.
+- **Base64url.** 22 caracteres contra 32 do hexadecimal, para o mesmo segredo, e
+  sem caractere que quebre ao colar em e-mail ou WhatsApp.
+
+## Por que não tem senha
+
+Duas opções existiam, e nenhuma vale aqui:
+
+- **Esconder com JavaScript é teatro**, e com Lambda nem faria sentido: o
+  conteúdo vem do servidor.
+- **Pedir senha de verdade** significa sessão, armazenamento de segredo e
+  recuperação. É construir meia autenticação para uma página de venda.
+
+Para o que a página carrega — seu texto, seu método, seu preço — o endereço
+aleatório é o padrão do mercado e é suficiente. Agora que existe Lambda, a porta
+está aberta para um token por e-mail no dia em que precisar, e isso é um ganho
+do desenho, não uma tarefa deste plano.
+
+## A fronteira que precisa ficar escrita
+
+Enquanto a página for **a sua proposta**, hash basta. No dia em que ela carregar
+**dado do cliente** — a Não Conformidade real, nome de pessoa, resultado de
+rodada, laudo — a resposta deixa de ser hash: é autenticação de verdade, e o
+lugar é a plataforma do cliente, não o seu site.
+
+`ideias` **não recebe dado de terceiro**. Quando alguém pedir "põe o resultado da
+rodada aí também", a resposta já está escrita aqui.
 
 ## Higiene da página
 
-Vai no template, e vale para toda proposta:
+Vai no template, e vale para toda proposta. Os cabeçalhos da Lambda cobrem parte
+disso; o resto é do HTML.
 
-| Cuidado                                                  | Por quê                                                                        |
-| -------------------------------------------------------- | ------------------------------------------------------------------------------ |
-| `<meta name="robots" content="noindex,nofollow">`        | O Pages não deixa mandar cabeçalho `X-Robots-Tag`. A meta é o que resta        |
-| `<meta name="referrer" content="no-referrer">`           | Sem isso, um clique para fora entrega o endereço inteiro no `Referer`          |
-| Nenhum link para fora da página                          | Mesma razão. Se precisar citar algo, cite sem `href`                           |
-| Fora do `sitemap.xml`                                    | O sitemap é escrito à mão e continua com duas URLs. Nada a fazer, só não mexer |
-| **Não** acrescentar `Disallow: /ideias/` ao `robots.txt` | O `Disallow` anuncia o caminho e não impede indexação de URL já conhecida      |
-| Data de emissão e validade visíveis no rodapé            | Proposta velha com preço antigo circulando não ajuda ninguém                   |
+| Cuidado                                                   | Por quê                                                                |
+| --------------------------------------------------------- | ---------------------------------------------------------------------- |
+| `<meta name="robots" content="noindex,nofollow">`         | Redundante com o cabeçalho, e sobrevive se a página for salva em disco |
+| Nenhum link para fora da página                           | Endereço não vaza em `Referer` se não houver clique para fora          |
+| Data de emissão e validade visíveis no rodapé             | Proposta velha com preço antigo circulando não ajuda ninguém           |
+| Folha de impressão embutida                               | O cliente vai salvar em PDF para encaminhar. Melhor que saia bonito    |
+| Nada de imagem em data URI acima de algumas dezenas de KB | O item da tabela tem teto de 400 KB                                    |
 
-Um detalhe a favor, que já existe: o `404.html` é cópia do `index.html`, então um
-hash errado cai na home em vez de confirmar que a pasta existe.
+O `sitemap.xml` e o `robots.txt` do site **não mudam**: o subdomínio não é
+alcançável a partir de nenhuma página, e listar `ideias` no `robots.txt` só
+serviria para anunciar que ele existe.
 
 ## Como fica o repositório privado
 
 ```
 d1-app-ideias/
-  causa-raiz-qualidade/
-    proposta.json          cliente, data, validade, estado, hash
-    index.html             a página, autocontida
-  <proxima>/
+  propostas/
+    causa-raiz-qualidade/
+      proposta.json        hash, cliente, criada em, validade, estado, versão
+      index.html           a página, autocontida
+  scripts/
+    nova.mjs               gera o hash e a pasta a partir do modelo
+    publicar.mjs           valida e grava na tabela
+    leituras.mjs           lista quem abriu e quando
+  modelo/
+    index.html             o template com a higiene já aplicada
 ```
 
-O `proposta.json` não vai para o site. Serve para você saber, meses depois, qual
+O `proposta.json` nunca é servido. Ele existe para você saber, meses depois, qual
 hash é de quem e o que já venceu.
+
+## Custo
+
+Com três propostas no ar e 200 aberturas por mês somadas, em `us-east-1`:
+
+| Item                                 | Conta                                  | Por mês        |
+| ------------------------------------ | -------------------------------------- | -------------- |
+| DynamoDB, leitura sob demanda        | 200 leituras de um item de 28 KB       | US$ 0,0002     |
+| DynamoDB, escrita das leituras       | 200 itens pequenos                     | US$ 0,0002     |
+| DynamoDB, armazenamento              | 84 KB                                  | US$ 0,00002    |
+| Lambda                               | 200 invocações de ~500 ms              | US$ 0          |
+| API Gateway HTTP                     | 200 requisições, a US$ 1,00 por milhão | US$ 0,0002     |
+| Certificado ACM e domínio no gateway | —                                      | US$ 0          |
+| **Total**                            |                                        | **< US$ 0,01** |
+
+Mesmo multiplicando por cem, fica abaixo de R$ 1 por mês. `sa-east-1` é mais caro,
+e nesse volume a diferença some no arredondamento.
+
+**As duas coisas que podem cobrar de verdade:**
+
+- **CloudWatch Logs sem retenção definida.** O padrão é guardar para sempre. Use
+  14 dias no Terraform e o assunto morre.
+- **Route 53**, que custa US$ 0,50 por zona ao mês. Não é preciso: o DNS está no
+  Registro.br, e tanto o CNAME do domínio do gateway quanto a validação do
+  certificado podem ser criados lá.
+
+O custo real deste plano é tempo, não dinheiro.
 
 ## Lotes
 
-### Lote 1 — Repositório privado e o gerador
+### Lote 1 — Infraestrutura e leitura
 
-Branch: `feat/ideias-publicadas`
+Repositório: `d1-app-api`. Branch: `feat/ideias`
+
+| Ajuste                                                                                    |
+| ----------------------------------------------------------------------------------------- |
+| Tabela `ideias` no Terraform, sob demanda, com TTL em `expira_em`                         |
+| Lambda leitora em Node 22, com a ordem de operações acima                                 |
+| Rota no HTTP API, com domínio `ideias.d1.app.br`, certificado regional e limite de rajada |
+| Retenção de 14 dias no grupo de logs                                                      |
+| Páginas de 404 e 410, curtas, no mesmo tom do site                                        |
+| Testes do handler: formato inválido, ausente, encerrada, vencida, feliz, e cabeçalhos     |
+
+### Lote 2 — Conteúdo e publicação
+
+Repositório: `d1-app-ideias`. Branch: `feat/publicador`
 
 | Ajuste                                                                                          |
 | ----------------------------------------------------------------------------------------------- |
-| Criar o repositório privado `d1-app-ideias`, com a estrutura acima                              |
-| Script `scripts/nova-ideia.mjs` neste repositório: gera o hash, cria a pasta e copia o template |
-| Template da proposta, com as metas de `robots` e `referrer` e o rodapé de validade              |
-| Mover a apresentação da causa raiz para o privado, com hash gerado                              |
-| Teste do gerador: 22 caracteres, alfabeto base64url, e dois hashes seguidos nunca iguais        |
+| Estrutura de pastas, modelo da proposta com a higiene aplicada                                  |
+| `nova.mjs`: gera hash, cria a pasta, escreve o `proposta.json`                                  |
+| `publicar.mjs`: valida e grava. Recusa acima de 380 KB, sem as metas, ou com link externo       |
+| Role por OIDC restrita a `PutItem` e `UpdateItem` na tabela `ideias`                            |
+| Workflow que publica ao entrar na `main`, só o que mudou                                        |
+| Migrar a apresentação da causa raiz, gerar o hash e publicar                                    |
+| Testes: formato do hash, recusa por tamanho, recusa por falta de meta, dois hashes nunca iguais |
 
-O script mora aqui, no público, porque é ferramenta e não conteúdo. Ele não sabe
-nada dos clientes: recebe um nome de pasta e cospe uma pasta com hash.
-
-### Lote 2 — Publicação
-
-Branch: `feat/ideias-no-deploy`
-
-| Ajuste                                                                                                                                          |
-| ----------------------------------------------------------------------------------------------------------------------------------------------- |
-| Chave de implantação somente-leitura no `d1-app-ideias`, com a parte privada em `secrets.IDEIAS_DEPLOY_KEY`                                     |
-| Passo no `deploy.yml` que clona o privado em `public/ideias/`, **depois** do `prettier --check` e do `npm test`, e **antes** do `npm run build` |
-| `public/ideias/` no `.gitignore`                                                                                                                |
-| `.prettierignore` com `public/ideias/`, defesa em profundidade caso alguém rode o clone antes                                                   |
-| O passo falha o build se o clone falhar                                                                                                         |
-
-**Por que clonar depois dos checks:** o `prettier --check .` roda sobre o
-diretório inteiro. Com o conteúdo clonado antes, a formatação de uma proposta
-derrubaria o deploy do site, o que é absurdo. Depois dos checks, o conteúdo entra
-já pronto e ninguém o verifica.
-
-**Por que falhar em vez de publicar sem as propostas:** um cliente com o endereço
-aberto na aba, recebendo 404 porque o clone falhou em silêncio, é pior que um
-deploy vermelho que você vê e conserta.
+A validação que recusa a publicação é o que substitui a revisão humana: um HTML
+sem `noindex`, ou com um link para fora, não chega ao ar.
 
 ### Lote 3 — Ciclo de vida
 
-Branch: `feat/ideias-encerradas`
+Repositório: `d1-app-ideias`, e o `doc/` deste aqui.
 
-| Ajuste                                                                                  |
-| --------------------------------------------------------------------------------------- |
-| Estado `encerrada` no `proposta.json`, que troca a página por um aviso curto e educado  |
-| Registro das decisões deste plano no `doc/09-decisoes-no-codigo.md`, na parte do script |
-| Nota no `README.md` da raiz sobre a pasta que aparece só no build                       |
+| Ajuste                                                                          |
+| ------------------------------------------------------------------------------- |
+| `encerrar.mjs`: muda o estado, e o endereço passa a responder 410 na hora       |
+| `leituras.mjs`: lista aberturas por proposta, com data e hora                   |
+| Registro das decisões no `doc/09-decisoes-no-codigo.md`                         |
+| **Ajustar o `doc/01`**: o site não rastreia nada, mas `ideias` registra leitura |
 
-Opcional, e só quando a primeira proposta vencer de verdade.
+O último item não é burocracia. O `doc/01` declara hoje que nada é rastreado, e
+essa frase deixa de ser inteiramente verdadeira no dia em que o primeiro item de
+leitura for gravado. Ou o documento passa a dizer a exceção com todas as letras,
+ou a declaração vira mentira por omissão.
 
 ## Esforço
 
-| Lote | Horas |
-| ---- | ----- |
-| 1    | 2 a 3 |
-| 2    | 1 a 2 |
-| 3    | 1     |
+| Lote      | Horas      |
+| --------- | ---------- |
+| 1         | 4 a 6      |
+| 2         | 3 a 4      |
+| 3         | 2          |
+| **Total** | **9 a 12** |
+
+Cresceu em relação às 4 a 6 horas da versão estática, e cresceu de novo quando o
+plano foi detalhado. É o preço dos ganhos da segunda seção, e ele está sendo pago
+de olhos abertos.
 
 ## Riscos
 
-| Risco                                                                 | Mitigação                                                             |
-| --------------------------------------------------------------------- | --------------------------------------------------------------------- |
-| Proposta commitada por engano no repositório público                  | `.gitignore` e `.prettierignore`, e o conteúdo nunca nasce aqui       |
-| Clone falha e o site sobe sem as propostas                            | O passo falha o build                                                 |
-| Chave de implantação vazada                                           | Somente-leitura e limitada a um repositório. Rotação é trocar a chave |
-| Cliente encaminha o endereço                                          | Aceito. É o mesmo risco de mandar um PDF por e-mail                   |
-| Endereço no histórico do navegador ou no log do proxy da empresa dele | Aceito, e é a razão de a página não levar dado dele                   |
-| Proposta antiga continua no ar                                        | Validade no rodapé, e o lote 3 fecha o ciclo                          |
+| Risco                                                       | Mitigação                                                                          |
+| ----------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| A Lambda cai e a proposta do cliente cai junto              | Alarme de erro no CloudWatch. O PDF da proposta continua existindo                 |
+| Partida a frio na primeira abertura                         | Aceito: meio segundo, uma vez                                                      |
+| HTML editado direto na tabela, sem passar pelo git          | O publicador é o único caminho, e a role de escrita é só dele                      |
+| Proposta acima de 400 KB                                    | O publicador recusa acima de 380 KB, antes de tentar gravar                        |
+| Varredura de hashes                                         | Formato conferido antes do banco, limite de rajada no gateway, 128 bits de segredo |
+| Cliente encaminha o endereço                                | Aceito. É o mesmo risco de mandar um PDF por e-mail                                |
+| Certificado ou CNAME mal configurados derrubam o subdomínio | Validar com o endereço de uma proposta de teste antes de mandar ao cliente         |
+| Registro de leitura contradiz a declaração de não rastrear  | Lote 3 acerta o `doc/01`                                                           |
