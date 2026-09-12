@@ -304,7 +304,10 @@ Repositório: `d1-app-ideias`. Branch: `feat/publicador`
 | Testes: formato do hash, recusa por tamanho, recusa por falta de meta, dois hashes nunca iguais |
 
 A validação que recusa a publicação é o que substitui a revisão humana: um HTML
-sem `noindex`, ou com um link para fora, não chega ao ar.
+sem `noindex`, com link clicável para fora, com `<script>`, acima de 380 KB ou
+**com marcador `[PREENCHER]` ainda no texto** não chega ao ar. O último caso é o
+mais provável de todos: no site, o marcador aparecer é proposital; numa proposta
+na mão do cliente, é vexame.
 
 ### Lote 3 — Ciclo de vida
 
