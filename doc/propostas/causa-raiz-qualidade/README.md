@@ -20,7 +20,13 @@ repositório próprio.
 
 A apresentação está publicada, como página privada, em
 https://claude.ai/code/artifact/1988f911-4360-4367-8d0b-fb21baff4d46 — o link só
-abre para quem receber. O cabeçalho traz o nome do cliente, Diego.
+abre para quem o dono compartilhar pelo menu da própria página, porque artifact
+publicado nasce privado. O cabeçalho traz o nome do cliente, Diego.
+
+Para enviar por e-mail ou WhatsApp, sem depender de conta nenhuma, a mesma página
+vira PDF pelo navegador: abrir, imprimir, salvar como PDF. A folha de impressão
+já está no arquivo, com fundo branco, cores preservadas e quebras de página que
+não partem cartão nem tabela no meio.
 
 O texto da apresentação não usa travessão: onde havia um, entrou vírgula,
 preposição ou ponto final. É só na apresentação, e a razão é de leitura, já que o

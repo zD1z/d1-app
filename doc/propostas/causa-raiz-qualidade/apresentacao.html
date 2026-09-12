@@ -691,6 +691,82 @@
     outline: 2px solid var(--acento);
     outline-offset: 3px;
   }
+
+  /* ---------- impressão e PDF ---------- */
+
+  @media print {
+    :root {
+      --papel: #ffffff;
+      --superficie: #ffffff;
+      --tinta: #101a24;
+      --suave: #3f5163;
+      --fraco: #63758a;
+      --linha: #d7e0e8;
+      --linha-forte: #b5c3d0;
+      --acento: #0d6a83;
+      --acento-fundo: #eef6f8;
+      --processo: #8a4f00;
+      --processo-fundo: #f6ead7;
+      --treino: #3c4590;
+      --treino-fundo: #e6e8f7;
+      --execucao: #3f5163;
+      --execucao-fundo: #e8edf1;
+      --ok: #1a5c3f;
+      --ok-fundo: #dcefe4;
+    }
+
+    body {
+      background: #ffffff;
+      font-size: 10.5pt;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+
+    .folha {
+      max-width: none;
+      padding: 0;
+    }
+
+    .capa {
+      padding-top: 0;
+    }
+
+    section {
+      padding-top: 30px;
+    }
+
+    h1,
+    h2,
+    h3,
+    h4,
+    .rotulo {
+      break-after: avoid;
+      page-break-after: avoid;
+    }
+
+    .etapa,
+    .causa,
+    .extras,
+    .laudo,
+    .rolagem,
+    .protecao,
+    .fase,
+    .contraste,
+    tr {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+
+    .grade,
+    table {
+      min-width: 0;
+    }
+
+    .fecho {
+      break-inside: avoid;
+      page-break-inside: avoid;
+    }
+  }
 </style>
 
 <main class="folha">
