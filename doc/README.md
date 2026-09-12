@@ -15,6 +15,7 @@ técnicas e de conteúdo sem precisar reler o código inteiro.
 | [07-plano.md](07-plano.md)                                           | O plano dos onze pontos do documento 06, e o que foi feito em cada lote |
 | [08-plano-formulario-e-medicao.md](08-plano-formulario-e-medicao.md) | A segunda leva: formulário de contato com envio de e-mail, e medição    |
 | [09-decisoes-no-codigo.md](09-decisoes-no-codigo.md)                 | O porquê de cada decisão do fonte, arquivo por arquivo                  |
+| [10-plano-ideias-publicadas.md](10-plano-ideias-publicadas.md)       | A terceira leva: propostas publicadas em `/ideias`, só por endereço     |
 
 ## Propostas
 
