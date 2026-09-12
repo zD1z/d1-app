@@ -143,7 +143,12 @@ Ordem das operações, e cada passo existe por uma razão:
    torna varredura barata para você e cara para quem varre.
 2. **`GetItem`** com `pk = hash` e `sk = proposta`.
 3. **Confere `estado` e `expira_em`.**
-4. **Grava a leitura**, sem esperar a escrita terminar para responder.
+4. **Grava a leitura, e espera a escrita terminar** antes de responder. A
+   tentação é responder primeiro e gravar depois, mas na Lambda isso não
+   funciona: assim que o handler devolve, o runtime congela, e a promessa
+   pendente pode nunca completar. A escrita é de um item pequeno e custa poucos
+   milissegundos. Se ela falhar, o erro vai para o log e a página é servida do
+   mesmo jeito: não abrir a proposta por causa da telemetria seria absurdo.
 5. **Devolve `text/html`**, com os cabeçalhos abaixo.
 
 | Situação                            | Resposta                                                           |
@@ -243,7 +248,9 @@ hash é de quem e o que já venceu.
 
 ## Custo
 
-Com três propostas no ar e 200 aberturas por mês somadas, em `us-east-1`:
+Com três propostas no ar e 200 aberturas por mês somadas. Os valores são de
+`us-east-1`; a conta roda em `sa-east-1`, que é mais cara, e nesse volume a
+diferença some no arredondamento:
 
 | Item                                 | Conta                                  | Por mês        |
 | ------------------------------------ | -------------------------------------- | -------------- |
@@ -255,8 +262,7 @@ Com três propostas no ar e 200 aberturas por mês somadas, em `us-east-1`:
 | Certificado ACM e domínio no gateway | —                                      | US$ 0          |
 | **Total**                            |                                        | **< US$ 0,01** |
 
-Mesmo multiplicando por cem, fica abaixo de R$ 1 por mês. `sa-east-1` é mais caro,
-e nesse volume a diferença some no arredondamento.
+Mesmo multiplicando por cem, fica abaixo de R$ 1 por mês.
 
 **As duas coisas que podem cobrar de verdade:**
 
