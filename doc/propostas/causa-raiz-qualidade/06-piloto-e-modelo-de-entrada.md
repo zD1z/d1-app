@@ -4,6 +4,13 @@ Decisão tomada em 2026-09-12, depois que a apresentação foi ao Diego. Ela mud
 natureza do projeto e passa a valer sobre o que os documentos 04 e 05 dizem de
 comercial.
 
+Este é o **modelo B** dos
+[modelos-de-engajamento.md](../modelos-de-engajamento.md): roda na sua
+infraestrutura, o código é seu, o cliente usa por licença. O modelo A, com
+desenvolvimento nas contas do cliente e código cedido a ele, é o formato pago, e
+continua disponível se o Diego quiser tudo dentro de casa. A migração de um para
+o outro está descrita lá, custa de um a dois dias, e é cobrada.
+
 ## A decisão
 
 O Diego é o cliente final e o dono da ideia. A primeira POC é feita **sem

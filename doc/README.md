@@ -18,8 +18,10 @@ técnicas e de conteúdo sem precisar reler o código inteiro.
 
 ## Propostas
 
-[`propostas/`](propostas/) guarda o planejamento das ideias que chegam pelo
-formulário do site. Não é documentação do `d1.app.br`: cada pasta ali descreve um
+[`propostas/`](propostas/README.md) guarda o planejamento das ideias que chegam
+pelo formulário do site, e o
+[modelos-de-engajamento.md](propostas/modelos-de-engajamento.md) com os dois
+formatos de trabalho que qualquer proposta pode tomar. Não é documentação do `d1.app.br`: cada pasta ali descreve um
 projeto separado, com repositório próprio. A primeira é
 [causa-raiz-qualidade](propostas/causa-raiz-qualidade/README.md), recebida em
 2026-09-09.
