@@ -227,10 +227,14 @@ A última é a única cara, e é cara **de propósito**: como o trabalho é sob
 encomenda, pagar hoje por multi-tenant que talvez nunca exista seria queimar
 orçamento do cliente para financiar hipótese minha.
 
-## Pendência aberta
+## Onde a POC roda
 
-**Em qual conta a POC roda.** Se na minha, começamos em uma semana e a migração
-para o cliente é um passo posterior. Se na do cliente, o dado nunca sai da casa
-dele desde o primeiro dia, e o começo depende de acesso, aprovação e política
-interna de TI. A segunda é a correta para dado de trabalhador; a primeira é mais
-rápida. Decisão do cliente, registrada aqui quando houver.
+**Na sua conta**, decidido em 2026-09-12 junto com o modelo de piloto do
+[06-piloto-e-modelo-de-entrada.md](06-piloto-e-modelo-de-entrada.md): você hospeda
+e o cliente paga o custo. Começa em uma semana, sem depender da TI da empresa
+dele.
+
+Duas consequências que o documento 06 detalha e que não podem ficar só aqui: você
+passa a ser operador de dado pessoal de trabalhador de outra empresa, o que pede
+acordo de tratamento por escrito; e, com mais de um cliente hospedado, a regra é
+**uma instância por cliente** até o quarto, em vez de multi-tenant.

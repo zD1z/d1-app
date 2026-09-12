@@ -34,27 +34,33 @@ travessão pede um tempo de respiro que o leitor não técnico nem sempre dá.
 
 ## Decisões travadas
 
-Tomadas na conversa de planejamento de 2026-09-09. Tudo o mais neste plano é
-derivado delas.
+Tomadas na conversa de planejamento de 2026-09-09, e revistas em 2026-09-12,
+quando a proposta virou piloto. Tudo o mais neste plano é derivado delas.
 
 | Assunto                | Decisão                                                                         |
 | ---------------------- | ------------------------------------------------------------------------------- |
-| Natureza do trabalho   | Projeto sob encomenda. Código do cliente, uma empresa só, sem multi-tenant      |
+| Natureza do trabalho   | Produto seu, com piloto. O Diego é o primeiro cliente e o dono da ideia         |
+| Primeiro piloto        | Sem cobrança de mão de obra, com teto de 120 h. Ele paga só a infraestrutura    |
+| Propriedade            | Ideia dele, código seu, licença de uso perpétua para ele. Ver documento 06      |
+| Onde roda              | Na sua conta. Uma instância por cliente, até o quarto                           |
 | Primeira entrega       | POC funcional, com um caso de falha real do cliente, ponta a ponta              |
 | Critério da stack      | Menor custo possível de operação, sem fechar a porta para algo mais estruturado |
 | Frontend               | Angular 21, estático, mesma base do `d1.app.br`                                 |
 | Backend                | Fastify em Node 22 com TypeScript, empacotado como uma única Lambda             |
 | Banco                  | Postgres gerenciado com escala a zero (Neon no plano gratuito)                  |
-| Autenticação           | Link mágico por e-mail via SES, sem senha e sem provedor de identidade pago     |
+| Autenticação           | Link com token de uso único. O e-mail transacional fica para depois do piloto   |
 | Infraestrutura         | Terraform aplicado por GitHub Actions com OIDC, como no `d1-app-api`            |
 | Motor de diagnóstico   | Regras determinísticas e versionadas. Sem IA na POC                             |
 | Entrega dos documentos | Planejamento em Markdown aqui; apresentação ao cliente como página publicada    |
 
 ## O que ainda não está decidido
 
-- **Preço e forma de cobrança.** O documento 05 traz o esforço estimado, a grade
-  de cálculo e o modelo de parcelas; falta a sua taxa-hora e a decisão sobre
-  desconto de piloto. Os campos ficam como `[PREENCHER]` até lá.
+- **Preço do desenvolvimento completo.** O documento 05 traz o esforço estimado e
+  a grade de cálculo; falta a sua taxa-hora. Só vale a partir do terceiro cliente,
+  ou antes disso se o Diego quiser exclusividade do código.
+- **Titularidade do código.** O documento 06 recomenda a divisão (ideia dele,
+  código seu, licença perpétua para ele). Precisa estar combinada **antes** da
+  primeira linha de código.
+- **Valor da hospedagem cobrada no piloto.** O custo direto é de R$ 15 a R$ 60 por
+  mês. Falta escolher o número e dizer, na mesma frase, que é preço de piloto.
 - **Nome do produto.** "Plataforma de simulação" é descrição, não nome.
-- **Quem hospeda depois da POC.** Se a conta AWS/Neon é sua ou do cliente muda o
-  contrato e a operação. Tratado no documento 03, na seção de ambientes.

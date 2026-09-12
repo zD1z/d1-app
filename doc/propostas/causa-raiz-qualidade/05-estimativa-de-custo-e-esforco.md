@@ -5,6 +5,12 @@ operação e o que o cliente gasta do lado dele. O preço é uma decisão comerc
 sua, tomada em cima destes números, e a última seção mostra a conta que liga uma
 coisa à outra.
 
+**O primeiro cliente não segue este documento.** O piloto com o Diego é sem
+cobrança de mão de obra, com teto de 120 horas e escopo próprio, no
+[06-piloto-e-modelo-de-entrada.md](06-piloto-e-modelo-de-entrada.md). Os números
+abaixo valem para o desenvolvimento completo, e para os clientes a partir do
+terceiro.
+
 ## Método
 
 Estimativa **de baixo para cima**, por bloco de trabalho, em três pontos:
