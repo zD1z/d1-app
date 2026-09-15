@@ -52,10 +52,6 @@ export const CONTEUDO: Conteudo = {
   tecnologias: [
     {
       grupo: 'Frontend',
-      nota:
-        'A biblioteca segue o projeto, não o meu gosto. Se o cliente já tem design system, ou pede uma ' +
-        'que eu ainda não usei, eu aplico a partir da documentação oficial, com agentes de IA no ' +
-        'levantamento e numa prova de conceito antes do código de verdade.',
       itens: [
         {
           nome: 'Angular',
@@ -72,14 +68,23 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'Tailwind CSS',
           icone: 'tailwind',
+          prova: 'Estilo utilitário direto no template, com tema claro e escuro.',
+        },
+        {
+          nome: 'Bootstrap',
+          sigla: 'BS',
+          prova: 'Grid, componentes prontos e tema customizado por variável.',
+        },
+        {
+          nome: 'Angular Material',
+          sigla: 'MAT',
           prova:
-            'Tema claro e escuro por classe, com design tokens em custom properties e componente montado sem sair do utilitário.',
+            'Componentes do Material Design, com CDK para overlay, drag and drop e acessibilidade.',
         },
         {
           nome: 'Bibliotecas de componentes',
           sigla: 'UI',
-          prova:
-            'Angular Material e CDK, PrimeNG, Bootstrap e, no ecossistema React, shadcn/ui e Material UI. A escolha vem do design system que já existe, do prazo e do quanto a tela precisa fugir do padrão.',
+          prova: 'PrimeNG, shadcn/ui, Material UI, Ant Design e Chakra UI.',
         },
       ],
     },
