@@ -49,6 +49,8 @@ export type Tecnologia = DadosDaTecnologia &
 
 export interface GrupoDeTecnologias {
   readonly grupo: string;
+
+  readonly nota?: string;
   readonly itens: readonly Tecnologia[];
 }
 

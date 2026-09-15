@@ -21,7 +21,7 @@ export const routes: Routes = [
     data: {
       descricao:
         'As tecnologias com que eu trabalho e onde cada uma foi usada de verdade: Angular, ' +
-        '.NET, Java, Python, PostgreSQL, AWS e Azure.',
+        '.NET, Java, Python, PostgreSQL, AWS, Azure e IA como parte da solução.',
     } satisfies DadosDeMeta,
     loadComponent: () => import('./paginas/sobre/pagina-sobre').then((m) => m.PaginaSobre),
   },

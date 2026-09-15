@@ -42,8 +42,10 @@ automação, 4 setores.
 ### `tecnologias: GrupoDeTecnologias[]`
 
 O coração da `/sobre`. Seis grupos — Frontend, Backend, Dados, Nuvem e
-infraestrutura, Qualidade, IA aplicada — com 20 tecnologias no total. Cada item
-tem:
+infraestrutura, Qualidade, IA como parte da solução — com 24 tecnologias no
+total. O grupo pode ter uma `nota` opcional, frase curta exibida logo abaixo do
+título: o Frontend usa para dizer que a biblioteca segue o projeto do cliente, e
+o grupo de IA para dizer quando a IA entra na solução. Cada item tem:
 
 - `icone` (chave em `core/icones/icones.ts`) **ou** `sigla` (monograma, para
   marcas sem ícone redistribuível);

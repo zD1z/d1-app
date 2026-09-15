@@ -18,6 +18,14 @@
   color: var(--texto-fraco);
 }
 
+.grupo__nota {
+  margin-top: calc(-1 * var(--e-3));
+  margin-bottom: var(--e-6);
+  font-size: var(--t-sm);
+  color: var(--texto-suave);
+  max-width: 72ch;
+}
+
 .tecnologias {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));

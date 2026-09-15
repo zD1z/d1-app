@@ -9,6 +9,9 @@
     @for (grupo of grupos; track grupo.grupo) {
       <div class="grupo">
         <h3 class="grupo__titulo">{{ grupo.grupo }}</h3>
+        @if (grupo.nota) {
+          <p class="grupo__nota">{{ grupo.nota }}</p>
+        }
 
         <ul class="tecnologias">
           @for (item of grupo.itens; track item.nome) {

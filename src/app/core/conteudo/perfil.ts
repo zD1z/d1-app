@@ -52,6 +52,10 @@ export const CONTEUDO: Conteudo = {
   tecnologias: [
     {
       grupo: 'Frontend',
+      nota:
+        'A biblioteca segue o projeto, não o meu gosto. Se o cliente já tem design system, ou pede uma ' +
+        'que eu ainda não usei, eu aplico a partir da documentação oficial, com agentes de IA no ' +
+        'levantamento e numa prova de conceito antes do código de verdade.',
       itens: [
         {
           nome: 'Angular',
@@ -70,6 +74,12 @@ export const CONTEUDO: Conteudo = {
           icone: 'tailwind',
           prova:
             'Tema claro e escuro por classe, com design tokens em custom properties e componente montado sem sair do utilitário.',
+        },
+        {
+          nome: 'Bibliotecas de componentes',
+          sigla: 'UI',
+          prova:
+            'Angular Material e CDK, PrimeNG, Bootstrap e, no ecossistema React, shadcn/ui e Material UI. A escolha vem do design system que já existe, do prazo e do quanto a tela precisa fugir do padrão.',
         },
       ],
     },
@@ -177,13 +187,35 @@ export const CONTEUDO: Conteudo = {
       ],
     },
     {
-      grupo: 'IA aplicada',
+      grupo: 'IA como parte da solução',
+      nota:
+        'IA entra quando resolve o problema do cliente, não como enfeite. Pode ser um agente que ' +
+        'executa tarefa, um servidor MCP que abre o sistema para agentes, ou um chatbot que responde ' +
+        'com o conhecimento da própria empresa.',
       itens: [
+        {
+          nome: 'Agentes de IA',
+          sigla: 'AG',
+          prova:
+            'Agente que executa tarefa de ponta a ponta com tools tipadas: consulta o sistema, preenche cadastro, abre chamado. Ação sensível passa por aprovação humana, e cada passo fica registrado.',
+        },
         {
           nome: 'Model Context Protocol',
           sigla: 'MCP',
           prova:
             'Servidor MCP referenciando a camada de aplicação direto, sem passar por HTTP, para um agente consultar o sistema com tools tipadas.',
+        },
+        {
+          nome: 'Chatbot com base de conhecimento',
+          sigla: 'KB',
+          prova:
+            'Atendimento com agentes alimentados pela base de conhecimento da empresa: manual, FAQ, contrato e histórico de chamado. A busca semântica (RAG) traz o trecho certo, a resposta cita a fonte, e o que não está na base vai para uma pessoa.',
+        },
+        {
+          nome: 'Desenvolvimento guiado por especificação',
+          sigla: 'SDD',
+          prova:
+            'Spec-Driven Development: requisito, critério de aceite e contrato escritos antes do código. Os agentes implementam contra a especificação, os testes conferem, e eu reviso cada diff antes de entrar.',
         },
         {
           nome: 'Claude Code',
