@@ -1,3 +1,7 @@
+.tecnologias-secao {
+  background: var(--fundo-alternado, var(--fundo));
+}
+
 .grupo {
   margin-bottom: var(--e-9);
 }
@@ -32,8 +36,6 @@
   gap: var(--e-6) var(--e-7);
 }
 
-/* A cor de cada tema vem calculada no componente, com contraste medido contra --superficie.
-   Item sem cor deixa --cor-da-marca inválida, e o var() cai no neutro. */
 .tecnologia {
   --cor-da-marca: var(--cor-da-marca-escuro);
 

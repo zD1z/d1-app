@@ -52,6 +52,10 @@
   --ok: #4ade80;
   --ok-fundo: color-mix(in srgb, var(--ok) 14%, transparent);
 
+  --faixa-destaque: var(--fundo);
+  --faixa-destaque-texto: var(--texto);
+  --faixa-destaque-texto-suave: var(--texto-suave);
+
   --cortina: rgba(4, 6, 10, 0.66);
 
   --fonte:
@@ -96,20 +100,25 @@
 @media (prefers-color-scheme: light) {
   :root {
     --fundo: #ffffff;
-    --superficie: #f4f6f9;
+    --superficie: #e8edf5;
     --cartao: #ffffff;
-    --borda: #e2e6ec;
-    --contorno: #848d9c;
+    --fundo-alternado: #dde3ec;
+    --borda: #d6dce6;
+    --contorno: #6d7889;
 
     --texto: #0e131b;
-    --texto-suave: #4a5462;
-    --texto-fraco: #5f6979;
+    --texto-suave: #414b59;
+    --texto-fraco: #566071;
 
     --acento: #0a5fbf;
     --acento-forte: #08498f;
     --acento-contraste: #ffffff;
     --acento-fundo: color-mix(in srgb, var(--acento) 8%, transparent);
     --acento-borda: color-mix(in srgb, var(--acento) 28%, transparent);
+
+    --faixa-destaque: var(--acento-forte);
+    --faixa-destaque-texto: #ffffff;
+    --faixa-destaque-texto-suave: #cfe0f5;
 
     --erro: #c92a2f;
     --aviso: #8a5a00;

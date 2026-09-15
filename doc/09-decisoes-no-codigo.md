@@ -367,16 +367,42 @@ e companhia, a troca muda a altura da linha e empurra o layout — e quem paga �
 - `--borda` é filete decorativo. `--contorno` é limite de controle — token
   separado porque a WCAG 1.4.11 pede 3:1 para o limite de um componente de
   interface, e a borda decorativa fica em 1,5:1 de propósito. Medido: 3,82:1 no
-  escuro, 3,09:1 no claro.
+  escuro e 3,46:1 no claro, o pior caso sobre `--fundo-alternado`.
 - `--texto-fraco` foi clareado. No valor antigo (`#6b7484`) reprovava em AA nos
   dois temas, em sete usos, incluindo o rodapé inteiro e os rótulos dos números
-  de credencial. Hoje o pior par é 5,13:1, contra os 4,5:1 exigidos.
+  de credencial. Hoje o pior par é 4,92:1, no claro sobre `--fundo-alternado`,
+  contra os 4,5:1 exigidos.
 - **O acento é a cor da conversão, e só dela.** A regra de uso é: chamada
   principal, trecho destacado do bordão, anel de foco. Rótulo de seção, chip de
   ícone, número de etapa e borda de hover foram para os neutros justamente para
-  o botão voltar a ser a coisa mais saturada da tela.
+  o botão voltar a ser a coisa mais saturada da tela. **Uma exceção, e só uma:**
+  no tema claro, a chamada final de `/sobre` pinta a seção inteira com
+  `--faixa-destaque` (= `--acento-forte`), não só o botão. É de propósito —
+  a página precisa fechar com um bloco marcante, e a chamada final é o único
+  lugar da árvore que não compete com conteúdo de conversão em cima (o hero e
+  o cabeçalho continuam neutros). Dentro da faixa o botão primário se inverte
+  — pílula branca com texto na cor da faixa — para continuar sendo o elemento
+  de maior contraste da seção, e o anel de foco troca `--acento` por
+  `--faixa-destaque-texto` (branco): o branco dá 8,90:1 contra a faixa, e o
+  azul do acento ficaria abaixo de 2:1. No tema escuro a seção não muda: os três
+  tokens `--faixa-destaque`, `--faixa-destaque-texto` e
+  `--faixa-destaque-texto-suave` existem no `:root` escuro valendo `--fundo`,
+  `--texto` e `--texto-suave`, para o CSS da seção não depender de fallback em
+  `var()` — e porque o escuro já tem contraste de sobra entre seções sem
+  precisar de faixa. A borda sumida, o botão invertido e o anel branco ficam
+  num `@media (prefers-color-scheme: light)` do componente: no escuro, botão
+  branco quebraria a paleta.
 - `--acento-contraste` declara o que se escreve em cima do acento. Antes o botão
   usava `--fundo`, que dava certo por coincidência.
+- **Fundo por seção, no tema claro.** `--superficie`, `--fundo-alternado` e
+  `--fundo` se alternam seção a seção (home: hero → soluções → quem-faz →
+  contato → rodapé; `/sobre`: apresentação → tecnologias → combinações →
+  chamada final → rodapé), e nenhuma seção fica com o mesmo token de fundo da
+  vizinha — sem isso o tema claro empapelava a página de branco e a única
+  separação era o filete de 1px do `--borda`. `--fundo-alternado` só existe no
+  claro; no escuro o `var()` cai no fundo de sempre, `--superficie` no rodapé e
+  `--fundo` na grade de tecnologias. No claro, `--fundo` e `--superficie` estão
+  a 1,18:1, contra 1,08:1 da escala anterior.
 - **Cores de estado** vivem nos tokens, e não chumbadas no CSS do formulário: o
   vermelho antigo (`#e5484d`) dava 3,91:1 sobre branco e o âmbar (`#e9a319`)
   dava 2,16:1, ou seja, sumia no tema claro.

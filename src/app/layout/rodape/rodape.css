@@ -1,6 +1,6 @@
 .rodape {
   border-top: 1px solid var(--borda);
-  background: var(--superficie);
+  background: var(--fundo-alternado, var(--superficie));
   padding: var(--e-8) 0;
 }
 

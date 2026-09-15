@@ -31,7 +31,7 @@ O site tem duas páginas e oito seções ao todo.
 | Apresentação  | `secoes/apresentacao`  | Nome, título, chamada, resumo de carreira e link do LinkedIn                                                                                                                                               |
 | Tecnologias   | `secoes/tecnologias`   | Seis grupos, 26 tecnologias, com nota opcional por grupo. Cada cartão traz ícone da marca (ou monograma) e uma frase de prova. A cor da marca fica sempre visível, ajustada por tema para manter contraste |
 | Combinações   | `secoes/combinacoes`   | Três arranjos de stack com as peças em etiquetas                                                                                                                                                           |
-| Chamada final | `secoes/chamada-final` | Devolve o visitante para a oferta da home                                                                                                                                                                  |
+| Chamada final | `secoes/chamada-final` | Devolve o visitante para a oferta da home. No tema claro fecha a página com a faixa azul do acento (ver "Cor" em `09-decisoes-no-codigo.md`); no escuro segue igual às demais seções                       |
 
 ## Formulário de ideia
 

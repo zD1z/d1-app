@@ -1,9 +1,6 @@
-// Cópia de `--superficie` de `src/styles.css`, o fundo da caixa onde a marca é desenhada.
-// Mudou lá, muda aqui: a suíte roda sem sistema de arquivos e não consegue conferir sozinha.
 export const SUPERFICIE_NO_ESCURO = '#14171e';
-export const SUPERFICIE_NO_CLARO = '#f4f6f9';
+export const SUPERFICIE_NO_CLARO = '#e8edf5';
 
-// WCAG 2.2: elemento gráfico pede 3:1 (1.4.11); o monograma é texto e pede 4.5:1 (1.4.3).
 export const CONTRASTE_DO_ICONE = 3;
 export const CONTRASTE_DO_MONOGRAMA = 4.5;
 
@@ -39,10 +36,6 @@ export function razaoDeContraste(cor: string, fundo: string): number {
   return (maior + 0.05) / (menor + 0.05);
 }
 
-/**
- * Mistura a cor da marca com branco (fundo escuro) ou preto (fundo claro), no menor passo que
- * alcança o contraste pedido. Cor que já passa volta intacta, então a marca só muda quando precisa.
- */
 export function corLegivel(cor: string, fundo: string, minimo: number): string {
   const origem = lerHex(cor);
   const destino: Rgb = luminancia(lerHex(fundo)) < 0.5 ? [255, 255, 255] : [0, 0, 0];

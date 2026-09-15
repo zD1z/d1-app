@@ -1,7 +1,6 @@
 export interface IconeDeMarca {
   readonly titulo: string;
 
-  // `null` em marca monocromática: preto some no fundo escuro, e o hover fica com a cor do texto.
   readonly cor: string | null;
   readonly caminho: string;
 }

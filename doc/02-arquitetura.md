@@ -163,7 +163,10 @@ que não chega ao contato, o site continua sem nenhuma requisição externa.
 
 - tokens em custom properties (`--fundo`, `--texto`, `--acento`, `--fonte`,
   `--largura: 1080px`, `--raio`, `--sombra`);
-- o bloco `@media (prefers-color-scheme: light)` que redefine os mesmos tokens;
+- o bloco `@media (prefers-color-scheme: light)` que redefine os mesmos tokens,
+  mais `--fundo-alternado` (só existe no claro; no escuro cai em `--superficie`
+  por fallback do `var()`) e os `--faixa-destaque*`, que existem nos dois temas
+  — ver "Cor" em `09-decisoes-no-codigo.md`;
 - reset mínimo e regras de elemento (`body`, títulos, `a`, `:focus-visible`);
 - `@media (prefers-reduced-motion: reduce)` zerando animações;
 - quatro classes compartilhadas: `.container`, `.secao` (com `__rotulo`,

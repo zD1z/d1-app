@@ -1,3 +1,8 @@
+.chamada {
+  background: var(--faixa-destaque);
+  color: var(--faixa-destaque-texto);
+}
+
 .chamada__caixa {
   text-align: center;
 }
@@ -5,6 +10,25 @@
 .chamada__texto {
   max-width: 52ch;
   margin: var(--e-4) auto var(--e-7);
-  color: var(--texto-suave);
+  color: var(--faixa-destaque-texto-suave);
   font-size: var(--t-md);
+}
+
+@media (prefers-color-scheme: light) {
+  .chamada {
+    border-top: none;
+  }
+
+  .chamada .botao--primario {
+    background: var(--faixa-destaque-texto);
+    color: var(--faixa-destaque);
+  }
+
+  .chamada .botao--primario:hover {
+    background: var(--faixa-destaque-texto-suave);
+  }
+
+  .chamada .botao--primario:focus-visible {
+    outline-color: var(--faixa-destaque-texto);
+  }
 }
