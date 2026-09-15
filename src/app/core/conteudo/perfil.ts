@@ -72,12 +72,12 @@ export const CONTEUDO: Conteudo = {
         },
         {
           nome: 'Bootstrap',
-          sigla: 'BS',
+          icone: 'bootstrap',
           prova: 'Grid, componentes prontos e tema customizado por variável.',
         },
         {
           nome: 'Angular Material',
-          sigla: 'MAT',
+          icone: 'materialDesign',
           prova:
             'Componentes do Material Design, com CDK para overlay, drag and drop e acessibilidade.',
         },
@@ -121,6 +121,7 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'SQL Server',
           sigla: 'SQL',
+          cor: '#CC2927',
           prova:
             'Modelagem, T-SQL, índice e plano de execução. Migração de base entre servidores e conserto de consulta que ficou lenta quando o volume cresceu.',
         },
@@ -132,12 +133,14 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'DynamoDB',
           sigla: 'DDB',
+          cor: '#4053D6',
           prova:
             'Modelagem por padrão de acesso, chave composta e leitura barata em escala. Não é SQL, e tratar como se fosse é o erro que custa caro depois.',
         },
         {
           nome: 'Oracle',
           sigla: 'ORA',
+          cor: '#F80000',
           prova: 'PL/SQL e consulta em base legada.',
         },
       ],
@@ -148,12 +151,14 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'AWS',
           sigla: 'AWS',
+          cor: '#FF9900',
           prova:
             'ECS Fargate, RDS, S3, CloudFront, Route 53, ACM, VPC privada e CloudWatch. Aplicação em contêiner atrás de load balancer, com HTTPS e log centralizado.',
         },
         {
           nome: 'Azure',
           sigla: 'AZ',
+          cor: '#0078D4',
           prova: 'Migração de sistema e de base de on-premises para a nuvem.',
         },
         {
@@ -181,6 +186,7 @@ export const CONTEUDO: Conteudo = {
         {
           nome: 'Playwright',
           sigla: 'PW',
+          cor: '#2EAD33',
           prova:
             'Teste ponta a ponta rodando o navegador de verdade, com banco separado do de produção e trava que aborta a suíte se ela apontar para a base errada.',
         },
@@ -206,7 +212,7 @@ export const CONTEUDO: Conteudo = {
         },
         {
           nome: 'Model Context Protocol',
-          sigla: 'MCP',
+          icone: 'mcp',
           prova:
             'Servidor MCP referenciando a camada de aplicação direto, sem passar por HTTP, para um agente consultar o sistema com tools tipadas.',
         },
@@ -248,7 +254,7 @@ export const CONTEUDO: Conteudo = {
       titulo: 'Integração e automação',
       descricao:
         'Fazer dois sistemas que não se falam trocarem informação, ou tirar do caminho uma rotina que alguém repete toda semana.',
-      pecas: ['.NET', 'Python', 'Terraform', 'AWS', 'MCP'],
+      pecas: ['.NET', 'Python', 'Terraform', 'AWS', 'Model Context Protocol'],
     },
   ],
 

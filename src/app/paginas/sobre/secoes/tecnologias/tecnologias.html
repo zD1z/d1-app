@@ -15,7 +15,11 @@
 
         <ul class="tecnologias">
           @for (item of grupo.itens; track item.nome) {
-            <li class="tecnologia" [style.--cor-da-marca]="corDaMarca(item.icone)">
+            <li
+              class="tecnologia"
+              [style.--cor-da-marca-escuro]="item.cores?.escuro"
+              [style.--cor-da-marca-claro]="item.cores?.claro"
+            >
               <span class="tecnologia__marca" aria-hidden="true">
                 @if (caminhoDoIcone(item.icone); as caminho) {
                   <svg viewBox="0 0 24 24" fill="currentColor">

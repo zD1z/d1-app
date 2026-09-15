@@ -39,11 +39,14 @@ export type Tecnologia = DadosDaTecnologia &
     | {
         readonly icone: ChaveDeIconeDeMarca;
         readonly sigla?: never;
+        readonly cor?: never;
       }
     | {
         readonly icone?: never;
 
         readonly sigla: string;
+
+        readonly cor?: string;
       }
   );
 

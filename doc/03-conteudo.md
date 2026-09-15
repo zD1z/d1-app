@@ -48,7 +48,9 @@ título; hoje só o grupo de IA usa, para dizer quando a IA entra na solução. 
 item tem:
 
 - `icone` (chave em `core/icones/icones.ts`) **ou** `sigla` (monograma, para
-  marcas sem ícone redistribuível);
+  marcas sem ícone redistribuível), com `cor` opcional em hexadecimal para o
+  monograma lembrar a marca. A cor é a oficial; o ajuste de contraste para cada
+  tema é feito em `core/cor/contraste.ts`, e não à mão no conteúdo;
 - `prova`: uma frase dizendo onde aquilo foi usado. É o campo que separa lista
   de prova, e o que faz a página valer alguma coisa. Ao adicionar tecnologia,
   esse campo não é opcional na prática.

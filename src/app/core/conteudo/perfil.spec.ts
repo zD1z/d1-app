@@ -39,6 +39,17 @@ describe('CONTEUDO', () => {
       }
     });
 
+    it('usa cor de marca em hexadecimal, no ícone e no monograma', () => {
+      const cores = [
+        ...Object.values(ICONES).map((icone) => icone.cor),
+        ...tecnologias.map((tecnologia) => tecnologia.cor),
+      ].filter((cor) => cor != null);
+
+      for (const cor of cores) {
+        expect(cor).toMatch(/^#[0-9A-F]{6}$/i);
+      }
+    });
+
     it('tem uma prova em cada item', () => {
       for (const tecnologia of tecnologias) {
         expect(tecnologia.prova.trim().length, tecnologia.nome).toBeGreaterThan(0);

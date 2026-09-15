@@ -32,10 +32,20 @@
   gap: var(--e-6) var(--e-7);
 }
 
+/* A cor de cada tema vem calculada no componente, com contraste medido contra --superficie.
+   Item sem cor deixa --cor-da-marca inválida, e o var() cai no neutro. */
 .tecnologia {
+  --cor-da-marca: var(--cor-da-marca-escuro);
+
   display: flex;
   gap: var(--e-4);
   align-items: flex-start;
+}
+
+@media (prefers-color-scheme: light) {
+  .tecnologia {
+    --cor-da-marca: var(--cor-da-marca-claro);
+  }
 }
 
 .tecnologia__marca {
@@ -47,7 +57,7 @@
   border: 1px solid var(--borda);
   border-radius: var(--raio-pequeno);
   background: var(--superficie);
-  color: var(--texto-suave);
+  color: var(--cor-da-marca, var(--texto-suave));
   transition:
     color 0.15s ease,
     border-color 0.15s ease;

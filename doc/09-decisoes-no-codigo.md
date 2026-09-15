@@ -117,14 +117,30 @@ sem estreitar o tipo antes.
 
 Traçados dos ícones de marca, extraídos do pacote **Simple Icons (CC0 1.0)**.
 Ficam embutidos de propósito: o site não faz requisição externa, e o pacote não
-precisa virar dependência só para desenhar treze símbolos.
+precisa virar dependência só para desenhar dezesseis símbolos.
 
 As marcas seguem sendo dos seus donos. O uso aqui é descritivo, para dizer que
 ferramentas foram usadas, e não sugere parceria nem endosso.
 
+A `cor` guardada é a da marca, e segue a do pacote com três exceções: Angular e
+OpenJDK vêm em preto no pacote, então usam o vermelho clássico do Angular e o
+laranja do Java, que são a referência que as pessoas reconhecem; o verde neon do
+Vitest troca por um verde mais fechado. O Model Context Protocol, que só existe
+em preto, fica com `cor: null` e herda a cor do texto.
+
+Essa cor não vai direto para a tela. `core/cor/contraste.ts` calcula uma versão
+por tema, misturando com branco no escuro e com preto no claro, no menor passo
+que alcança o contraste da WCAG contra `--superficie`: 3:1 para ícone, que é
+elemento gráfico, e 4,5:1 para monograma, que é texto. Cor que já passa volta
+intacta. Um teste confere cada cor do site nos dois temas. As duas superfícies
+estão repetidas no arquivo, e não lidas de `styles.css`: a suíte roda sem acesso
+ao sistema de arquivos. Mudou `--superficie`, muda lá também.
+
 AWS, Azure, SQL Server, Oracle, DynamoDB e Playwright não estão no arquivo
 porque foram removidos do pacote a pedido dos donos das marcas. Essas
-tecnologias aparecem com monograma no lugar do símbolo.
+tecnologias aparecem com monograma no lugar do símbolo, e o monograma pode ter
+`cor` própria para lembrar a marca. Monograma sem marca por trás, como
+Agentes de IA ou Bibliotecas de componentes, fica sem cor.
 
 O objeto é fechado com `satisfies Record<string, IconeDeMarca>`, e não anotado
 como `Record<...>`: com a anotação, `keyof typeof ICONES` valia `string` e uma
@@ -460,10 +476,14 @@ o botão que é o próprio endereço, não para o que abre o formulário.
 
 ### `tecnologias.css` e `apresentacao.css`
 
-- A cor oficial da marca só aparece no hover. Monocromático por padrão mantém a
-  grade coesa e legível nos dois temas, onde logo colorido some num deles. A
-  reserva é o contorno neutro, e não o acento: numa grade de vinte itens, vinte
-  hovers em azul disputariam com a única chamada de ação da página.
+- A cor da marca fica sempre visível. Antes ela só aparecia no hover, e no
+  celular, onde não há hover, a grade inteira ficava cinza e perdia a
+  referência. O motivo de ter sido monocromática, logo colorido sumindo num dos
+  temas, deixou de valer com a cor ajustada por tema (ver `core/icones/icones.ts`
+  acima). O componente escreve `--cor-da-marca-escuro` e `--cor-da-marca-claro`
+  no item, e o CSS escolhe uma pela `prefers-color-scheme`. Item sem cor deixa a
+  variável inválida e cai no neutro. O hover só acende a borda com a mesma cor, e
+  nunca com o acento, que continua reservado para a chamada de ação.
 - Sem símbolo disponível, o monograma ocupa o mesmo lugar com o mesmo peso.
 - O `h1` da `/sobre` fica um degrau acima do título de seção e bem abaixo do
   bordão da home: é a página de apoio, mas o `h1` dela não pode empatar com o
